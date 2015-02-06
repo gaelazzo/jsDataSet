@@ -1,0 +1,36 @@
+{
+  "name": "jsDataSet",
+  "version": "1.0.0",
+  "description": "DataSet (like .Net) made available for javascript and more",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "grunt": "^0.4.5",
+    "grunt-karma": "^0.10.1",
+    "karma-jasmine": "^0.3.5",
+    "karma": "^0.12.31",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "jasmine-core": "^2.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gaelazzo/jsDataSet"
+  },
+  "keywords": [
+    "DataSet",
+    "javascript",
+    "library"
+  ],
+  "author": "Gaetano Lazzo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gaelazzo/jsDataSet/issues"
+  },
+  "homepage": "https://github.com/gaelazzo/jsDataSet"
+}
