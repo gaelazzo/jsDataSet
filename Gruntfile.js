@@ -21,8 +21,21 @@ module.exports = function (grunt) {
   // Define the configuration for all the tasks
   grunt.initConfig(
     {
-
-
+        pkg: grunt.file.readJSON('package.json'),
+        yuidoc: {
+            compile: {
+                name: '<%= pkg.name %>',
+                description: '<%= pkg.description %>',
+                version: '<%= pkg.version %>',
+                //url: '<%= pkg.homepage %>',
+                options: {
+                    paths: ['./src' ],
+                    exclude: './src/bower_components' ,
+                    //themedir: 'path/to/custom/theme/',
+                    outdir: 'doc'
+                }
+            }
+        },
 
 
 
@@ -87,7 +100,7 @@ module.exports = function (grunt) {
           autoWatch: true,
           singleRun: false
         }
-      },
+      }
 
 
 
