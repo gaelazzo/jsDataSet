@@ -3242,7 +3242,7 @@
         deSerialize: function (t, deserializeStructure) {
             var that = this;
             if (deserializeStructure) {
-                this.key(t.key.slpit(','));
+                this.key(t.key.split(','));
                 this.tableForReading(t.tableForReading);
                 this.tableForWriting(t.tableForWriting);
                 this.skipSecurity(t.skipSecurity);
