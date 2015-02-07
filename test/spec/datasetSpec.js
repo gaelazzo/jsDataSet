@@ -1,17 +1,18 @@
 /*jslint  nomen:true*/
 /*jslint  nomen:true*/
-/*globals _ ,  jsDataSet, jasmine, beforeEach, expect, module, it, inject, describe, spyOn, afterEach  */
+/*globals _ ,  jsDataSet, jasmine, beforeEach, expect, module, it,  describe, spyOn, afterEach  */
 //console.log('defining datasetSpec');
 'use strict';
 var  dsSpace = jsDataSet,
-    $q = dsNameSpace.dataQuery;
+    $q = dsSpace.dataQuery;
 
 describe('System status', function () {
   var ds;
 
-  beforeEach(inject(function (dsNameSpace, dataQuery) {
-    ds = new dsNameSpace.DataSet('temp');
-  }));
+
+  beforeEach(function () {
+    ds = new dsSpace.DataSet('temp');
+  });
 
   it('dsSpace should be defined', function () {
     expect(dsSpace).not.toBeNull();
@@ -31,9 +32,9 @@ describe('DataSet',
 
     var ds;
 
-    beforeEach(inject(function (dsNameSpace, dataQuery) {
-      ds = new dsNameSpace.DataSet('temp');
-    }));
+    beforeEach(function () {
+      ds = new dsSpace.DataSet('temp');
+    });
     afterEach(function () {
       ds = null;
     });

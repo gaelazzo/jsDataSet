@@ -11,6 +11,7 @@
     /** Used as a safe reference for `undefined` in pre-ES5 environments. (thanks lodash)*/
     var undefined;
 
+
     /**
      * Escapes special characters in a string
      * @method myRegExpEscape
@@ -333,7 +334,7 @@
          */
         getValue: function (fieldName, dataRowVer) {
             this.commit();
-            if (dataRowVer === dataRowVersion.original){
+            if (dataRowVer === $rowVersion.original){
                 if (this.old.hasOwnProperty(fieldName)) {
                     return this.old[fieldName];
                 }
@@ -2958,7 +2959,7 @@
                     dr.rejectChanges();
                     newRows.push(o);
                 }
-            });
+            }).value();
             this.rows = newRows;
         },
 
@@ -3999,7 +4000,7 @@
             _.forEach(this.relationsByParent[table.name],function(rel){
                 if (rel.isEntityRelation()){
                     _.forEach(rel.getChilds(row), function(toDel){
-                        if (toDel.getRow().rowState !== dataRowState.deleted){
+                        if (toDel.getRow().rowState !== $rowState.deleted){
                             this.cascadeDelete(toDel);
                         }
                     })

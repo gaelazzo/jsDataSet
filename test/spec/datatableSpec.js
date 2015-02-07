@@ -12,7 +12,8 @@ describe('DataTable module test', function () {
   });
 
   afterEach(function () {
-    ds = null;
+      ds = null;
+      ds2 = null;
   });
 
 
