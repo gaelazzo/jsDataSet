@@ -569,9 +569,11 @@
          * @returns {DataRow[]}
          */
         getAllParentRows: function () {
+            var that= this;
             return _(this.table.dataset.relationsByChild[this.table.name])
+                .value()
                 .reduce(function (list, rel) {
-                    return list.concat(rel.getParents(this.current));
+                    return list.concat(rel.getParents(that.current));
                 }, [], this);
         },
         /**
@@ -581,10 +583,12 @@
          * @returns {DataRow[]}
          */
         getParentsInTable: function(parentTableName){
+            var that= this;
             return _(this.table.dataset.relationsByChild[this.table.name])
-                .filter({parentTableName: parentTableName})
+                .filter({parentTable: parentTableName})
+                .value()
                 .reduce(function(list,rel) {
-                    return list.concat(rel.getParents(this.current));
+                    return list.concat(rel.getParents(that.current));
                 },[],this);
         },
 
@@ -608,10 +612,12 @@
          * @returns {DataRow[]}
          */
         getAllChildRows: function () {
+            var that = this;
             return _(this.table.dataset.relationsByParent[this.table.name])
+                .value()
                 .reduce(function (list, rel) {
-                    return list.concat(rel.getChilds(this.current));
-                }, [], this);
+                    return list.concat(rel.getChilds(that.current));
+                }, []);
         },
 
         /**
@@ -621,11 +627,13 @@
          * @returns {DataRow[]}
          */
         getChildsInTable: function (childTableName) {
+            var that = this;
             return _(this.table.dataset.relationsByParent[this.table.name])
-                .filter({childTableName: childTableName})
+                .filter({childTable: childTableName})
+                .value()
                 .reduce(function (list, rel) {
-                    return list.concat(rel.getChilds(this.current));
-                }, [], this);
+                    return list.concat(rel.getChilds(that.current));
+                }, []);
         },
 
         /**
@@ -3721,8 +3729,8 @@
             if (ds === null) {
                 ds = childRow.getRow().table.dataset;
             }
-            var parentTable = ds.tables[this.parentTable];
-            return _.filter(parentTable.rows, this.getParentsFilter(childRow));
+            var actualParentTable = ds.tables[this.parentTable];
+            return _.filter(actualParentTable.rows, this.getParentsFilter(childRow));
         },
 
         serialize: function(){
