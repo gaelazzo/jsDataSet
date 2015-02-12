@@ -1,5 +1,6 @@
 'use strict';
 /*globals beforeEach,jsDataSet,afterEach,describe,jasmine,it,expect,inject */
+
 var  dsSpace = jsDataSet,
     $q = dsSpace.dataQuery;
 
