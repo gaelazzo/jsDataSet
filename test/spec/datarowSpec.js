@@ -257,10 +257,10 @@ describe('DataRow module test', function () {
 
 
             d.newRelation('r1','par1',['a'],'child1',['a']); //par1 to child1 through a->a
-            d.newRelation('r2','par1',['b'],'child2',['b']); //par1 to child2 through b->b
             d.newRelation('r3','par2',['a'],'child1',['b']); //par2 to child1 through a->b
-            d.newRelation('r4','par2',['b'],'child2',['a']); //par2 to child2 through b->a
             d.newRelation('r5','par1',['c'],'child1',['c']); //par1 to child1 through c->c
+            d.newRelation('r2','par1',['b'],'child2',['b']); //par1 to child2 through b->b
+            d.newRelation('r4','par2',['b'],'child2',['a']); //par2 to child2 through b->a
             d.newRelation('r6','par2',['c'],'child2',['c']); //par2 to child2 through c->c
 
         });
@@ -272,24 +272,52 @@ describe('DataRow module test', function () {
 
         it('getParentRows should give parent of a row through a specified relation', function(){
             expect(p10.getParentRows('r1')).toEqual([o,o2]);
-        });
-        it('getParentRows should give parent of a row through a specified relation', function(){
-            expect(p10.getParentRows('r5')).toEqual([o3]);
-        });
+            expect(p11.getParentRows('r1')).toEqual([o3]);
+            expect(p12.getParentRows('r1')).toEqual([]);
+            expect(p13.getParentRows('r1')).toEqual([]);
+            expect(p14.getParentRows('r1')).toEqual([]);
 
+            expect(p10.getParentRows('r3')).toEqual([]);
+            expect(p11.getParentRows('r3')).toEqual([o7]);
+            expect(p12.getParentRows('r3')).toEqual([]);
+            expect(p13.getParentRows('r3')).toEqual([]);
+            expect(p14.getParentRows('r3')).toEqual([o8,o9]);
+
+            expect(p10.getParentRows('r5')).toEqual([o3]);
+            expect(p11.getParentRows('r5')).toEqual([o]);
+            expect(p12.getParentRows('r5')).toEqual([]);
+            expect(p13.getParentRows('r5')).toEqual([]);
+            expect(p14.getParentRows('r5')).toEqual([]);
+
+
+
+        });
 
 
         it('getParentsInTable should give parent of a row in a specified table', function(){
-            expect(p10.getParentsInTable('par1')).toEqual([o,o2,o3]);
+            expect(p10.getParentsInTable('par1')).toHaveSameItems([o,o2,o3],true);
+            expect(p11.getParentsInTable('par1')).toHaveSameItems([o3,o],true);
+            expect(p12.getParentsInTable('par1')).toHaveSameItems([]);
+            expect(p13.getParentsInTable('par1')).toHaveSameItems([]);
+            expect(p14.getParentsInTable('par1')).toHaveSameItems([]);
+
+            expect(p10.getParentsInTable('par2')).toEqual([]);
+            expect(p11.getParentsInTable('par2')).toHaveSameItems([o7],true);
+            expect(p12.getParentsInTable('par2')).toEqual([]);
+            expect(p13.getParentsInTable('par2')).toEqual([]);
+            expect(p14.getParentsInTable('par2')).toHaveSameItems([o8,o9],true);
         });
 
         it('getAllParentRows should give all parent of a row', function(){
-            expect(p5.getAllParentRows()).toEqual([]);
+            expect(p10.getAllParentRows()).toHaveSameItems([o,o2,o3],true);
+            expect(p11.getAllParentRows()).toHaveSameItems([o,o3,o7],true);
+            expect(p12.getAllParentRows()).toEqual([]);
+            expect(p13.getAllParentRows()).toEqual([]);
+            expect(p14.getAllParentRows()).toHaveSameItems([o8,o9],true);
         });
 
     });
 
-    //TODO: check getAllChildRows,getAllParentRows,getParentsInTable,getChildsInTable,
-    //TODO: check getParentRows,getChildRows
+    //TODO: check getAllChildRows,getChildsInTable,getChildRows
 
 });
