@@ -600,7 +600,7 @@
          * @returns {DataRow[]}
          */
         getChildRows: function (relName) {
-            var rel = this.tables.dataset.relations[relName];
+            var rel = this.table.dataset.relations[relName];
             if (rel === undefined) {
                 throw 'Relation ' + relName + ' does not exists in dataset ' + this.tables.dataset.name;
             }
@@ -4195,3 +4195,5 @@
             (typeof ObjectObserver === 'undefined') ? require('observe') : ObjectObserver
 )
 );
+
+console.log('jsDataSet runned');

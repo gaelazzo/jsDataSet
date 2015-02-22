@@ -213,7 +213,7 @@ describe('DataRow module test', function () {
         });
     });
 
-    describe('DataRow functions', function () {
+    describe('DataRow relations', function () {
         var t, o, o2, o3, o4, p, p2, p3, p4,
             q, o5, o6, o7, o8, o9, p5,p6,p7,p8,p9,
             s, o10, o11, o12,o13,o14,o15, p10,p11,p12,p13,p14,p15,
@@ -316,8 +316,81 @@ describe('DataRow module test', function () {
             expect(p14.getAllParentRows()).toHaveSameItems([o8,o9],true);
         });
 
+
+
+        it('getChildRows should give childs of a row through a specified relation', function(){
+            expect(p.getChildRows('r1')).toEqual([o10]);
+            expect(p2.getChildRows('r1')).toEqual([o10]);
+            expect(p3.getChildRows('r1')).toEqual([o11]);
+            expect(p4.getChildRows('r1')).toEqual([]);
+
+            expect(p.getChildRows('r2')).toEqual([]);
+            expect(p2.getChildRows('r2')).toEqual([]);
+            expect(p3.getChildRows('r2')).toEqual([o15]);
+            expect(p4.getChildRows('r2')).toEqual([o16]);
+
+            expect(p.getChildRows('r3')).toEqual([]);
+            expect(p2.getChildRows('r3')).toEqual([]);
+            expect(p3.getChildRows('r3')).toEqual([o11]);
+            expect(p4.getChildRows('r3')).toEqual([o14]);
+
+            expect(p.getChildRows('r4')).toEqual([]);
+            expect(p2.getChildRows('r4')).toEqual([]);
+            expect(p3.getChildRows('r4')).toHaveSameItems([o15,o16],true);
+            expect(p4.getChildRows('r4')).toEqual([o17]);
+
+
+            expect(p.getChildRows('r5')).toEqual([o11]);
+            expect(p2.getChildRows('r5')).toEqual([]);
+            expect(p3.getChildRows('r5')).toEqual([o10]);
+            expect(p4.getChildRows('r5')).toEqual([]);
+
+
+
+            expect(p5.getChildRows('r3')).toEqual([]);
+            expect(p6.getChildRows('r3')).toEqual([]);
+            expect(p7.getChildRows('r3')).toEqual([o11]);
+            expect(p8.getChildRows('r3')).toEqual([o14]);
+            expect(p9.getChildRows('r3')).toEqual([o14]);
+
+            expect(p5.getChildRows('r4')).toEqual([]);
+            expect(p6.getChildRows('r4')).toEqual([]);
+            expect(p7.getChildRows('r4')).toEqual([]);
+            expect(p8.getChildRows('r4')).toEqual([o17]);
+            expect(p9.getChildRows('r4')).toEqual([o17]);
+
+            expect(p5.getChildRows('r6')).toEqual([]);
+            expect(p6.getChildRows('r6')).toEqual([]);
+            expect(p7.getChildRows('r6')).toEqual([]);
+            expect(p8.getChildRows('r6')).toEqual([o18]);
+            expect(p9.getChildRows('r6')).toEqual([]);
+
+
+        });
+
+        it('getAllChildRows should give all childs of a row in all tables', function() {
+            expect(p.getAllChildRows()).toHaveSameItems([o10,o11],true);
+            expect(p2.getAllChildRows()).toEqual([o10]);
+            expect(p3.getAllChildRows()).toHaveSameItems([o10,o11,o15],true);
+            expect(p4.getAllChildRows()).toEqual([o16]);
+        });
+
+
+        it('getChildRows should give childs of a row in a specified table', function(){
+            expect(p.getChildsInTable('child1')).toHaveSameItems([o10,o11],true);
+            expect(p2.getChildsInTable('child1')).toEqual([o10]);
+            expect(p3.getChildsInTable('child1')).toHaveSameItems([o10,o11],true);
+            expect(p4.getChildsInTable('child1')).toEqual([]);
+
+            expect(p.getChildsInTable('child2')).toEqual([]);
+            expect(p2.getChildsInTable('child2')).toEqual([]);
+            expect(p3.getChildsInTable('child2')).toEqual([o15]);
+            expect(p4.getChildsInTable('child2')).toEqual([o16]);
+
+
+        });
     });
 
-    //TODO: check getAllChildRows,getChildsInTable,getChildRows
+
 
 });
