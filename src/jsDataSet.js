@@ -4191,7 +4191,7 @@
         root.jsDataSet = jsDataSet;
     }
 }.call(this,
-            (typeof _ === 'undefined')? require('lodash-node'): _,
+            (typeof _ === 'undefined')? require('lodash'): _,
             (typeof ObjectObserver === 'undefined') ? require('observe') : ObjectObserver
 )
 );
