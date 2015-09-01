@@ -663,9 +663,11 @@
          * @returns {DataRow[]}
          */
         getAllParentRows: function () {
+            var that= this;
             return _(this.table.dataset.relationsByChild[this.table.name])
+                .value()
                 .reduce(function (list, rel) {
-                    return list.concat(rel.getParents(this.current));
+                    return list.concat(rel.getParents(that.current));
                 }, [], this);
         },
         /**
@@ -675,10 +677,12 @@
          * @returns {DataRow[]}
          */
         getParentsInTable: function(parentTableName){
+            var that= this;
             return _(this.table.dataset.relationsByChild[this.table.name])
-                .filter({parentTableName: parentTableName})
+                .filter({parentTable: parentTableName})
+                .value()
                 .reduce(function(list,rel) {
-                    return list.concat(rel.getParents(this.current));
+                    return list.concat(rel.getParents(that.current));
                 },[],this);
         },
 
@@ -690,7 +694,7 @@
          * @returns {DataRow[]}
          */
         getChildRows: function (relName) {
-            var rel = this.tables.dataset.relations[relName];
+            var rel = this.table.dataset.relations[relName];
             if (rel === undefined) {
                 throw &#x27;Relation &#x27; + relName + &#x27; does not exists in dataset &#x27; + this.tables.dataset.name;
             }
@@ -702,10 +706,12 @@
          * @returns {DataRow[]}
          */
         getAllChildRows: function () {
+            var that = this;
             return _(this.table.dataset.relationsByParent[this.table.name])
+                .value()
                 .reduce(function (list, rel) {
-                    return list.concat(rel.getChilds(this.current));
-                }, [], this);
+                    return list.concat(rel.getChilds(that.current));
+                }, []);
         },
 
         /**
@@ -715,11 +721,13 @@
          * @returns {DataRow[]}
          */
         getChildsInTable: function (childTableName) {
+            var that = this;
             return _(this.table.dataset.relationsByParent[this.table.name])
-                .filter({childTableName: childTableName})
+                .filter({childTable: childTableName})
+                .value()
                 .reduce(function (list, rel) {
-                    return list.concat(rel.getChilds(this.current));
-                }, [], this);
+                    return list.concat(rel.getChilds(that.current));
+                }, []);
         },
 
         /**
@@ -3336,7 +3344,7 @@
         deSerialize: function (t, deserializeStructure) {
             var that = this;
             if (deserializeStructure) {
-                this.key(t.key.slpit(&#x27;,&#x27;));
+                this.key(t.key.split(&#x27;,&#x27;));
                 this.tableForReading(t.tableForReading);
                 this.tableForWriting(t.tableForWriting);
                 this.skipSecurity(t.skipSecurity);
@@ -3815,8 +3823,8 @@
             if (ds === null) {
                 ds = childRow.getRow().table.dataset;
             }
-            var parentTable = ds.tables[this.parentTable];
-            return _.filter(parentTable.rows, this.getParentsFilter(childRow));
+            var actualParentTable = ds.tables[this.parentTable];
+            return _.filter(actualParentTable.rows, this.getParentsFilter(childRow));
         },
 
         serialize: function(){
@@ -4277,10 +4285,12 @@
         root.jsDataSet = jsDataSet;
     }
 }.call(this,
-            (typeof _ === &#x27;undefined&#x27;)? require(&#x27;lodash-node&#x27;): _,
+            (typeof _ === &#x27;undefined&#x27;)? require(&#x27;lodash&#x27;): _,
             (typeof ObjectObserver === &#x27;undefined&#x27;) ? require(&#x27;observe&#x27;) : ObjectObserver
 )
 );
+
+console.log(&#x27;jsDataSet runned&#x27;);
     </pre>
 </div>
                     </div>

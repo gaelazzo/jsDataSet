@@ -81,7 +81,7 @@
             "namespaces": {},
             "tag": "module",
             "file": "src\\jsDataSet.js",
-            "line": 3804,
+            "line": 3812,
             "description": "Provides shim for Ado.net DataSet class"
         },
         "dataenums": {
@@ -130,7 +130,7 @@
             "module": "DataSet",
             "namespace": "",
             "file": "src\\jsDataSet.js",
-            "line": 2517,
+            "line": 2525,
             "description": "Provides utility functions to filter data and to create sql condition over database.\nEvery function returns a function f where:\nf ( r, context )  = true if r matches condition in the given context\nf( r, context ) = result  evaluated in the given context if f is a computation function\nf.isTrue = true if f is always true\nf.isFalse = true if f is always false\nf ( r, context) = undefined if there is no sufficient data to evaluate f\nnull fields and undefined fields are all considered (and returned) as null values (so they compare equal)\nf.toSql(formatter, context)  = a string representing the underlying condition to be applied to a database.\n formatter is used to obtain details about making the expression, see sqlFormatter for an example\n [context] is the context into which the expression have to be evaluated"
         }
     },
@@ -187,7 +187,7 @@
             "submodule": "DataQuery",
             "namespace": "",
             "file": "src\\jsDataSet.js",
-            "line": 668,
+            "line": 676,
             "description": "Function with ability to be converted to sql. When invoked gives a result depending on the arguments."
         },
         "dataQuery": {
@@ -202,7 +202,7 @@
             "submodule": "DataQuery",
             "namespace": "",
             "file": "src\\jsDataSet.js",
-            "line": 680,
+            "line": 688,
             "description": "Compare function provider to help building conditions that can be applyed both to collections,\n using the returned function as a filter, or to a database, using the toSql() method"
         },
         "DataQuery": {
@@ -217,7 +217,7 @@
             "submodule": "DataQuery",
             "namespace": "",
             "file": "src\\jsDataSet.js",
-            "line": 686,
+            "line": 694,
             "description": "collection of function generators",
             "itemtype": "property",
             "type": "String"
@@ -234,7 +234,7 @@
             "submodule": "DataQuery",
             "namespace": "",
             "file": "src\\jsDataSet.js",
-            "line": 2349,
+            "line": 2357,
             "description": "Describe how to evaluate the value of a column before posting it"
         },
         "DataTable": {
@@ -249,7 +249,7 @@
             "submodule": "DataQuery",
             "namespace": "",
             "file": "src\\jsDataSet.js",
-            "line": 2517,
+            "line": 2525,
             "description": "A DataTable is s collection of DataRow and provides information about the structure of logical table"
         },
         "OptimisticLocking": {
@@ -263,7 +263,7 @@
             "module": "DataSet",
             "namespace": "",
             "file": "src\\jsDataSet.js",
-            "line": 3535,
+            "line": 3543,
             "description": "Manages auto fill of locking purposed fields and evaluates filter for optimistic locking for update\nIn his basic implementation accept a list of fields to fill. Values for filling are taken from\n environment.",
             "itemtype": "method",
             "params": [
@@ -291,7 +291,7 @@
             "module": "DataSet",
             "namespace": "",
             "file": "src\\jsDataSet.js",
-            "line": 3607,
+            "line": 3615,
             "description": "creates a DataRelation",
             "is_constructor": 1,
             "params": [
@@ -339,7 +339,7 @@
             "module": "DataSet",
             "namespace": "",
             "file": "src\\jsDataSet.js",
-            "line": 3804,
+            "line": 3812,
             "description": "Creates an empty DataSet",
             "itemtype": "method",
             "params": [
@@ -10404,7 +10404,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 577,
+            "line": 579,
             "description": "Gets parents row of this row in a given table",
             "itemtype": "method",
             "name": "getParentsInTable",
@@ -10425,7 +10425,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 591,
+            "line": 595,
             "description": "Gets the child(s) of this row in the dataSet it is contained, following the relation with the\n specified name",
             "itemtype": "method",
             "name": "getChildRows",
@@ -10446,7 +10446,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 606,
+            "line": 610,
             "description": "Gets all child rows of this one",
             "return": {
                 "description": "",
@@ -10458,7 +10458,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 617,
+            "line": 623,
             "description": "Gets child rows of this row in a given table",
             "itemtype": "method",
             "name": "getChildsInTable",
@@ -10479,7 +10479,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 631,
+            "line": 639,
             "description": "DataTable that contains this DataRow",
             "itemtype": "property",
             "name": "table",
@@ -10490,7 +10490,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 637,
+            "line": 645,
             "description": "Get an object with all key fields of this row",
             "itemtype": "method",
             "name": "keySample",
@@ -10504,7 +10504,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 674,
+            "line": 682,
             "description": "Converts a SqlFun into a string",
             "itemtype": "method",
             "name": "toSql",
@@ -10514,7 +10514,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 696,
+            "line": 704,
             "description": "Check if an object is the null or undefined constant",
             "itemtype": "method",
             "name": "isNullOrUndefined",
@@ -10534,7 +10534,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 706,
+            "line": 714,
             "description": "Adds some useful methods and properties to a function in order to transform it into a sqlFun",
             "itemtype": "method",
             "name": "sqlFun",
@@ -10560,7 +10560,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 742,
+            "line": 750,
             "description": "returns  a function that given an environment will give the input functions applied to that.",
             "itemtype": "method",
             "name": "context",
@@ -10583,7 +10583,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 771,
+            "line": 779,
             "description": "Gets a field from an object. This is a very important function to distinguish between generic strings and\n field names.",
             "itemtype": "method",
             "name": "field",
@@ -10609,7 +10609,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 804,
+            "line": 812,
             "access": "private",
             "tagname": "transform strings into fields, leaves other things unchanged\nFor example 'a' becomes f(r)-> r['a'],\n 12 is returned unchanged,\n a function is returned  unchanged",
             "itemtype": "method",
@@ -10631,7 +10631,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 822,
+            "line": 830,
             "description": "Defines a constant function. The toSql method invokes the formatter.quote function",
             "itemtype": "method",
             "name": "constant",
@@ -10652,7 +10652,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 866,
+            "line": 874,
             "description": "Evaluates an expression in a given context",
             "itemtype": "method",
             "name": "calc",
@@ -10682,7 +10682,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 896,
+            "line": 904,
             "description": "Check if an expression evaluates to null",
             "itemtype": "method",
             "name": "isNull",
@@ -10702,7 +10702,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 924,
+            "line": 932,
             "itemtype": "method",
             "name": "minus",
             "params": [
@@ -10721,7 +10721,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 950,
+            "line": 958,
             "itemtype": "method",
             "name": "not",
             "params": [
@@ -10740,7 +10740,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 973,
+            "line": 981,
             "description": "Check if the nth bit of expression is set",
             "itemtype": "method",
             "name": "bitSet",
@@ -10764,7 +10764,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1008,
+            "line": 1016,
             "description": "Check if the nth bit of expression is not set",
             "itemtype": "method",
             "name": "bitClear",
@@ -10788,7 +10788,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1045,
+            "line": 1053,
             "description": "check if expr1 & mask === val & mask",
             "itemtype": "method",
             "name": "testMask",
@@ -10818,7 +10818,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1093,
+            "line": 1101,
             "description": "Check if expr1 evaluates between min and max",
             "itemtype": "method",
             "name": "between",
@@ -10846,7 +10846,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1136,
+            "line": 1144,
             "description": "Checks if expr1 is (sql-like) mask, where mask can contain * and _ characters",
             "itemtype": "method",
             "name": "like",
@@ -10875,7 +10875,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1174,
+            "line": 1182,
             "description": "Finds distinct values of a field",
             "itemtype": "method",
             "name": "distinctVal",
@@ -10899,7 +10899,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1191,
+            "line": 1199,
             "description": "Finds distinct values of a field",
             "itemtype": "method",
             "name": "distinctVal",
@@ -10920,7 +10920,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1229,
+            "line": 1237,
             "description": "checks if expr1 is in the array list",
             "itemtype": "method",
             "name": "isIn",
@@ -10945,7 +10945,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1265,
+            "line": 1273,
             "description": "checks if expr1 is not in the array list",
             "itemtype": "method",
             "name": "isNotIn",
@@ -10970,7 +10970,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1286,
+            "line": 1294,
             "description": "checks if expr1 evaluates equal to expr2",
             "itemtype": "method",
             "name": "eq",
@@ -10994,7 +10994,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1316,
+            "line": 1324,
             "description": "checks if expr1 evaluates different from expr2",
             "itemtype": "method",
             "name": "ne",
@@ -11018,7 +11018,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1346,
+            "line": 1354,
             "description": "checks if expr1 evaluates less than from expr2",
             "itemtype": "method",
             "name": "lt",
@@ -11042,7 +11042,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1381,
+            "line": 1389,
             "description": "checks if expr1 evaluates less than or equal to from expr2",
             "itemtype": "method",
             "name": "le",
@@ -11066,7 +11066,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1417,
+            "line": 1425,
             "description": "checks if expr1 evaluates greater than expr2",
             "itemtype": "method",
             "name": "gt",
@@ -11090,7 +11090,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1453,
+            "line": 1461,
             "description": "checks if expr1 evaluates greater than or equal to expr2",
             "itemtype": "method",
             "name": "ge",
@@ -11114,7 +11114,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1490,
+            "line": 1498,
             "description": "checks if at least one of supplied expression evaluates to a truthy value",
             "itemtype": "method",
             "name": "or",
@@ -11135,7 +11135,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1558,
+            "line": 1566,
             "description": "return the first object not null in the  array parameter",
             "params": [
                 {
@@ -11154,7 +11154,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1595,
+            "line": 1603,
             "description": "checks if expr1 is null or equal to expr2",
             "itemtype": "method",
             "name": "isNullOrEq",
@@ -11178,7 +11178,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1607,
+            "line": 1615,
             "description": "checks if expr1 is null or greater than expr2",
             "itemtype": "method",
             "name": "isNullOrGt",
@@ -11202,7 +11202,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1619,
+            "line": 1627,
             "description": "checks if expr1 is null or greater than or equal to expr2",
             "itemtype": "method",
             "name": "isNullOrGe",
@@ -11226,7 +11226,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1631,
+            "line": 1639,
             "description": "checks if expr1 is null or less than expr2",
             "itemtype": "method",
             "name": "isNullOrLt",
@@ -11250,7 +11250,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1643,
+            "line": 1651,
             "description": "checks if expr1 is null or less than or equal to expr2",
             "itemtype": "method",
             "name": "isNullOrLe",
@@ -11274,7 +11274,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1655,
+            "line": 1663,
             "description": "Evaluates the maximum value of an expression in a table. If any undefined is found, return undefined.\nNull are skipped. If all is null return null",
             "itemtype": "method",
             "name": "max",
@@ -11295,7 +11295,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1699,
+            "line": 1707,
             "description": "Evaluates the minimum value of an expression in a table. If any undefined is found, return undefined.\nNull are skipped. If all is null return null",
             "itemtype": "method",
             "name": "min",
@@ -11316,7 +11316,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1745,
+            "line": 1753,
             "itemtype": "method",
             "name": "substring",
             "params": [
@@ -11346,7 +11346,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1796,
+            "line": 1804,
             "description": "Converts a generic expression into an integer",
             "itemtype": "method",
             "name": "convertToInt",
@@ -11367,7 +11367,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1828,
+            "line": 1836,
             "description": "Converts a generic expression into a string",
             "itemtype": "method",
             "name": "convertToString",
@@ -11393,7 +11393,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1860,
+            "line": 1868,
             "description": "checks if all supplied expression evaluate to truthy values",
             "itemtype": "method",
             "name": "and",
@@ -11414,7 +11414,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 1929,
+            "line": 1937,
             "description": "Compares a set of keys of an object with an array of values or with fields of another object\n values can be an array or an object",
             "itemtype": "method",
             "name": "mcmp",
@@ -11445,7 +11445,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2009,
+            "line": 2017,
             "description": "Compares a set of keys of an object with an array of values or with fields of another object",
             "itemtype": "method",
             "name": "mcmpLike",
@@ -11466,7 +11466,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2041,
+            "line": 2049,
             "description": "returns a functions that evaluates the sum of a list or array of values given when it is CREATED",
             "itemtype": "method",
             "name": "sub",
@@ -11492,7 +11492,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2082,
+            "line": 2090,
             "description": "returns a functions that evaluates the sum of a list or array of values given when it is CREATED",
             "itemtype": "method",
             "name": "div",
@@ -11518,7 +11518,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2123,
+            "line": 2131,
             "description": "returns a functions that evaluates the sum of a list or array of values given when it is CREATED",
             "itemtype": "method",
             "name": "add",
@@ -11538,7 +11538,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2162,
+            "line": 2170,
             "description": "returns a functions that evaluates the concatenation of a list or array of strings given when it is CREATED",
             "itemtype": "method",
             "name": "concat",
@@ -11558,7 +11558,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2202,
+            "line": 2210,
             "description": "Evaluates the sum of an array of element given at run time",
             "itemtype": "method",
             "name": "sum",
@@ -11578,7 +11578,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2250,
+            "line": 2258,
             "description": "returns a functions that evaluates the multiply of a list or array of values\nIf some operand is 0, returns the always 0 function",
             "itemtype": "method",
             "name": "mul",
@@ -11598,7 +11598,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2355,
+            "line": 2363,
             "description": "Create a AutoIncrementColumn",
             "itemtype": "method",
             "name": "AutoIncrementColumn",
@@ -11620,7 +11620,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2362,
+            "line": 2370,
             "description": "name of the column that has to be auto-incremented",
             "itemtype": "property",
             "name": "columnName",
@@ -11631,7 +11631,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2368,
+            "line": 2376,
             "description": "Array of column names of selector fields. The max() is evaluating filtering the values of those fields",
             "itemtype": "property",
             "name": "[selector]",
@@ -11642,7 +11642,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2374,
+            "line": 2382,
             "description": "Array of bit mask to use for comparing selector. If present, only corrisponding bits will be compared,\n i.e. instead of sel=value it will be compared (sel & mask) = value",
             "itemtype": "property",
             "name": "[selectorMask]",
@@ -11653,7 +11653,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2381,
+            "line": 2389,
             "description": "A field to use as prefix for the evaluated field",
             "itemtype": "property",
             "name": "[prefixField]",
@@ -11664,7 +11664,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2387,
+            "line": 2395,
             "description": "String literal to be appended to the prefix before the evaluated max",
             "itemtype": "property",
             "name": "[middleConst]",
@@ -11675,7 +11675,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2394,
+            "line": 2402,
             "description": "for string id, the len of the evaluated max. It is not the overall size of the evaluated id, because a\n prefix and a middle const might be present\nIf idLen = 0 and there is no prefix, the field is assumed to be a number, otherwise a 0 prefixed string-number",
             "itemtype": "property",
             "name": "[idLen=0]",
@@ -11686,7 +11686,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2402,
+            "line": 2410,
             "description": "Indicates that numbering does NOT depend on prefix value, I.e. is linear in every section of the calculated field",
             "itemtype": "property",
             "name": "[linearField=false]",
@@ -11697,7 +11697,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2408,
+            "line": 2416,
             "description": "Minimum temporary value for in-memory rows",
             "itemtype": "property",
             "name": "[minimum=0]",
@@ -11708,7 +11708,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2431,
+            "line": 2439,
             "description": "Gets a function that filter selector fields eventually masking with selectorMask",
             "params": [
                 {
@@ -11726,7 +11726,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2454,
+            "line": 2462,
             "description": "evaluates the function to filter selector on a specified row and column",
             "itemtype": "method",
             "name": "getSelector",
@@ -11743,7 +11743,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2469,
+            "line": 2477,
             "description": "Gets the prefix evaluated for a given row",
             "itemtype": "method",
             "name": "getPrefix",
@@ -11763,7 +11763,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2487,
+            "line": 2495,
             "description": "gets the expression to be used for retrieving the max",
             "itemtype": "method",
             "name": "getExpression",
@@ -11779,7 +11779,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2503,
+            "line": 2511,
             "description": "Cached function that evaluates selector basing on autoIncrement fields",
             "itemtype": "method",
             "name": "[getSelector]",
@@ -11793,7 +11793,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2510,
+            "line": 2518,
             "description": "Custom function to be called to evaluate the maximum value",
             "itemtype": "method",
             "name": "[customFunction] ( r, {string} columnName, {DataAccess} conn}",
@@ -11804,7 +11804,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2522,
+            "line": 2530,
             "description": "DataSet to which this table belongs",
             "itemtype": "property",
             "name": "dataset",
@@ -11815,7 +11815,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2527,
+            "line": 2535,
             "description": "Creates an empty DataTable",
             "params": [
                 {
@@ -11835,7 +11835,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2534,
+            "line": 2542,
             "description": "Name of the table",
             "itemtype": "property",
             "name": "name",
@@ -11846,7 +11846,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2540,
+            "line": 2548,
             "description": "Collection of rows, each one hiddenly surrounded with a DataRow object",
             "itemtype": "property",
             "name": "rows",
@@ -11857,7 +11857,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2547,
+            "line": 2555,
             "description": "Array of key column names",
             "access": "private",
             "tagname": "",
@@ -11870,7 +11870,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2554,
+            "line": 2562,
             "description": "Set of properties to be assigned to new rows when they are created",
             "itemtype": "property",
             "name": "myDefaults",
@@ -11883,7 +11883,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2561,
+            "line": 2569,
             "description": "Array of column names",
             "itemtype": "property",
             "name": "columns",
@@ -11894,7 +11894,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2570,
+            "line": 2578,
             "description": "A ordering to use for posting of this table",
             "itemtype": "property",
             "name": "postingOrder",
@@ -11905,7 +11905,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2580,
+            "line": 2588,
             "access": "private",
             "tagname": "",
             "itemtype": "property",
@@ -11917,7 +11917,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2586,
+            "line": 2594,
             "description": "Mark the table as optimized / not optimized\nAn optimized table has a cache for all autoincrement field",
             "itemtype": "method",
             "name": "setOptimize",
@@ -11934,7 +11934,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2602,
+            "line": 2610,
             "description": "Check if this table is optimized",
             "itemtype": "method",
             "name": "isOptimized",
@@ -11948,7 +11948,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2611,
+            "line": 2619,
             "description": "Clear evaluated max cache",
             "itemtype": "method",
             "name": "clearMaxCache",
@@ -11958,7 +11958,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2621,
+            "line": 2629,
             "description": "Set a value in the max cache",
             "itemtype": "method",
             "name": "setMaxExpr",
@@ -11990,7 +11990,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2637,
+            "line": 2645,
             "description": "get/set the minimum temp value for a field, assuming 0 if undefined",
             "itemtype": "method",
             "name": "minimumTempValue",
@@ -12013,7 +12013,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2658,
+            "line": 2666,
             "description": "gets the max in cache for a field and updates the cache",
             "itemtype": "method",
             "name": "getMaxExpr",
@@ -12044,7 +12044,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2676,
+            "line": 2684,
             "description": "Evaluates the max of an expression eventually using a cached value",
             "itemtype": "method",
             "name": "cachedMaxSubstring",
@@ -12085,7 +12085,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2698,
+            "line": 2706,
             "description": "Evaluates the max of an expression without using any cached value. If len = 0 the expression is treated\n as a number with max(field) otherwise it is performed max(convertToInt(substring(field,start,len)))",
             "params": [
                 {
@@ -12119,7 +12119,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2732,
+            "line": 2740,
             "description": "Extract a set of rows matching a filter function - skipping deleted rows",
             "itemtype": "method",
             "name": "select",
@@ -12141,7 +12141,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2766,
+            "line": 2774,
             "description": "Extract a set of rows matching a filter function - including deleted rows",
             "itemtype": "method",
             "name": "selectAll",
@@ -12162,7 +12162,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2780,
+            "line": 2788,
             "description": "Get the filter that compares key fields of a given row",
             "itemtype": "method",
             "name": "keyFilter",
@@ -12183,7 +12183,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2793,
+            "line": 2801,
             "description": "Compares the key of two objects",
             "params": [
                 {
@@ -12207,7 +12207,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2803,
+            "line": 2811,
             "description": "Get/Set the primary key in a Jquery fashioned style. If k is given, the key is set, otherwise the existing\n key is returned",
             "itemtype": "method",
             "name": "key",
@@ -12229,7 +12229,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2824,
+            "line": 2832,
             "description": "Clears the table detaching all rows.",
             "itemtype": "method",
             "name": "clear",
@@ -12239,7 +12239,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2838,
+            "line": 2846,
             "description": "Detaches a row from the table",
             "itemtype": "method",
             "name": "detach",
@@ -12255,7 +12255,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2854,
+            "line": 2862,
             "description": "Adds an object to the table setting the datarow in the state of \"added\"",
             "itemtype": "method",
             "name": "add",
@@ -12274,7 +12274,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2869,
+            "line": 2877,
             "description": "check if a row is present in the table. If there is  a key, it is used for finding the row,\n otherwise a ==== comparison is made",
             "itemtype": "method",
             "name": "existingRow",
@@ -12294,7 +12294,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2891,
+            "line": 2899,
             "description": "Adds an object to the table setting the datarow in the state of \"unchanged\"",
             "itemtype": "method",
             "name": "load",
@@ -12322,7 +12322,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2912,
+            "line": 2920,
             "description": "Adds an object to the table setting the datarow in the state of 'unchanged'",
             "itemtype": "method",
             "name": "loadArray",
@@ -12344,7 +12344,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2924,
+            "line": 2932,
             "description": "Accept any changes setting all dataRows in the state of 'unchanged'.\nDeleted rows become detached and are removed from the table",
             "itemtype": "method",
             "name": "acceptChanges",
@@ -12354,7 +12354,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2945,
+            "line": 2953,
             "description": "Reject any changes putting all to 'unchanged' state.\nAdded rows become detached.",
             "itemtype": "method",
             "name": "rejectChanges",
@@ -12364,7 +12364,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2966,
+            "line": 2974,
             "description": "Check if any DataRow in the table has changes",
             "itemtype": "method",
             "name": "hasChanges",
@@ -12378,7 +12378,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2978,
+            "line": 2986,
             "description": "gets an array of all modified/added/deleted rows",
             "itemtype": "method",
             "name": "getChanges",
@@ -12392,7 +12392,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2989,
+            "line": 2997,
             "description": "Debug-helper function",
             "itemtype": "method",
             "name": "toString",
@@ -12406,7 +12406,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 2998,
+            "line": 3006,
             "description": "import a row preserving it's state, the row should already have a DataRow attached",
             "itemtype": "method",
             "name": "importRow",
@@ -12427,7 +12427,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3022,
+            "line": 3030,
             "description": "Get/set the object defaults in a JQuery fashioned style. When def is present, its fields and values are\n merged into existent defaults.",
             "itemtype": "method",
             "name": "defaults",
@@ -12448,7 +12448,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3037,
+            "line": 3045,
             "description": "Clears any stored default value for the table",
             "itemtype": "method",
             "name": "clearDefaults",
@@ -12458,7 +12458,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3045,
+            "line": 3053,
             "description": "creates a DataRow and returns the created object. The created object has the default values merged to the\n values in the optional parameter obj.",
             "itemtype": "method",
             "name": "newRow",
@@ -12486,7 +12486,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3067,
+            "line": 3075,
             "description": "Make childRow child of parentRow if a relation between the two is found",
             "itemtype": "method",
             "name": "makeChild",
@@ -12514,7 +12514,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3088,
+            "line": 3096,
             "description": "Get/Set a flag indicating that this table is not subjected to security functions in a Jquery fashioned\n style",
             "itemtype": "method",
             "name": "skipSecurity",
@@ -12536,7 +12536,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3106,
+            "line": 3114,
             "description": "Get/Set the name of table  to be used to read data from database in a Jquery fashioned style",
             "itemtype": "method",
             "name": "tableForReading",
@@ -12558,7 +12558,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3120,
+            "line": 3128,
             "description": "Get/Set the name of table  to be used to write data from database in a Jquery fashioned style",
             "itemtype": "method",
             "name": "tableForWriting",
@@ -12580,7 +12580,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3134,
+            "line": 3142,
             "description": "Get/Set a static filter  to be used to read data from database in a Jquery fashioned style",
             "itemtype": "method",
             "name": "staticFilter",
@@ -12602,7 +12602,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3147,
+            "line": 3155,
             "description": "Get/set the ordering that have to be user reading from db",
             "params": [
                 {
@@ -12621,7 +12621,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3160,
+            "line": 3168,
             "description": "get the list of columns",
             "itemtype": "method",
             "name": "columnList",
@@ -12635,7 +12635,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3172,
+            "line": 3180,
             "description": "Gets all autoincrement column names of this table",
             "return": {
                 "description": "",
@@ -12647,7 +12647,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3180,
+            "line": 3188,
             "description": "Get/Set autoincrement properties of fields",
             "itemtype": "method",
             "name": "autoIncrement",
@@ -12674,7 +12674,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3196,
+            "line": 3204,
             "description": "Get a serializable version of this table. If serializeStructure=true, also structure information is serialized",
             "params": [
                 {
@@ -12700,7 +12700,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3236,
+            "line": 3244,
             "description": "Get data from a serialized structure. If serializeStructure=true, also structure information is serialized",
             "params": [
                 {
@@ -12726,7 +12726,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3276,
+            "line": 3284,
             "description": "adds an array of objects to collection, as unchanged, if they still are not present. Existence is verified\n basing on  key",
             "itemtype": "method",
             "name": "mergeArray",
@@ -12752,7 +12752,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3300,
+            "line": 3308,
             "description": "clones table structure without copying any DataRow",
             "itemtype": "method",
             "name": "clone",
@@ -12766,7 +12766,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3319,
+            "line": 3327,
             "description": "Clones table structure and copies data\nmethod @copy",
             "return": {
                 "description": "",
@@ -12778,7 +12778,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3332,
+            "line": 3340,
             "description": "Gets a filter of colliding rows supposing to change r[field]= value, on  a specified column",
             "itemtype": "method",
             "name": "collisionFilter",
@@ -12816,7 +12816,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3353,
+            "line": 3361,
             "description": "Assign a field assuring it will not cause duplicates on table's autoincrement fields",
             "itemtype": "method",
             "name": "safeAssign",
@@ -12844,7 +12844,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3366,
+            "line": 3374,
             "description": "check if changing a key field of a row it would collide with come autoincrement field. If it would,\n recalculates colliding rows/filter in accordance",
             "itemtype": "method",
             "name": "avoidCollisions",
@@ -12871,7 +12871,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3388,
+            "line": 3396,
             "description": "Recalc a field to avoid collisions on some rows identified by a filter",
             "itemtype": "method",
             "name": "avoidCollisionsOnField",
@@ -12895,7 +12895,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3401,
+            "line": 3409,
             "description": "Assign a value to a field and update all dependencies",
             "itemtype": "method",
             "name": "assignField",
@@ -12922,7 +12922,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3414,
+            "line": 3422,
             "description": "assign a value to a field in a row and all descending child rows",
             "itemtype": "method",
             "name": "cascadeAssignField",
@@ -12951,7 +12951,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3439,
+            "line": 3447,
             "description": "Gets all autoincrement fields that depends on a given field, i.e. those having field as selector or prefixfield",
             "itemtype": "method",
             "name": "fieldDependencies",
@@ -12974,7 +12974,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3461,
+            "line": 3469,
             "description": "Re calculate temporaryID affected by a field change. It should be done for every autoincrement field\n that has that field as a selector or as a prefix field",
             "itemtype": "method",
             "name": "updateDependencies",
@@ -13000,7 +13000,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3478,
+            "line": 3486,
             "description": "Augment r[field] in order to avoid collision with another row that needs to take that value\nif field is not specified, this is applied to all autoincrement field of the table\nPrecondition: r[[field] should be an autoincrement field",
             "itemtype": "method",
             "name": "calcTemporaryId",
@@ -13023,7 +13023,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3553,
+            "line": 3561,
             "description": "This function is called before posting row into db for every insert/update",
             "itemtype": "method",
             "name": "prepareForPosting",
@@ -13044,7 +13044,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3574,
+            "line": 3582,
             "description": "Get the optimistic lock for updating a row",
             "itemtype": "method",
             "name": "getOptimisticLock",
@@ -13064,7 +13064,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3620,
+            "line": 3628,
             "description": "Parent table name",
             "itemtype": "property",
             "name": "parentTable",
@@ -13074,7 +13074,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3627,
+            "line": 3635,
             "description": "DataSet to which this DataRelation belongs to. It is used to retrieve parent and child table",
             "itemtype": "property",
             "name": "dataSet",
@@ -13084,7 +13084,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3634,
+            "line": 3642,
             "description": "Array of parent column names or comma separated column names",
             "itemtype": "property",
             "name": "parentCols",
@@ -13094,7 +13094,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3643,
+            "line": 3651,
             "description": "Child table name",
             "itemtype": "property",
             "name": "childTable",
@@ -13104,7 +13104,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3650,
+            "line": 3658,
             "description": "Array of child column names  or comma separated column names",
             "itemtype": "property",
             "name": "childCols",
@@ -13114,7 +13114,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3665,
+            "line": 3673,
             "description": "Gets a filter that will be applied to the child table and will find any child row of a given DataRow",
             "itemtype": "method",
             "name": "getChildsFilter",
@@ -13136,7 +13136,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3681,
+            "line": 3689,
             "description": "Get any child of a given DataRow following this DataRelation",
             "itemtype": "method",
             "name": "getChilds",
@@ -13155,7 +13155,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3696,
+            "line": 3704,
             "description": "Gets a filter that will be applied to the parent table and will find any parent row of a given DataRow",
             "itemtype": "method",
             "name": "getParentsFilter",
@@ -13177,7 +13177,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3713,
+            "line": 3721,
             "description": "Get any parent of a given DataRow following this DataRelation",
             "itemtype": "method",
             "name": "getParents",
@@ -13196,7 +13196,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3744,
+            "line": 3752,
             "description": "get/set the activation filter for the relation, i.e. a condition that must be satisfied in order to\n follow the relation when automatically filling dataset from database. The condition is meant to be applied\n to parent rows",
             "params": [
                 {
@@ -13215,7 +13215,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3759,
+            "line": 3767,
             "description": "Establish if  a relation links the key of  a table into a subset of another table key",
             "itemtype": "method",
             "name": "isEntityRelation",
@@ -13228,7 +13228,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3782,
+            "line": 3790,
             "description": "Modifies childRow in order to make it child of parentRow. Sets to null corresponding fields if\n parentRow is null or undefined",
             "itemtype": "method",
             "name": "makeChild",
@@ -13251,7 +13251,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3816,
+            "line": 3824,
             "description": "DataSet name",
             "itemtype": "property",
             "name": "name",
@@ -13260,7 +13260,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3823,
+            "line": 3831,
             "description": "Collection of DataTable where tables[tableName] is a DataTable named tableName",
             "itemtype": "property",
             "name": "tables",
@@ -13270,7 +13270,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3830,
+            "line": 3838,
             "description": "Collection of DataRelation  where relations[relName] is a DataRelation named relName",
             "itemtype": "property",
             "name": "relations",
@@ -13280,7 +13280,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3836,
+            "line": 3844,
             "description": "Gets all relations where the parent table is the key of the hash\nrelationsByParent['a'] is an array of all DataRelations where 'a' is the parent",
             "itemtype": "property",
             "name": "relationsByParent",
@@ -13290,7 +13290,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3844,
+            "line": 3852,
             "description": "Gets all relations where the child table is the key of the hash\nrelationsByChild['a'] is an array of all DataRelations where 'a' is the child",
             "itemtype": "property",
             "name": "relationsByChild",
@@ -13300,7 +13300,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3852,
+            "line": 3860,
             "description": "DataSet - level optmistic locking, this property is set in custom implementations",
             "itemtype": "property",
             "name": "optimisticLocking",
@@ -13310,7 +13310,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3866,
+            "line": 3874,
             "description": "Clones a DataSet replicating its structure but without copying any DataRow",
             "itemtype": "method",
             "name": "clone",
@@ -13323,7 +13323,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3887,
+            "line": 3895,
             "description": "Creates a new DataTable attaching it to the DataSet",
             "itemtype": "method",
             "name": "newTable",
@@ -13342,7 +13342,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3905,
+            "line": 3913,
             "description": "Creates a copy of the DataSet, including both structure and data.",
             "itemtype": "method",
             "name": "copy",
@@ -13355,7 +13355,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3921,
+            "line": 3929,
             "description": "Calls acceptChanges to all contained DataTables",
             "itemtype": "method",
             "name": "acceptChanges",
@@ -13364,7 +13364,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3931,
+            "line": 3939,
             "description": "Calls rejectChanges to all contained DataTables",
             "itemtype": "method",
             "name": "rejectChanges",
@@ -13373,7 +13373,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3941,
+            "line": 3949,
             "description": "Check if any contained DataTable has any changes",
             "itemtype": "method",
             "name": "hasChanges",
@@ -13386,7 +13386,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3952,
+            "line": 3960,
             "description": "Creates a new DataRelation and attaches it to the DataSet",
             "itemtype": "method",
             "name": "newRelation",
@@ -13426,7 +13426,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 3991,
+            "line": 3999,
             "description": "Deletes a row with all subentity child",
             "itemtype": "method",
             "name": "cascadeDelete",
@@ -13446,7 +13446,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 4016,
+            "line": 4024,
             "description": "Creates a serializable version of this DataSet",
             "itemtype": "method",
             "name": "serialize",
@@ -13474,7 +13474,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 4040,
+            "line": 4048,
             "description": "Restores data from an object obtained with serialize().",
             "itemtype": "method",
             "name": "deSerialize",
@@ -13495,7 +13495,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 4067,
+            "line": 4075,
             "description": "merges changes from DataSet d assuming they are unchanged and they can be present in this or not.\nIf a row is not present, it is added. If it is present, it is updated.\nIt is assumed that \"this\" dataset is unchanged at the beginning",
             "itemtype": "method",
             "name": "mergeAsPut",
@@ -13511,7 +13511,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 4089,
+            "line": 4097,
             "description": "merges changes from DataSet d assuming they are unchanged and they are not present in this dataset.\nRows are all added 'as is' to this, in the state of ADDED\nIt is assumed that \"this\" dataset is unchanged at the beginning",
             "itemtype": "method",
             "name": "mergeAsPost",
@@ -13527,7 +13527,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 4106,
+            "line": 4114,
             "description": "merges changes from DataSet d assuming they are unchanged and they are all present in this dataset.\nRows are updated, but only  fields actually present in d are modified. Other field are left unchanged.\nIt is assumed that \"this\" dataset is unchanged at the beginning",
             "itemtype": "method",
             "name": "mergeAsPatch",
@@ -13543,7 +13543,7 @@
         },
         {
             "file": "src\\jsDataSet.js",
-            "line": 4126,
+            "line": 4134,
             "description": "Import data from a given dataset",
             "itemtype": "method",
             "name": "importData",
@@ -15709,203 +15709,199 @@
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:577"
+            "line": " src\\jsDataSet.js:579"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:591"
+            "line": " src\\jsDataSet.js:595"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:606"
+            "line": " src\\jsDataSet.js:610"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:617"
+            "line": " src\\jsDataSet.js:623"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:637"
+            "line": " src\\jsDataSet.js:645"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:1093"
+            "line": " src\\jsDataSet.js:1101"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:1136"
+            "line": " src\\jsDataSet.js:1144"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:1174"
+            "line": " src\\jsDataSet.js:1182"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:1191"
+            "line": " src\\jsDataSet.js:1199"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:1229"
+            "line": " src\\jsDataSet.js:1237"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:1265"
+            "line": " src\\jsDataSet.js:1273"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:1286"
+            "line": " src\\jsDataSet.js:1294"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:1316"
+            "line": " src\\jsDataSet.js:1324"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:1346"
+            "line": " src\\jsDataSet.js:1354"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:1381"
+            "line": " src\\jsDataSet.js:1389"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:1417"
+            "line": " src\\jsDataSet.js:1425"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:1453"
+            "line": " src\\jsDataSet.js:1461"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:1490"
+            "line": " src\\jsDataSet.js:1498"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:1558"
+            "line": " src\\jsDataSet.js:1566"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:1607"
+            "line": " src\\jsDataSet.js:1615"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:1643"
+            "line": " src\\jsDataSet.js:1651"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:1655"
+            "line": " src\\jsDataSet.js:1663"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:1699"
+            "line": " src\\jsDataSet.js:1707"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:1745"
+            "line": " src\\jsDataSet.js:1753"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:1796"
+            "line": " src\\jsDataSet.js:1804"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:1828"
+            "line": " src\\jsDataSet.js:1836"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:2202"
+            "line": " src\\jsDataSet.js:2210"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:2431"
+            "line": " src\\jsDataSet.js:2439"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:2469"
+            "line": " src\\jsDataSet.js:2477"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:2602"
+            "line": " src\\jsDataSet.js:2610"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:2732"
+            "line": " src\\jsDataSet.js:2740"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:2766"
+            "line": " src\\jsDataSet.js:2774"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:2780"
+            "line": " src\\jsDataSet.js:2788"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:2793"
+            "line": " src\\jsDataSet.js:2801"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:2803"
+            "line": " src\\jsDataSet.js:2811"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:2854"
+            "line": " src\\jsDataSet.js:2862"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:2891"
+            "line": " src\\jsDataSet.js:2899"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:2966"
+            "line": " src\\jsDataSet.js:2974"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:2978"
+            "line": " src\\jsDataSet.js:2986"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:2989"
+            "line": " src\\jsDataSet.js:2997"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:2998"
+            "line": " src\\jsDataSet.js:3006"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:3022"
+            "line": " src\\jsDataSet.js:3030"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:3045"
+            "line": " src\\jsDataSet.js:3053"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:3088"
+            "line": " src\\jsDataSet.js:3096"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:3106"
+            "line": " src\\jsDataSet.js:3114"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:3120"
+            "line": " src\\jsDataSet.js:3128"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:3134"
+            "line": " src\\jsDataSet.js:3142"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:3147"
+            "line": " src\\jsDataSet.js:3155"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:3160"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:3172"
+            "line": " src\\jsDataSet.js:3168"
         },
         {
             "message": "replacing incorrect tag: returns with return",
@@ -15913,51 +15909,55 @@
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:3461"
+            "line": " src\\jsDataSet.js:3188"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:3574"
+            "line": " src\\jsDataSet.js:3469"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:3681"
+            "line": " src\\jsDataSet.js:3582"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:3713"
+            "line": " src\\jsDataSet.js:3689"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:3744"
+            "line": " src\\jsDataSet.js:3721"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:3759"
+            "line": " src\\jsDataSet.js:3752"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:3804"
+            "line": " src\\jsDataSet.js:3767"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:3866"
+            "line": " src\\jsDataSet.js:3812"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:3887"
+            "line": " src\\jsDataSet.js:3874"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:3905"
+            "line": " src\\jsDataSet.js:3895"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:3941"
+            "line": " src\\jsDataSet.js:3913"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\jsDataSet.js:4016"
+            "line": " src\\jsDataSet.js:3949"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:4024"
         },
         {
             "message": "Missing item type\nStarting with version 2.0, this file \"boots\" Jasmine, performing all of the necessary initialization before executing the loaded environment and all of a project's specs. This file should be loaded after `jasmine.js` and `jasmine_html.js`, but before any project source files or spec files are loaded. Thus this file can also be used to customize Jasmine for a project.\n\nIf a project is using Jasmine via the standalone distribution, this file can be customized directly. If a project is using Jasmine via the [Ruby gem][jasmine-gem], this file can be copied into the support directory via `jasmine copy_boot_js`. Other environments (e.g., Python) will have different mechanisms.\n\nThe location of `boot.js` can be specified and/or overridden in `jasmine.yml`.\n\n[jasmine-gem]: http://github.com/pivotal/jasmine-gem",
@@ -17565,51 +17565,51 @@
         },
         {
             "message": "Missing item type\nGets all child rows of this one",
-            "line": " src\\jsDataSet.js:606"
+            "line": " src\\jsDataSet.js:610"
         },
         {
             "message": "Missing item type\nreturn the first object not null in the  array parameter",
-            "line": " src\\jsDataSet.js:1558"
+            "line": " src\\jsDataSet.js:1566"
         },
         {
             "message": "Missing item type\nGets a function that filter selector fields eventually masking with selectorMask",
-            "line": " src\\jsDataSet.js:2431"
+            "line": " src\\jsDataSet.js:2439"
         },
         {
             "message": "Missing item type\nCreates an empty DataTable",
-            "line": " src\\jsDataSet.js:2527"
+            "line": " src\\jsDataSet.js:2535"
         },
         {
             "message": "Missing item type\nEvaluates the max of an expression without using any cached value. If len = 0 the expression is treated\n as a number with max(field) otherwise it is performed max(convertToInt(substring(field,start,len)))",
-            "line": " src\\jsDataSet.js:2698"
+            "line": " src\\jsDataSet.js:2706"
         },
         {
             "message": "Missing item type\nCompares the key of two objects",
-            "line": " src\\jsDataSet.js:2793"
+            "line": " src\\jsDataSet.js:2801"
         },
         {
             "message": "Missing item type\nGet/set the ordering that have to be user reading from db",
-            "line": " src\\jsDataSet.js:3147"
+            "line": " src\\jsDataSet.js:3155"
         },
         {
             "message": "Missing item type\nGets all autoincrement column names of this table",
-            "line": " src\\jsDataSet.js:3172"
+            "line": " src\\jsDataSet.js:3180"
         },
         {
             "message": "Missing item type\nGet a serializable version of this table. If serializeStructure=true, also structure information is serialized",
-            "line": " src\\jsDataSet.js:3196"
+            "line": " src\\jsDataSet.js:3204"
         },
         {
             "message": "Missing item type\nGet data from a serialized structure. If serializeStructure=true, also structure information is serialized",
-            "line": " src\\jsDataSet.js:3236"
+            "line": " src\\jsDataSet.js:3244"
         },
         {
             "message": "Missing item type\nClones table structure and copies data\nmethod @copy",
-            "line": " src\\jsDataSet.js:3319"
+            "line": " src\\jsDataSet.js:3327"
         },
         {
             "message": "Missing item type\nget/set the activation filter for the relation, i.e. a condition that must be satisfied in order to\n follow the relation when automatically filling dataset from database. The condition is meant to be applied\n to parent rows",
-            "line": " src\\jsDataSet.js:3744"
+            "line": " src\\jsDataSet.js:3752"
         }
     ]
 }
