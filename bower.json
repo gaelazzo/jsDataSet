@@ -1,6 +1,6 @@
 {
   "name": "jsDataSet",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "homepage": "https://github.com/gaelazzo/jsDataSet",
   "repository": {
     "type": "git",
@@ -13,6 +13,9 @@
   "main": [
     "src/jsDataSet.js"
     ],
+  "files": [
+    "src"
+  ],
   "moduleType": [
     "amd",
     "globals",
@@ -27,7 +30,8 @@
   "ignore": [
     "node_modules",
     "bower_components",
-    "test"
+    "test",
+    "doc"
   ],
   "dependencies": {
     "observe-js": "~0.5.4",
