@@ -24,8 +24,8 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
         'node_modules/jasmine-collection-matchers/index.js',
-        'src/bower_components/lodash/lodash.js',
-        'src/bower_components/observe-js/src/observe.js',
+        'bower_components/lodash/lodash.js',
+        'bower_components/observe-js/src/observe.js',
         'src/jsDataSet.js',
         'test/spec/*.js'
     ],
