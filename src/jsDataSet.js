@@ -4192,7 +4192,7 @@
     }
 }.call(this,
             (typeof _ === 'undefined')? require('lodash'): _,
-            (typeof ObjectObserver === 'undefined') ? require('observe') : ObjectObserver
+            (typeof ObjectObserver === 'undefined') ? require('observe-js') : ObjectObserver
 )
 );
 
