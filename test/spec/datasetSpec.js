@@ -4,7 +4,7 @@
 //console.log('defining datasetSpec');
 'use strict';
 var  dsSpace = jsDataSet,
-    $q = dsSpace.dataQuery;
+    $q = jsDataQuery;
 
 describe('System status', function () {
   var ds;

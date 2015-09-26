@@ -10,6 +10,7 @@ module.exports = function(config) {
     // enable / disable watching file and executing tests whenever any file changes
     //autoWatch: true,
 
+      usePolling: true,
 
       //dots  progress  junit  growl  coverage
       reporters: ['dots'],
@@ -21,11 +22,13 @@ module.exports = function(config) {
     // testing framework to use (jasmine/mocha/qunit/...)
     frameworks: ['jasmine'],
 
+
     // list of files / patterns to load in the browser
     files: [
         'node_modules/jasmine-collection-matchers/index.js',
         'bower_components/lodash/lodash.js',
         'bower_components/observe-js/src/observe.js',
+        'bower_components/jsDataQuery/src/jsDataQuery.js',
         'src/jsDataSet.js',
         'test/spec/*.js'
     ],

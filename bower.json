@@ -4,7 +4,7 @@
   "homepage": "https://github.com/gaelazzo/jsDataSet",
   "repository": {
     "type": "git",
-    "url":"git://github.com/gaelazzo/jsDataSet.git"
+    "url": "git://github.com/gaelazzo/jsDataSet.git"
   },
   "authors": [
     "Gaetano Lazzo <gaetano.lazzo@gmail.com>"
@@ -12,7 +12,7 @@
   "description": ".Net DataSet made available for javascript",
   "main": [
     "src/jsDataSet.js"
-    ],
+  ],
   "files": [
     "src"
   ],
@@ -35,7 +35,10 @@
   ],
   "dependencies": {
     "observe-js": "~0.5.6",
-    "jasmine": "~2.2.1",
-    "lodash": "~3.9.3"
+    "lodash": "~3.9.3",
+    "jsdataquery": "jsDataQuery#*"
+  },
+  "devdependencies": {
+    "jasmine": "~2.2.1"
   }
 }

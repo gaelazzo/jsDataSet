@@ -1,7 +1,7 @@
 'use strict';
 /*globals _ ,  jasmine, jsDataSet, beforeEach, expect, module, it, inject, describe, spyOn, afterEach  */
 var  dsSpace = jsDataSet,
-    $q = dsNameSpace.dataQuery;
+    $q = jsDataQuery;
 
 describe('DataTable module test', function () {
   var ds,ds2;

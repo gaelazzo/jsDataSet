@@ -846,7 +846,7 @@
      * @method context
      * @param environmentFunction
      * @return {sqlFun}
-     * @example if environment = {a:1, b:2} and envifonmentFunction = function (env){return env.a}
+     * @example if environment = {a:1, b:2} and environmentFunction = function (env){return env.a}
      *   context(environmentFunction) applied to environment will return 1
      */
     function context(environmentFunction){
@@ -2072,10 +2072,6 @@
                     value = myValues[field];
                 }
 
-                //I comment this section for compatibility with sql version
-                //if (isNullOrUndefined(r[field]) &amp;&amp; isNullOrUndefined(value)) {
-                //continue;
-                //}
                 if (isNullOrUndefined(r[field]) || isNullOrUndefined(value)) {
                     return false;
                 }
@@ -2084,7 +2080,7 @@
                 }
             }
             return true;
-        };
+        }
         f.toString = function(){
             return &#x27;mcmp(&#x27;+ arrayToString(keys)+&#x27;,&#x27;+ arrayToString(picked)+&#x27;)&#x27;;
         };
@@ -2141,7 +2137,7 @@
     }
 
     /**
-     * returns a functions that evaluates the sum of a list or array of values given when it is CREATED
+     * returns a functions that does a subtraction
      * @method sub
      * @param {sqlFun} expr1
      * @param {sqlFun} expr2
@@ -2182,7 +2178,7 @@
 
 
     /**
-     * returns a functions that evaluates the sum of a list or array of values given when it is CREATED
+     * returns a functions that does a division
      * @method div
      * @param {sqlFun} expr1
      * @param {sqlFun} expr2
@@ -4286,11 +4282,11 @@
     }
 }.call(this,
             (typeof _ === &#x27;undefined&#x27;)? require(&#x27;lodash&#x27;): _,
-            (typeof ObjectObserver === &#x27;undefined&#x27;) ? require(&#x27;observe&#x27;) : ObjectObserver
+            (typeof ObjectObserver === &#x27;undefined&#x27;) ? require(&#x27;observe-js&#x27;).ObjectObserver : ObjectObserver
 )
 );
 
-console.log(&#x27;jsDataSet runned&#x27;);
+
     </pre>
 </div>
                     </div>
