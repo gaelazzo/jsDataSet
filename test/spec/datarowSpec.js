@@ -3,12 +3,15 @@
 /*globals beforeEach,jsDataSet, afterEach,describe,jasmine,it,expect,inject */
 var  dsNameSpace = jsDataSet,
     DataRow = dsNameSpace.DataRow,
-    $rowState = dsNameSpace.dataRowState,
-    $q = dsNameSpace.dataQuery;
+    $rowState = dsNameSpace.dataRowState;
 
 
 describe('DataRow module test', function () {
-    var ds;
+    var  dsNameSpace = jsDataSet,
+        DataRow = dsNameSpace.DataRow,
+        $rowState = dsNameSpace.dataRowState,
+        ds;
+
 
 
     beforeEach(function () {

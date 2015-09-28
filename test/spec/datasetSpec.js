@@ -3,11 +3,11 @@
 /*globals _ ,  jsDataSet, jasmine, beforeEach, expect, module, it,  describe, spyOn, afterEach  */
 //console.log('defining datasetSpec');
 'use strict';
-var  dsSpace = jsDataSet,
-    $q = jsDataQuery;
 
 describe('System status', function () {
-  var ds;
+  var dsSpace = jsDataSet,
+      $q = jsDataQuery,
+      ds;
 
 
   beforeEach(function () {
@@ -28,9 +28,10 @@ describe('System status', function () {
 
 describe('DataSet',
   function () {
-    //console.log('datasetspec executed');
+    var dsSpace = jsDataSet,
+        $q = jsDataQuery,
+        ds;
 
-    var ds;
 
     beforeEach(function () {
       ds = new dsSpace.DataSet('temp');

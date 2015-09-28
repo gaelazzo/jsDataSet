@@ -9,7 +9,7 @@
   "dependencies": {
     "lodash": "~3.1.0",
     "observe-js": "~0.4.2",
-    "jsDataQuery": "https://github.com/gaelazzo/jsdataquery"
+    "jsDataQuery": "https://github.com/gaelazzo/jsDataQuery"
   },
   "devDependencies": {
     "grunt": "~0.4.0",
@@ -17,7 +17,7 @@
     "grunt-contrib-yuidoc": "^0.7.0",
     "grunt-karma": "^0.10.1",
     "jasmine-core": "^2.2.0",
-	"jasmine-collection-matchers":"*",
+    "jasmine-collection-matchers":"*",
     "karma": "^0.12.31",
     "karma-jasmine": "^0.3.5",
     "karma-junit-reporter": "^0.2.2",

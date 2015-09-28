@@ -1,10 +1,11 @@
 'use strict';
 /*globals _ ,  jasmine, jsDataSet, beforeEach, expect, module, it, inject, describe, spyOn, afterEach  */
-var  dsSpace = jsDataSet,
-    $q = jsDataQuery;
+
 
 describe('DataTable module test', function () {
-  var ds,ds2;
+  var  dsSpace = jsDataSet,
+      $q= jsDataQuery,
+      ds,ds2;
 
   beforeEach(function () {
     ds = new dsSpace.DataSet('temp');
