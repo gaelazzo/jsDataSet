@@ -1,5 +1,5 @@
 /node_modules
 /.idea
-/src/bower_components
+bower_components
 .idea
 doc
