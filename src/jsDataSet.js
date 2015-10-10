@@ -11,19 +11,6 @@
     /** Used as a safe reference for `undefined` in pre-ES5 environments. (thanks lodash)*/
     var undefined;
 
-
-    /**
-     * Escapes special characters in a string
-     * @method myRegExpEscape
-     * @private
-     * @param str the string to be escaped
-     * @return {String} escaped string
-     */
-    var myRegExpEscape = function (str) {
-        return str.replace(/([.*+?\^=!:${}()|\[\]\/\\])/g, '\\$1'); // str.replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1');
-    };
-
-
     if (!Function.prototype.bind) {
         Function.prototype.bind = function (oThis) {
             if (typeof this !== "function") {
@@ -781,7 +768,7 @@
      * Gets the prefix evaluated for a given row
      * @method getPrefix
      * @param r
-     * @returns {string}
+     * @returns string
      */
     AutoIncrementColumn.prototype.getPrefix = function(r){
         var prefix = '';
@@ -987,7 +974,6 @@
         /**
          * Evaluates the max of an expression eventually using a cached value
          * @method cachedMaxSubstring
-         * @param {DataRow} row
          * @param {string} field
          * @param {number} start
          * @param {number} len
@@ -1223,8 +1209,9 @@
         /**
          * Adds an object to the table setting the datarow in the state of 'unchanged'
          * @method loadArray
-         * @param {array} arr array of plain objects
+         * @param {object[]} arr array of plain objects
          * @param {bool} safe if false doesn't verify existence of row
+         * @return *
          */
         loadArray: function (arr, safe) {
             _.forEach(arr, function (o) {
@@ -1663,9 +1650,9 @@
         /**
          * Assign a field assuring it will not cause duplicates on table's autoincrement fields
          * @method safeAssign
-         * @param r
-         * @param field
-         * @param value
+         * @param {DataRow} r
+         * @param {string} field
+         * @param {object} value
          * @return {*}
          */
         safeAssign: function(r, field, value){
@@ -1682,7 +1669,6 @@
          * @param {object} value
          */
         avoidCollisions: function (r, field, value) {
-            var that = this;
             var deps = this.fieldDependencies(field);
             if (this.autoIncrementColumns[field]){
                 deps.unshift(field);
@@ -1800,16 +1786,12 @@
                 },this);
                 return;
             }
-            var that = this,
-                prefix = '',
+            var prefix = '',
                 newID = '1',
-                fieldExpr,
-                lenToExtract,
                 evaluatedMax,
                 autoIncrementInfo = this.autoIncrementColumns[field],
                 selector = autoIncrementInfo.getSelector(r),
                 startSearch;
-            //expr  = autoIncrementInfo.getExpression(r);
             if (autoIncrementInfo.isNumber){
                 evaluatedMax = this.cachedMaxSubstring(field, 0, 0, selector) + 1;
             } else {
@@ -2024,7 +2006,7 @@
          * Get any parent of a given DataRow following this DataRelation
          * @method getParents
          * @param childRow
-         * @returns {array}
+         * @returns {DataRow[]}
          */
         getParents: function (childRow) {
             var ds = this.dataset;
@@ -2274,10 +2256,10 @@
                 throw ("Relation " + relationName + " is already present in dataset");
             }
             if (this.tables[parentTableName] === undefined) {
-                throw ("Parent table:'+parentTableName+' of relation " + relationName + " is not a dataSet table");
+                throw ("Parent table:"+parentTableName+" of relation " + relationName + " is not a dataSet table");
             }
             if (this.tables[childTableName] === undefined) {
-                throw ("Child table:'+childTableName+' of relation " + relationName + " is not a dataSet table");
+                throw ("Child table:"+childTableName+" of relation " + relationName + " is not a dataSet table");
             }
 
             var rel = new DataRelation(relationName, parentTableName, parentColsName, childTableName, childColsName);
