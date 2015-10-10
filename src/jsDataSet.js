@@ -71,11 +71,6 @@
         }
 
 
-        /**
-         * provides DataRow enumeration constants
-         * @module DataSet
-         * @submodule dataenums
-         */
 
         /**
          * Enumerates possible state of a DataRow: detached, deleted, added, unchanged, modified
