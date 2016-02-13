@@ -408,8 +408,6 @@ describe('DataSet',
       it('getOptimisticLock should return a function that matches the original row',  function(){
         var t = ds.newTable('a'),
           r= t.newRow({id:10,a: 1, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'}),
-          r1 = t.newRow({id: 11, a: 1, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'}),
-          r2 = t.newRow({id: 12, a: 1, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'}),
           o = new $ol(['lt', 'lu'], ['ct', 'cu', 'lt', 'lu']);
         t.key(['id']);
         var filter = o.getOptimisticLock(r);
@@ -444,8 +442,6 @@ describe('DataSet',
       it('getOptimisticLock should return a function that matches the original row (no primary key)', function () {
         var t = ds.newTable('a'),
           r = t.newRow({id: 10, a: 1, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'}),
-          r1 = t.newRow({id: 11, a: 1, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'}),
-          r2 = t.newRow({id: 12, a: 1, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'}),
           o = new $ol(['lt', 'lu'], ['ct', 'cu', 'lt', 'lu']);
 
         //t.key(['id']); no key here
@@ -491,14 +487,14 @@ describe('DataSet',
     describe('serialize/deserialize', function () {
       var t, t2, r, r1, r2, s, s1, s2, s3;
       beforeEach(function () {
-        t = ds.newTable('a'),
-          r = t.newRow({id: 10, a: 1, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'}),
-          r1 = t.newRow({id: 11, a: 123, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'}),
-          r2 = t.newRow({id: 12, a: 1, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'}),
-          t2 = ds.newTable('b'),
-          s = t2.newRow({id: 13, a: 1, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'}),
-          s1 = t2.newRow({id: 14, a: 1, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'}),
-          s2 = t2.newRow({id: 15, a: 1, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'}),
+        t = ds.newTable('a');
+          r = t.newRow({id: 10, a: 1, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'});
+          r1 = t.newRow({id: 11, a: 123, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'});
+          r2 = t.newRow({id: 12, a: 1, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'});
+          t2 = ds.newTable('b');
+          s = t2.newRow({id: 13, a: 1, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'});
+          s1 = t2.newRow({id: 14, a: 1, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'});
+          s2 = t2.newRow({id: 15, a: 1, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'});
           s3 = t2.newRow({id: 16, a: 2, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'});
         s2.getRow().acceptChanges();
         s2.getRow().del();
@@ -544,6 +540,12 @@ describe('DataSet',
 
 
     });
+
+
+    describe('merge functions', function(){
+      //TODO all those
+    });
+
   });
 
 
