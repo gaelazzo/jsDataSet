@@ -1,6 +1,6 @@
 /*global ObjectObserver */
 'use strict';
-/*globals beforeEach,jsDataSet, afterEach,describe,jasmine,it,expect,inject */
+/*globals beforeEach,jsDataSet, afterEach,describe,jasmine,it,expect,inject,getRow */
 
 
 describe('DataRow module test', function () {

@@ -74,7 +74,57 @@
     /**
      * Enumerates possible state of a DataRow: detached, deleted, added, unchanged, modified
      * @class dataRowState
-     * @type detached|deleted|added|unchanged|modified
+     * @public
+     * @static
+     */
+
+    /**
+     * Constant meaning an objectRow not linked to any table
+     * @property detached
+     * @public
+     * @static
+     * @type string
+     */
+
+
+    /**
+     * Constant meaning a  objectRow onto which has been called a del() command
+     * @property deleted
+     * @public
+     * @static
+     * @type string
+     */
+
+    /**
+     * Constant meaning an objectRow added to the DataTable after last acceptChanges
+     * @property added
+     * @public
+     * @static
+     * @type string
+     */
+
+    /**
+     * Constant meaning an unchanged objectRow
+     * @property unchanged
+     * @public
+     * @static
+     * @type string
+     */
+
+    /**
+     * Constant meaning a modified objectRow, i.e. some change has been made on it after last acceptChanges
+     * @property modified
+     * @public
+     * @static
+     * @type string
+     */
+
+    /**
+     * @property $rowState
+     * @public
+     * @static
+     * @readOnly
+     * @type dataRowState
      */
     var $rowState = {
             detached: "detached",
