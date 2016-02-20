@@ -4,6 +4,7 @@
   "description": "DataSet (like .Net) made available for javascript and more",
   "main": "src/jsDataSet.js",
   "directories": {
+    "bin": "src",
     "test": "test"
   },
   "dependencies": {

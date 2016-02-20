@@ -104,7 +104,7 @@
      * Internal class attached to dataRow model data and used to track object changes
      * @private
      * @class DataRowObserver
-     * @param {DataRow} d
+     * @param {objectRow} d
      * @constructor
      */
     function DataRowObserver(d) {
@@ -193,15 +193,33 @@
 
 
     /**
-     * Provides methods to treat objects as Ado.Net DataRows
-     * @class DataRow
+     * class type to host data
+     * @class ObjectRow
+     * 
      */
 
 
     /**
+     * Gets the DataRow linked to an ObjectRow
+     * @method getRow
+     * @returns {DataRow}
+     */
+    function getRow(){
+    }
+    
+
+    /**
+     * Provides methods to treat objects as Ado.Net DataRows
+     * @class DataRow
+     */
+
+ 
+
+    /**
+     * 
      * Creates a DataRow from a generic plain object, and returns the DataRow
      * @method DataRow
-     * @param {object} o this is the main object managed by the application logic
+     * @param {object} o this is the main object managed by the application logic, it is attached to a getRow function
      * @returns {DataRow}
      * @constructor
      */
@@ -228,9 +246,9 @@
         }
 
         /**
-         * current value of the DataRow is the object o itself
+         * current value of the DataRow is the ObjectRow o itself
          * @private
-         * @property {object} current
+         * @property {ObjectRow} current
          */
         this.current = o;
         /**
@@ -287,7 +305,7 @@
         /**
          * Get the DataRow attached to an object. This method is attached to the object itself,
          *  so you can get the DataRow calling o.getRow() where o is the plain object
-         * @property {DataRow} getRow
+         * This transforms o into an ObjectRow
          */
         Object.defineProperty(o, 'getRow', {
             value: function () {
@@ -385,6 +403,7 @@
             if (r.state === $rowState.added){ //assumes this also is already in the state of "added"
                 return this.makeEqualTo(r.current());
             }
+            return this;
         },
 
 
@@ -438,7 +457,7 @@
         /**
          * get changes from the ObjectObserver
          * @method commit
-         * @private
+         * @internal
          */
         commit: function () {
             if (this.observer) {
@@ -470,6 +489,7 @@
         /**
          * Discard changes, restoring the original values of the object. state becomes unchanged
          * @method rejectChanges
+         * @return {DataRow}
          */
         rejectChanges: function () {
             if (this.state === $rowState.detached) {
@@ -503,6 +523,7 @@
          * resets all change and sets state to unchanged
          * @private
          * @method _reset
+         * @return {DataRow}
          */
         _reset: function () {
             this.old = {};
@@ -515,6 +536,7 @@
         /**
          * Detaches row, loosing all changes made. object is also removed from the underlying DataTable
          * @method detach
+         * @return {undefined}
          */
         detach: function () {
             this.state = $rowState.detached;
@@ -526,14 +548,15 @@
             if (this.table) {
                 this.table.detach(this.current);
             }
-            delete this.current.getRow;
-            return this;
+            delete (this.current).getRow;
+            return undefined;
         },
 
         /**
          * Deletes the row. If it is in added state it becomes detached. Otherwise any changes are lost, and
          *  only rejectChanges can bring the row into life again
          *  @method del
+         *  @returns {DataRow}
          */
         del: function () {
             if (this.state === $rowState.deleted) {
@@ -553,8 +576,8 @@
 
         /**
          * Debug - helper function
-         * @returns {string}
          * @method toString
+         * @returns {string}
          */
         toString: function () {
             if (this.table) {
@@ -568,7 +591,7 @@
          *  specified name
          * @method getParentRows
          * @param {string} relName
-         * @returns {DataRow[]}
+         * @returns {ObjectRow[]}
          */
         getParentRows: function (relName) {
             var rel = this.table.dataset.relations[relName];
@@ -580,7 +603,7 @@
 
         /**
          * Gets all parent rows of this one
-         * @returns {DataRow[]}
+         * @returns {ObjectRow[]}
          */
         getAllParentRows: function () {
             var that = this;
@@ -594,7 +617,7 @@
          * Gets parents row of this row in a given table
          * @method getParentsInTable
          * @param {string} parentTableName
-         * @returns {DataRow[]}
+         * @returns {ObjectRow[]}
          */
         getParentsInTable: function (parentTableName) {
             var that = this;
@@ -611,7 +634,7 @@
          *  specified name
          * @method getChildRows
          * @param {string} relName
-         * @returns {DataRow[]}
+         * @returns {ObjectRow[]}
          */
         getChildRows: function (relName) {
             var rel = this.table.dataset.relations[relName];
@@ -623,7 +646,7 @@
 
         /**
          * Gets all child rows of this one
-         * @returns {DataRow[]}
+         * @returns {ObjectRow[]}
          */
         getAllChildRows: function () {
             var that = this;
@@ -638,7 +661,7 @@
          * Gets child rows of this row in a given table
          * @method getChildsInTable
          * @param  {string} childTableName
-         * @returns {DataRow[]}
+         * @returns {ObjectRow[]}
          */
         getChildsInTable: function (childTableName) {
             var that = this;
@@ -676,7 +699,7 @@
 
     /**
      * Create a AutoIncrementColumn
-     * @method AutoIncrementColumn
+     * @constructor AutoIncrementColumn
      * @param {string} columnName
      * @param {object} options same options as AutoIncrement properties
      **/
@@ -776,7 +799,7 @@
     /**
      * evaluates the function to filter selector on a specified row and column
      * @method getSelector
-     * @param {DataRow} r
+     * @param {ObjectRow} r
      */
     AutoIncrementColumn.prototype.getSelector = function (r) {
         var prefix = this.getPrefix(r),
@@ -809,7 +832,7 @@
     /**
      * gets the expression to be used for retrieving the max
      * @method getExpression
-     * @param {DataRow} r
+     * @param {ObjectRow} r
      * @return {sqlFun}
      */
     AutoIncrementColumn.prototype.getExpression = function (r) {
@@ -833,12 +856,12 @@
 
     /**
      * Custom function to be called to evaluate the maximum value
-     * @method  [customFunction] ({DataRow} r, {string} columnName, {DataAccess} conn}
+     * @method  [customFunction] ({ObjectRow} r, {string} columnName, {DataAccess} conn}
      **/
 
 
     /**
-     * A DataTable is s collection of DataRow and provides information about the structure of logical table
+     * A DataTable is s collection of ObjectRow and provides information about the structure of logical table
      * @class DataTable
      */
 
@@ -863,7 +886,7 @@
         /**
          * Collection of rows, each one hiddenly surrounded with a DataRow object
          * @property rows
-         * @type DataRow[]
+         * @type ObjectRow[]
          */
         this.rows = [];
 
@@ -1053,7 +1076,7 @@
          * Extract a set of rows matching a filter function - skipping deleted rows
          * @method select.-
          * @param {sqlFun} [filter]
-         * @returns {DataRow[]}
+         * @returns {ObjectRow[]}
          */
         select: function (filter) {
             if (filter === null || filter === undefined) {
@@ -1087,7 +1110,7 @@
          * Extract a set of rows matching a filter function - including deleted rows
          * @method selectAll
          * @param {sqlFun} filter
-         * @returns {DataRow[]}
+         * @returns {ObjectRow[]}
          */
         selectAll: function (filter) {
             if (filter) {
@@ -1367,7 +1390,7 @@
          *  values in the optional parameter obj.
          * @method newRow
          * @param {object} [obj] contains the initial value of the created objects.
-         * @param {DataRow} [parentRow]
+         * @param {ObjectRow} [parentRow]
          * @returns {object}
          */
         newRow: function (obj, parentRow) {
@@ -1389,7 +1412,7 @@
          * @method makeChild
          * @param {object} childRow
          * @param {string} parentTable
-         * @param {DataRow} [parentRow]
+         * @param {ObjectRow} [parentRow]
          */
         makeChild: function (childRow, parentTable, parentRow) {
             var that = this,
@@ -1597,7 +1620,7 @@
          * adds an array of objects to collection, as unchanged, if they still are not present. Existence is verified
          *  basing on  key
          * @method mergeArray
-         * @param {DataRow []} arr
+         * @param {ObjectRow []} arr
          * @param {bool} overwrite
          * @return {*}
          */
@@ -1653,7 +1676,7 @@
          * Gets a filter of colliding rows supposing to change r[field]= value, on  a specified column
          * @method collisionFilter
          * @private
-         * @param {DataRow} r
+         * @param {ObjectRow} r
          * @param {string} field
          * @param {object} value
          * @param {AutoIncrementColumn} autoInfo
@@ -1673,7 +1696,7 @@
         /**
          * Assign a field assuring it will not cause duplicates on table's autoincrement fields
          * @method safeAssign
-         * @param {DataRow} r
+         * @param {ObjectRow} r
          * @param {string} field
          * @param {object} value
          * @return {*}
@@ -1687,7 +1710,7 @@
          * check if changing a key field of a row it would collide with come autoincrement field. If it would,
          *  recalculates colliding rows/filter in accordance
          * @method avoidCollisions
-         * @param {DataRow} r
+         * @param {ObjectRow} r
          * @param {string} field
          * @param {object} value
          */
@@ -1720,7 +1743,7 @@
         /**
          * Assign a value to a field and update all dependencies
          * @method assignField
-         * @param {DataRow} r
+         * @param {ObjectRow} r
          * @param {string} field
          * @param {object} value
          */
@@ -1734,7 +1757,7 @@
          * assign a value to a field in a row and all descending child rows
          * @method cascadeAssignField
          * @private
-         * @param {DataRow} r
+         * @param {ObjectRow} r
          * @param {string} parentField
          * @param {object} value
          */
@@ -1781,7 +1804,7 @@
          * Re calculate temporaryID affected by a field change. It should be done for every autoincrement field
          *  that has that field as a selector or as a prefix field
          * @method updateDependencies
-         * @param {DataRow} row
+         * @param {ObjectRow} row
          * @param {string} field
          * @returns {*}
          */
@@ -1797,7 +1820,7 @@
          * if field is not specified, this is applied to all autoincrement field of the table
          * Precondition: r[[field] should be an autoincrement field
          * @method calcTemporaryId
-         * @param {DataRow} r
+         * @param {ObjectRow} r
          * @param {string} [field]
          */
         calcTemporaryId: function (r, field) {
@@ -1868,7 +1891,7 @@
         /**
          * This function is called before posting row into db for every insert/update
          * @method prepareForPosting
-         * @param {DataRow} r
+         * @param {ObjectRow} r
          * @param {Environment} env
          */
         prepareForPosting: function (r, env) {
@@ -1889,7 +1912,7 @@
         /**
          * Get the optimistic lock for updating or deleting a row
          * @method getOptimisticLock
-         * @param {DataRow}r
+         * @param {ObjectRow}r
          * @returns {sqlFun}
          */
         getOptimisticLock: function (r) {
@@ -1978,9 +2001,9 @@
 
     DataRelation.prototype = {
         /**
-         * Gets a filter that will be applied to the child table and will find any child row of a given DataRow
+         * Gets a filter that will be applied to the child table and will find any child row of a given ObjectRow
          * @method getChildsFilter
-         * @param {object} parentRow
+         * @param {ObjectRow} parentRow
          * @param {string} [alias] when present is used to attach an alias for the parent table in the composed filter
          */
         getChildsFilter: function (parentRow, alias) {
@@ -1994,10 +2017,10 @@
         },
 
         /**
-         * Get any child of a given DataRow following this DataRelation
+         * Get any child of a given ObjectRow following this DataRelation
          * @method getChilds
-         * @param {DataRow} parentRow
-         * @returns {DataRow[]}
+         * @param {ObjectRow} parentRow
+         * @returns {ObjectRow[]}
          */
         getChilds: function (parentRow) {
             var ds = this.dataset;
@@ -2009,7 +2032,7 @@
         },
 
         /**
-         * Gets a filter that will be applied to the parent table and will find any parent row of a given DataRow
+         * Gets a filter that will be applied to the parent table and will find any parent row of a given ObjectRow
          * @method getParentsFilter
          * @param {object} childRow
          * @param {string} [alias] when present is used to attach an alias for the parent table in the composed filter
@@ -2026,10 +2049,10 @@
 
 
         /**
-         * Get any parent of a given DataRow following this DataRelation
+         * Get any parent of a given ObjectRow following this DataRelation
          * @method getParents
-         * @param {DataRow} childRow
-         * @returns {DataRow[]}
+         * @param {ObjectRow} childRow
+         * @returns {ObjectRow[]}
          */
         getParents: function (childRow) {
             var ds = this.dataset;
@@ -2040,6 +2063,10 @@
             return _.filter(actualParentTable.rows, this.getParentsFilter(childRow));
         },
 
+        /**
+         * Get a serialized version of this relation
+         * @returns {{}}
+         */
         serialize: function () {
             var rel = {};
             //relation name is not serialized here, it is a key in the parent
@@ -2051,6 +2078,7 @@
             if (this.childCols !== this.parentCols) {
                 rel.childCols = this.childCols.join();
             }
+            return rel;
         },
 
         deSerialize: function () {
@@ -2098,8 +2126,8 @@
          * Modifies childRow in order to make it child of parentRow. Sets to null corresponding fields if
          *  parentRow is null or undefined
          * @method makeChild
-         * @param {DataRow} parentRow
-         * @param {DataRow} childRow
+         * @param {ObjectRow} parentRow
+         * @param {ObjectRow} childRow
          * @return {*}
          */
         makeChild: function (parentRow, childRow) {
@@ -2181,7 +2209,7 @@
         },
 
         /**
-         * Clones a DataSet replicating its structure but without copying any DataRow
+         * Clones a DataSet replicating its structure but without copying any ObjectRow
          * @method clone
          * @returns {DataSet}
          */
@@ -2307,7 +2335,7 @@
         /**
          * Deletes a row with all subentity child
          * @method cascadeDelete
-         * @param {DataRow} row
+         * @param {ObjectRow} row
          * @return {*}
          */
         cascadeDelete: function (row) {

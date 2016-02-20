@@ -1,9 +1,6 @@
 /*global ObjectObserver */
 'use strict';
 /*globals beforeEach,jsDataSet, afterEach,describe,jasmine,it,expect,inject */
-var  dsNameSpace = jsDataSet,
-    DataRow = dsNameSpace.DataRow,
-    $rowState = dsNameSpace.dataRowState;
 
 
 describe('DataRow module test', function () {
@@ -32,11 +29,11 @@ describe('DataRow module test', function () {
 
         beforeEach(function () {
             t = ds.newTable('tt');
-            o = {a: 1, b: 2, c: 'a'};
+            o = {a: 1, b: 2, c: 'a'};           //o,o2,o3,o4 are plain object  (objectRow)
             o2 = {a: 1, b: 2, c: 'a'};
             o3 = {a: 2, b: 3, c: 'b'};
             o4 = {a: 3, b: 4, c: 'c'};
-            p = t.load(o);
+            p = t.load(o);                  //p,p2,p3,p4 are linked DataRow
             p2 = t.load(o2);
             p3 = t.load(o3);
             p4 = t.load(o4);
@@ -220,7 +217,7 @@ describe('DataRow module test', function () {
         var t, o, o2, o3, o4, p, p2, p3, p4,
             q, o5, o6, o7, o8, o9, p5,p6,p7,p8,p9,
             s, o10, o11, o12,o13,o14,o15, p10,p11,p12,p13,p14,p15,
-            u, o16,o17,o18,o19,o20, p16,p17,p18,p19,p20,
+            u, o16,o17,o18,o19, p16,p17,p18,p19,
             d;
 
 
