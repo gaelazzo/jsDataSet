@@ -42,6 +42,7 @@
         'object': true
     };
 
+    //noinspection JSUnresolvedVariable
     /**
      * Used as a reference to the global object. (thanks lodash)
      *
@@ -50,14 +51,18 @@
      */
     var root = (objectTypes[typeof window] && window !== (this && this.window)) ? window : this;
 
+    //noinspection JSUnresolvedVariable
     /** Detect free variable `exports`. (thanks lodash) */
     var freeExports = objectTypes[typeof exports] && exports && !exports.nodeType && exports;
 
+    //noinspection JSUnresolvedVariable
     /** Detect free variable `module`. (thanks lodash)*/
     var freeModule = objectTypes[typeof module] && module && !module.nodeType && module;
 
+    //noinspection JSUnresolvedVariable
     /** Detect free variable `global` from Node.js or Browserified code and use it as `root`. (thanks lodash)*/
     var freeGlobal = freeExports && freeModule && typeof global == 'object' && global;
+    //noinspection JSUnresolvedVariable
     if (freeGlobal && (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal || freeGlobal.self === freeGlobal)) {
         root = freeGlobal;
     }
@@ -71,59 +76,21 @@
     }
 
 
-    /**
-     * Enumerates possible state of a DataRow: detached, deleted, added, unchanged, modified
-     * @class dataRowState
-     * @public
-     * @static
-     */
 
     /**
-     * Constant meaning an objectRow not linked to any table
-     * @property detached
      * @public
-     * @static
-     * @type string
+     * @typedef {$rowState} dataRowState
+     * @property  {DataRowState} detached
+     * @property  {DataRowState} deleted
+     * @property {DataRowState} added
+     * @property  {DataRowState} unchanged
+     * @property  {DataRowState} modified
      */
 
-
-    /**
-     * Constant meaning a  objectRow onto which has been called a del() command
-     * @property deleted
-     * @public
-     * @static
-     * @type string
-     */
-
-    /**
-     * Constant meaning an objectRow added to the DataTable after last acceptChanges
-     * @property added
-     * @public
-     * @static
-     * @type string
-     */
-
-    /**
-     * Constant meaning an unchanged objectRow
-     * @property unchanged
-     * @public
-     * @static
-     * @type string
-     */
-
-    /**
-     * Constant meaning a modified objectRow, i.e. some change has been made on it after last acceptChanges
-     * @property modified
-     * @public
-     * @static
-     * @type string
-     */
-
+    //noinspection JSValidateTypes
     /**
      * @property $rowState
      * @public
-     * @static
-     * @readOnly
      * @type dataRowState
      */
     var $rowState = {
@@ -134,9 +101,19 @@
             modified: "modified"
         },
 
+
+    /**
+     * @public
+     * @typedef {$rowVersion} dataRowVersion
+     * @property  {DataRowVersion} original
+     * @property  {DataRowVersion} current
+     */
+
         /**
          * Enumerates possible version of a DataRow field: original, current
-         * @class dataRowVersion
+         * @public
+         * @property $rowVersion
+         * @type dataRowVersion
          */
         $rowVersion = {
             original: "original",
@@ -158,8 +135,14 @@
      * @constructor
      */
     function DataRowObserver(d) {
+        /**
+         * @property r
+         * @type objectRow
+         */
         this.r = d;
     }
+
+
 
     DataRowObserver.prototype = {
         constructor: DataRowObserver,
@@ -245,17 +228,21 @@
     /**
      * class type to host data
      * @class ObjectRow
-     * 
+     * @public
      */
-
-
-    /**
-     * Gets the DataRow linked to an ObjectRow
-     * @method getRow
-     * @returns {DataRow}
-     */
-    function getRow(){
+     function ObjectRow(){
+        //dummy constructor
+        /**
+         * Gets the DataRow linked to an ObjectRow
+         * @public
+         * @method getRow
+         * @returns {DataRow}
+         */
+        this.getRow  = function(){
+        }
     }
+
+
     
 
     /**
@@ -326,10 +313,10 @@
         var that = this,
             dObs;
 
-        /**
+        /**\
          * State of the DataRow, possible values are added unchanged modified deleted detached
          * @property  state
-         * @type dataRowState
+         * @type DataRowState
          */
         Object.defineProperty(this, 'state', {
             get: function () {
@@ -379,7 +366,7 @@
          * get the value of a field of the object. If dataRowVer is omitted, it's equivalent to o.fieldName
          * @method getValue
          * @param {string} fieldName
-         * @param {dataRowVersion} [dataRowVer='current'] possible values are 'original', 'current'
+         * @param {DataRowVersion} [dataRowVer='current'] possible values are 'original', 'current'
          * @returns {object}
          */
         getValue: function (fieldName, dataRowVer) {
@@ -438,7 +425,7 @@
          * @return {DataRow}
          */
         makeSameAs: function(r){
-            if (this.state === $rowstate.deleted){
+            if (this.state === $rowState.deleted){
                 this.rejectChanges();
             }
             if (r.state === $rowState.deleted){
@@ -1150,6 +1137,7 @@
                 }
                 if (filter) {
                     //console.log('filter(r) is '+filter(r));
+                    //noinspection JSValidateTypes   because a sqlFun is also a Function
                     return filter(r);
                 }
                 return true;
@@ -1344,7 +1332,12 @@
         rejectChanges: function () {
             //First detach all added rows
             var newRows = [];
-            _(this.rows).forEach(function (o) {
+            _(this.rows).forEach(
+                /**
+                 * @method
+                 * @param {ObjectRow} o
+                 */
+                function (o) {
                 var dr = o.getRow();
                 if (dr.state === $rowState.added) {
                     dr.table = null;
@@ -1948,12 +1941,14 @@
             var row = r.getRow();
             if (row.state === $rowState.added) {
                 _.forEach(this.createFields, function (field) {
+                    //noinspection JSUnresolvedFunction
                     r[field] = env.field(field);
                 });
                 return;
             }
             if (row.state === $rowState.modified) {
                 _.forEach(this.updateFields, function (field) {
+                    //noinspection JSUnresolvedFunction
                     r[field] = env.field(field);
                 });
             }
@@ -1994,9 +1989,9 @@
      * @constructor DataRelation
      * @param {string} relationName
      * @param {string} parentTableName
-     * @param {string[]} parentColsName array of string
+     * @param {String|String[]} parentColsName array of string
      * @param {string} childTableName
-     * @param {string[]} [childColsName=parentColsName] optional names of child columns
+     * @param {String|String[]} [childColsName=parentColsName] optional names of child columns
      * @return {DataRelation}
      */
     function DataRelation(relationName, parentTableName, parentColsName, childTableName, childColsName) {
@@ -2018,7 +2013,7 @@
         /**
          * Array of parent column names or comma separated column names
          * @property parentCols
-         * @type string|string[]
+         * @type String|String[]
          */
         this.parentCols = _.isString(parentColsName) ?
             _.map(parentColsName.split(','), function (s) {
@@ -2233,7 +2228,7 @@
          * Gets all relations where the parent table is the key of the hash
          * relationsByParent['a'] is an array of all DataRelations where 'a' is the parent
          * @property relationsByParent
-         * @type DataRelation[]
+         * @type DataRelation[][]
          */
         this.relationsByParent = {};
 
@@ -2241,7 +2236,7 @@
          * Gets all relations where the child table is the key of the hash
          * relationsByChild['a'] is an array of all DataRelations where 'a' is the child
          * @property relationsByChild
-         * @type DataRelation[]
+         * @type DataRelation[][]
          */
         this.relationsByChild = {};
 
@@ -2394,7 +2389,7 @@
             _.forEach(this.relationsByParent[table.name], function (rel) {
                 if (rel.isEntityRelation()) {
                     _.forEach(rel.getChilds(row), function (toDel) {
-                        if (toDel.getRow().rowState !== $rowState.deleted) {
+                        if (toDel.getRow().state !== $rowState.deleted) {
                             this.cascadeDelete(toDel);
                         }
                     })
@@ -2530,7 +2525,7 @@
                 var t2 = that.tables[t.name];
                 _.forEach(t.rows, function (r) {
                     var existingRow = t2.select(t.keyFilter(r));
-                    if (r.getRow().$rowState == $rowState.deleted) {
+                    if (r.getRow().state == $rowState.deleted) {
                         if (existingRow.length === 1) {
                             existingRow[0].makeSameAs(r);
                         }
@@ -2577,6 +2572,7 @@
 
 
     // Some AMD build optimizers like r.js check for condition patterns like the following:
+    //noinspection JSUnresolvedVariable
     if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) {
         // Expose lodash to the global object when an AMD loader is present to avoid
         // errors in cases where lodash is loaded by a script tag and not intended
@@ -2586,6 +2582,7 @@
 
         // Define as an anonymous module so, through path mapping, it can be
         // referenced as the "underscore" module.
+        //noinspection JSUnresolvedFunction
         define(function () {
             return jsDataSet;
         });
