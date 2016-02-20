@@ -573,7 +573,7 @@
         getParentRows: function (relName) {
             var rel = this.table.dataset.relations[relName];
             if (rel === undefined) {
-                throw 'Relation ' + relName + ' does not exists in dataset ' + this.tables.dataset.name;
+                throw 'Relation ' + relName + ' does not exists in dataset ' + this.table.dataset.name;
             }
             return rel.getParents(this.current);
         },
@@ -1051,7 +1051,7 @@
 
         /**
          * Extract a set of rows matching a filter function - skipping deleted rows
-         * @method select
+         * @method select.-
          * @param {sqlFun} [filter]
          * @returns {DataRow[]}
          */
@@ -1478,7 +1478,7 @@
         },
 
         /**
-         * get the list of columns
+         * get the list of columns or * if there is no column set
          * @method columnList
          * @returns {string}
          */
