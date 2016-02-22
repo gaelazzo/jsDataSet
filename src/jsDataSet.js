@@ -122,7 +122,7 @@
 
 
     /**
-     * DataRow shim, provides methods to treat objects as Ado.Net DataRows
+     * DataRow shim, provides methods to manage objects as Ado.Net DataRows
      * @module DataSet
      * @submodule DataRow
      */
@@ -246,7 +246,7 @@
     
 
     /**
-     * Provides methods to treat objects as Ado.Net DataRows
+     * Provides methods to manage objects as Ado.Net DataRows
      * @class DataRow
      */
 
@@ -837,6 +837,7 @@
      * evaluates the function to filter selector on a specified row and column
      * @method getSelector
      * @param {ObjectRow} r
+     * @returns {sqlFun}
      */
     AutoIncrementColumn.prototype.getSelector = function (r) {
         var prefix = this.getPrefix(r),
@@ -884,16 +885,11 @@
         return dataQuery.max(dataQuery.convertToInt(dataQuery.substring(fieldExpr, startSearch + 1, lenToExtract)));
     };
 
-    /**
-     * Cached function that evaluates selector basing on autoIncrement fields
-     * @method [getSelector]
-     * @return {sqlFun}
-     **/
 
 
     /**
-     * Custom function to be called to evaluate the maximum value
-     * @method  [customFunction] ({ObjectRow} r, {string} columnName, {DataAccess} conn}
+     * Optional custom function to be called to evaluate the maximum value
+     * @method  customFunction ({ObjectRow} r, {string} columnName, {DataAccess} conn}
      **/
 
 
@@ -1076,7 +1072,7 @@
         },
 
         /**
-         *  Evaluates the max of an expression without using any cached value. If len = 0 the expression is treated
+         *  Evaluates the max of an expression without using any cached value. If len = 0 the expression is managed
          *   as a number with max(field) otherwise it is performed max(convertToInt(substring(field,start,len)))
          * @param {string} field
          * @param {number} start
