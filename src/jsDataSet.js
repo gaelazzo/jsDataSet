@@ -889,10 +889,12 @@
 
     /**
      * Optional custom function to be called to evaluate the maximum value
-     * @method
+     * @function
+     * @name customFunction
      * @param {ObjectRow} r
      * @param {string} columnName
-     * param {DataAccess} conn
+     * @param {DataAccess} conn
+     * @return {object}
      **/
     customFunction:undefined,
 
