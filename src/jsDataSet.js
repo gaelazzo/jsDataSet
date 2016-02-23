@@ -889,14 +889,13 @@
 
     /**
      * Optional custom function to be called to evaluate the maximum value
-     * @function
-     * @name customFunction
+     * @method customFunction
      * @param {ObjectRow} r
      * @param {string} columnName
      * @param {DataAccess} conn
      * @return {object}
      **/
-    customFunction:undefined,
+    AutoIncrementColumn.prototype.customFunction = undefined;
 
 
     /**
