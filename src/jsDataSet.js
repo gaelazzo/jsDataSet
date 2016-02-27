@@ -1112,7 +1112,7 @@
 
         /**
          * Extract a set of rows matching a filter function - skipping deleted rows
-         * @method select.-
+         * @method select
          * @param {sqlFun} [filter]
          * @returns {ObjectRow[]}
          */
