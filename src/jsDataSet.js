@@ -949,6 +949,10 @@
          */
         this.columns = [];
 
+        /**
+         * @property autoIncrementColumns
+         * @type {AutoIncrementColumn[]}
+         */
         this.autoIncrementColumns = {};
 
         /**
@@ -1558,6 +1562,7 @@
 
         /**
          * Gets all autoincrement column names of this table
+         * @method getAutoIncrementColumns
          * @returns {string[]}
          */
         getAutoIncrementColumns: function () {
