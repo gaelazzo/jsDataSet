@@ -1665,6 +1665,22 @@
             });
         },
 
+
+        /**
+         * Get all relation where THIS table is the child and another table is the parent
+         * @returns {DataRelation[]}
+         */
+        parentRelation: function() {
+            return this.dataset.relationsByChild[this.name];
+        },
+
+        /**
+         * Get all relation where THIS table is the parent and another table is the child
+         */
+        childRelation: function() {
+            return this.dataset.relationsByParent[this.name];
+        },
+
         /**
          * adds an array of objects to collection, as unchanged, if they still are not present. Existence is verified
          *  basing on  key
