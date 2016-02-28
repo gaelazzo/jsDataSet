@@ -1668,16 +1668,19 @@
 
         /**
          * Get all relation where THIS table is the child and another table is the parent
+         * @method parentRelations
          * @returns {DataRelation[]}
          */
-        parentRelation: function() {
+        parentRelations: function() {
             return this.dataset.relationsByChild[this.name];
         },
 
         /**
          * Get all relation where THIS table is the parent and another table is the child
+         * @method childRelations
+         * @returns {DataRelation[]}
          */
-        childRelation: function() {
+        childRelations: function() {
             return this.dataset.relationsByParent[this.name];
         },
 
