@@ -793,6 +793,10 @@
          **/
         this.minimum = options.minimum || 0;
 
+        /**
+         * true if this field is a number
+         * @property {number} [isNumber=false]
+         **/
         if (typeof options.isNumber === 'undefined') {
             this.isNumber = (this.idLen === 0) && (typeof this.prefixField === 'undefined')
                 && (typeof this.middleConst === 'undefined');
