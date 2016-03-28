@@ -4,7 +4,7 @@
   "homepage": "https://github.com/gaelazzo/jsDataSet",
   "repository": {
     "type": "git",
-    "url": "git://github.com/gaelazzo/jsDataSet.git"
+    "url": "git://github.com/gaelazzo/jsDataSet"
   },
   "authors": [
     "Gaetano Lazzo <gaetano.lazzo@gmail.com>"
