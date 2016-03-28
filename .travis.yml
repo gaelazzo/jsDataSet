@@ -11,4 +11,7 @@ addons:
       - g++-4.8
 before_install: npm install -g grunt-cli
 install: npm install
-before_script: grunt yuidoc
+before_script: 
+  - grunt yuidoc
+ -  npm install -g bower
+  - bower install
