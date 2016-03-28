@@ -1307,9 +1307,10 @@
          * @return *
          */
         loadArray: function (arr, safe) {
+            var that=this;
             _.forEach(arr, function (o) {
-                this.load(o, safe);
-            }, this);
+                that.load(o, safe);
+            });
         },
 
         /**
@@ -1355,7 +1356,7 @@
                     dr.rejectChanges();
                     newRows.push(o);
                 }
-            }).value();
+            });
             this.rows = newRows;
         },
 
@@ -1787,14 +1788,15 @@
          * @param {object} value
          */
         avoidCollisions: function (r, field, value) {
+            var that=this;
             var deps = this.fieldDependencies(field);
             if (this.autoIncrementColumns[field]) {
                 deps.unshift(field);
             }
             _.forEach(deps, function (depField) {
-                this.avoidCollisionsOnField(depField,
-                    this.collisionFilter(r, field, value, this.autoIncrementColumns[depField]));
-            }, this);
+                that.avoidCollisionsOnField(depField,
+                    that.collisionFilter(r, field, value, that.autoIncrementColumns[depField]));
+            });
 
 
         },
@@ -1807,9 +1809,10 @@
          * @param {sqlFun} filter
          */
         avoidCollisionsOnField: function (field, filter) {
+            var that=this;
             _.forEach(this.select(filter), function (rCollide) {
-                this.calcTemporaryId(rCollide, field);
-            }, this);
+                that.calcTemporaryId(rCollide, field);
+            });
         },
 
         /**
@@ -1881,9 +1884,10 @@
          * @returns {*}
          */
         updateDependencies: function (row, field) {
+            var that=this;
             _.forEach(this.fieldDependencies(field), function (f) {
-                this.calcTemporaryId(row, f);
-            }, this);
+                that.calcTemporaryId(row, f);
+            });
         },
 
 
@@ -1896,10 +1900,11 @@
          * @param {string} [field]
          */
         calcTemporaryId: function (r, field) {
+            var that=this;
             if (field === undefined) {
                 _.forEach(_.keys(this.autoIncrementColumns), function (field) {
-                    this.calcTemporaryId(r, field);
-                }, this);
+                    that.calcTemporaryId(r, field);
+                });
                 return;
             }
             var prefix = '',
@@ -2414,12 +2419,13 @@
          */
         cascadeDelete: function (row) {
             var r = row.getRow(),
-                table = r.table;
+                table = r.table,
+                that=this;
             _.forEach(this.relationsByParent[table.name], function (rel) {
                 if (rel.isEntityRelation()) {
                     _.forEach(rel.getChilds(row), function (toDel) {
                         if (toDel.getRow().state !== $rowState.deleted) {
-                            this.cascadeDelete(toDel);
+                            that.cascadeDelete(toDel);
                         }
                     })
                 } else {
@@ -2428,7 +2434,7 @@
                         }
                     );
                 }
-            }, this);
+            });
             r.del();
         },
 
