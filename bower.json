@@ -35,10 +35,13 @@
   ],
   "dependencies": {
     "observe-js": "~0.5.6",
-    "lodash": "~4.6.1",
+    "lodash": "4.6.1",
     "jsdataquery": "jsDataQuery#*"
   },
   "devdependencies": {
     "jasmine": "~2.2.1"
   }
+  "resolutions": {
+     "lodash": "4.6.1",
+    }
 }
