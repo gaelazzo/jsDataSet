@@ -42,6 +42,6 @@
     "jasmine": "~2.2.1"
   },
   "resolutions": {
-     "lodash": "4.6.1",
+     "lodash": "4.6.1"
     }
 }
