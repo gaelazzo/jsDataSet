@@ -13,7 +13,7 @@
     "jsDataQuery": "https://github.com/gaelazzo/jsDataQuery"
   },
   "devDependencies": {
-    "grunt": "~0.4.5",
+    "grunt": "~1.0.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-contrib-yuidoc": "^0.7.0",
     "grunt-karma": "^0.10.1",
