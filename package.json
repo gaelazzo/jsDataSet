@@ -8,8 +8,8 @@
     "test": "test"
   },
   "dependencies": {
-    "lodash": "~4.6.1",
-    "observe-js": "~0.5.7",
+    "lodash": "4.6.1",
+    "observe-js": "0.5.7",
     "jsDataQuery": "https://github.com/gaelazzo/jsDataQuery"
   },
   "devDependencies": {
