@@ -1698,18 +1698,18 @@
          * @return {*}
          */
         mergeArray: function (arr, overwrite) {
+            var that=this;
             _.forEach(arr, function (r) {
-                    var oldRow = this.existingRow(r);
+                    var oldRow = that.existingRow(r);
                     if (oldRow) {
                         if (overwrite) {
                             oldRow.getRow().makeEqualTo(r);
                             oldRow.acceptChanges();
                         }
                     } else {
-                        this.load(r, false);
+                        that.load(r, false);
                     }
-                },
-                this
+                }
             );
         },
 
