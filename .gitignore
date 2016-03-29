@@ -3,3 +3,9 @@
 bower_components
 .idea
 doc
+jsDataSet.sln
+jsDataSet.njsproj
+bin/Microsoft.NodejsTools.WebRole.dll
+.vs/jsDataSet/v14/.suo
+.vs/config/applicationhost.config
+.ntvs_analysis.dat
