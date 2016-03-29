@@ -9,3 +9,5 @@ bin/Microsoft.NodejsTools.WebRole.dll
 .vs/jsDataSet/v14/.suo
 .vs/config/applicationhost.config
 .ntvs_analysis.dat
+obj/Debug/jsDataSet.njsproj.FileListAbsolute.txt
+obj/Debug/jsDataSet.njsprojResolveAssemblyReference.cache
