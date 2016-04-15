@@ -31,3 +31,5 @@ It's also possible to delete a row with all relative children (with cascading ef
 
 A full list of available function is available in the auto-generated yui doc.
 
+![](https://travis-ci.org/gaelazzo/jsDataSet.svg?branch=master)
+
