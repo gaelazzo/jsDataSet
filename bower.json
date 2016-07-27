@@ -39,7 +39,7 @@
     "jsdataquery": "git://github.com/gaelazzo/jsDataQuery.git"
   },
   "devdependencies": {
-    "jasmine": "~2.2.1"
+    "jasmine-core": "~2.2.1"
   },
   "resolutions": {
      "lodash": "4.6.1"
