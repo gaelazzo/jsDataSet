@@ -36,7 +36,7 @@
   "dependencies": {
     "observe-js": "~0.5.7",
     "lodash": "4.6.1",
-    "jsdataquery": "git://github.com/gaelazzo/jsDataQuery.git"
+    "jsDataQuery": "git://github.com/gaelazzo/jsDataQuery.git"
   },
   "devdependencies": {
     "jasmine-core": "~2.2.1"
