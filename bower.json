@@ -35,7 +35,7 @@
   ],
   "dependencies": {
     "observe-js": "~0.5.7",
-    "lodash": "4.6.1",
+    "lodash": "4.17.4",
     "jsDataQuery": "git://github.com/gaelazzo/jsDataQuery.git"
   },
   "devdependencies": {
