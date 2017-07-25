@@ -1589,14 +1589,14 @@
         /**
          * get the list of columns or * if there is no column set
          * @method columnList
-         * @returns array of strings
+         * @returns string
          */
         columnList: function () {
             var c = [ ];
             for( var key in columns ) {
                 c.push(columns[key].name);
             }
-            if (this.c.length > 0) {return c}
+            if (this.c.length > 0) {return c.join(",");}
             return '*';   
         },
 
