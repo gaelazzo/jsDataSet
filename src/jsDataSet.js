@@ -121,6 +121,29 @@
         };
 
 
+    
+    /**
+   * Create a DataColumn
+   * @param {string} columnName
+   * @param {string} type of the column field
+   **/
+    function DataColumn(name, ctype) {
+
+        /**
+        * name of the column 
+        * @property {string} name
+        **/
+        this.name = name;
+
+        /**
+        * type of the column 
+        * @property {string} ctype
+        **/
+        this.ctype = ctype;
+
+    }   
+    
+    
     /**
      * DataRow shim, provides methods to manage objects as Ado.Net DataRows
      * @module DataSet
@@ -947,11 +970,11 @@
         this.myDefaults = {};
 
         /**
-         * Array of column names
+         * Dictionary of DataColumn
          * @property columns
-         * @type string[]
+         * @type {}
          */
-        this.columns = [];
+        this.columns = {};
 
         /**
          * @property autoIncrementColumns
@@ -1026,6 +1049,14 @@
             this.maxCache[hash] = num;
         },
 
+        
+        setDataColumn : function(field,name,ctype){
+        
+            this.columns[field] = new DataColumn(name, ctype);
+
+        },       
+        
+        
         /**
          * get/set the minimum temp value for a field, assuming 0 if undefined
          * @method minimumTempValue
@@ -1558,13 +1589,15 @@
         /**
          * get the list of columns or * if there is no column set
          * @method columnList
-         * @returns {string}
+         * @returns array of strings
          */
         columnList: function () {
-            if (this.columns.length > 0) {
-                return this.columns.join(',');
+            var c = [ ];
+            for( var key in columns ) {
+                c.push(columns[key].name);
             }
-            return '*';
+            if (this.c.length > 0) {return c}
+            return '*';   
         },
 
         /**
