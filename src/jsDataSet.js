@@ -970,9 +970,9 @@
         this.myDefaults = {};
 
         /**
-         * Array of DataColumn
+         * Dictionary of DataColumn
          * @property columns
-         * @type {DataColumn[]}
+         * @type {}
          */
         this.columns = {};
 
