@@ -1050,9 +1050,9 @@
         },
 
         
-        setDataColumn : function(field,name,ctype){
+        setDataColumn : function(name,ctype){
         
-            this.columns[field] = new DataColumn(name, ctype);
+            this.columns[name] = new DataColumn(name, ctype);
 
         },       
         
