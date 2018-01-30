@@ -188,7 +188,8 @@ describe('DataSet',
         expect(ds.relations.ab).toBe(rel);
       });
 
-      it('newRelation adds a relation to ds.relations', function () {
+
+        it('newRelation adds a relation to ds.relations', function () {
         ds.newTable('a');
         ds.newTable('b');
         var rel = ds.newRelation('ab', 'a', ['field1'], 'b', ['field2']);
@@ -336,8 +337,18 @@ describe('DataSet',
         expect(ds.relationsByChild.a).toEqual([]);
       });
 
+        it('dataSet.relationsByParent and should be set relationsByChild after calling newRelation', function () {
+            ds.newTable('a');
+            ds.newTable('b');
+            var rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']);
+            expect(ds.getParentChildRelation('b','a')).toEqual([]);
+            expect(ds.getParentChildRelation('a','c')).toEqual([]);
+            expect(ds.getParentChildRelation('a','b')).toEqual([rel]);
+        });
 
-      it('clone should preserve relationsByParent relationsByChild and ', function () {
+
+
+        it('clone should preserve relationsByParent relationsByChild and ', function () {
         ds.newTable('a');
         ds.newTable('b');
         var rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),

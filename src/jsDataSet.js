@@ -2322,6 +2322,11 @@
             return "dataSet " + this.name;
         },
 
+        getParentChildRelation: function (parentName,childName){
+          return _(this.relationsByChild[childName])
+              .filter({parentTable:parentName})
+              .value();
+        },
         /**
          * Clones a DataSet replicating its structure but without copying any ObjectRow
          * @method clone
