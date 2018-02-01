@@ -64,7 +64,7 @@ describe('DataRow module test', function () {
             expect(createDr).toThrow();
         });
 
-        it('new DataRow called with an  object already linked to a DataRow should throw exception', function () {
+        it('new DataRow called with an  object already linked to a DataRow should not throw exception', function () {
             var a = {Q: 1},
                 q = new DataRow(a),
                 createDr = function () {
@@ -72,7 +72,18 @@ describe('DataRow module test', function () {
                     q2.b = 1;
                 };
             q.b = 1;
-            expect(createDr).toThrow();
+            expect(createDr).not.toThrow();
+        });
+        it('new DataRow called with an  object already linked to a DataRow should create an independent DataRow', function () {
+            var a = {Q: 1},
+                q = new DataRow(a),
+                createDr = function () {
+                    var q2 = new DataRow(a);
+                    q2.b = 1;
+                };
+            q.b = 1;
+            q.Q = 2;
+            expect(a.Q).toBe(1);
         });
 
         it(' DataRow called with an  object already linked to a DataRow should return the linked DataRow',

@@ -291,9 +291,12 @@
 
         if (o.getRow) {
             if (this && this.constructor === DataRow) {
-                throw 'Called new DataRow with an object already attached to a DataRow';
+                o=_.clone(o);
+                //throw 'Called new DataRow with an object already attached to a DataRow';
             }
-            return o.getRow();
+            else {
+                return o.getRow();
+            }
         }
 
         if (this === undefined || this.constructor !== DataRow) {
@@ -2617,16 +2620,8 @@
         mergeAsPut: function (d) {
             var that = this;
             _.forEach(d.tables, function (t) {
-                var t2 = that.tables[t.name];
-                _.forEach(t.rows, function (r) {
-                    var existingRow = t2.select(t2.keyFilter(r));
-                    if (existingRow.length === 0) {
-                        t2.add(_.clone(r.current));  // new row state is 'added'
-                    } else {
-                        existingRow[0].getRow().makeEqualTo(r.current); //new row state is modified
-                    }
-                })
-            })
+                that.tables[t.name].mergeAsPut(t);
+            });
         },
 
         /**
@@ -2639,11 +2634,8 @@
         mergeAsPost: function (d) {
             var that = this;
             _.forEach(d.tables, function (t) {
-                var t2 = that.tables[t.name];
-                _.forEach(t.rows, function (r) {
-                    t2.add(_.clone(r.current)); //row is always simply  added
-                })
-            })
+                that.tables[t.name].mergeAsPost(t);
+            });
         },
 
         /**
@@ -2656,14 +2648,8 @@
         mergeAsPatch: function (d) {
             var that = this;
             _.forEach(d.tables, function (t) {
-                var t2 = that.tables[t.name];
-                _.forEach(t.rows, function (r) {
-                    var existingRow = t2.select(t.keyFilter(r));
-                    if (existingRow.length === 1) {
-                        existingRow[0].getRow().patchTo(r); //row is now in the state of updated
-                    }
-                })
-            })
+                that.tables[t.name].mergeAsPatch(t);
+            });
         },
 
         /**
@@ -2675,27 +2661,8 @@
         merge: function (d) {
             var that = this;
             _.forEach(d.tables, function (t) {
-                var t2 = that.tables[t.name];
-                _.forEach(t.rows, function (r) {
-                    var existingRow = t2.select(t.keyFilter(r));
-                    if (r.getRow().state == $rowState.deleted) {
-                        if (existingRow.length === 1) {
-                            existingRow[0].makeSameAs(r);
-                        }
-                        else {
-                            t2.add(_.clone(r)).acceptChanges().del();
-                        }
-                    }
-                    else {
-                        if (existingRow.length === 1) {
-                            existingRow[0].getRow().makeSameAs(r);
-                        }
-                        else {
-                            t2.add({}).makeSameAs(r);
-                        }
-                    }
-                })
-            })
+                that.tables[t.name].merge(t);
+            });
         },
 
         /**
@@ -2726,7 +2693,7 @@
 
     // Some AMD build optimizers like r.js check for condition patterns like the following:
     //noinspection JSUnresolvedVariable
-    if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) {
+    if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
         // Expose lodash to the global object when an AMD loader is present to avoid
         // errors in cases where lodash is loaded by a script tag and not intended
         // as an AMD module. See http://requirejs.org/docs/errors.html#mismatch for
