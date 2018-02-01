@@ -1971,7 +1971,85 @@
 
             this.assignField(r, field, newID);
 
-        }
+        },
+        /**
+         * merges changes from dataTable t assuming they are unchanged and they can be present in this or not.
+         * If a row is not present, it is added. If it is present, it is updated.
+         * It is assumed that "this" dataTable is unchanged at the beginning
+         * @method mergeAsPut
+         * @param {DataTable} t
+         */
+        mergeAsPut: function (t) {
+            var that = this;
+                _.forEach(t.rows, function (r) {
+                    var existingRow = that.select(that.keyFilter(r));
+                    if (existingRow.length === 0) {
+                        that.add(_.clone(r.current));  // new row state is 'added'
+                    } else {
+                        existingRow[0].getRow().makeEqualTo(r.current); //new row state is modified
+                    }
+                });
+        },
+
+        /**
+         * merges changes from dataTable t assuming they are unchanged and they are not present in this dataTable.
+         * Rows are all added 'as is' to this, in the state of ADDED
+         * It is assumed that "this" dataTable is unchanged at the beginning
+         * @method mergeAsPost
+         * @param {DataTable} t
+         */
+        mergeAsPost: function (t) {
+            var that = this;
+                _.forEach(t.rows, function (r) {
+                    that.add(_.clone(r.current)); //row is always simply  added
+                });
+        },
+
+        /**
+         * merges changes from dataTable t assuming they are unchanged and they are all present in this dataTable.
+         * Rows are updated, but only  fields actually present in d are modified. Other field are left unchanged.
+         * It is assumed that "this" dataTable is unchanged at the beginning
+         * @method mergeAsPatch
+         * @param {DataTable} t
+         */
+        mergeAsPatch: function (t) {
+            var that = this;
+                _.forEach(t.rows, function (r) {
+                    var existingRow = that.select(t.keyFilter(r));
+                    if (existingRow.length === 1) {
+                        existingRow[0].getRow().patchTo(r); //row is now in the state of updated
+                    }
+            });
+        },
+
+        /**
+         * merge any row present in dataTable t. Rows are merged as unchanged if they are unchanged,
+         *  otherwise their values are copied into existent dataTable
+         *  DataSet must have same table structure
+         * @param  {DataTable} t
+         */
+        merge: function (t) {
+            var that = this;
+                _.forEach(t.rows, function (r) {
+                    var existingRow = that.select(t.keyFilter(r));
+                    if (r.getRow().state === $rowState.deleted) {
+                        if (existingRow.length === 1) {
+                            existingRow[0].makeSameAs(r);
+                        }
+                        else {
+                            that.add(_.clone(r)).acceptChanges().del();
+                        }
+                    }
+                    else {
+                        if (existingRow.length === 1) {
+                            existingRow[0].getRow().makeSameAs(r);
+                        }
+                        else {
+                            that.add({}).makeSameAs(r);
+                        }
+                    }
+            });
+        },
 
     };
 
