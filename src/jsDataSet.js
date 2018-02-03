@@ -4,7 +4,7 @@
  */
 /*jslint nomen: true*/
 /*jslint bitwise: true */
-/*globals Environment */
+/*globals Environment,jsDataAccess */
 ;
 'use strict';
 
@@ -76,7 +76,6 @@
     }
 
 
-
     /**
      * @public
      * @typedef {$rowState} dataRowState
@@ -102,12 +101,12 @@
         },
 
 
-    /**
-     * @public
-     * @typedef {$rowVersion} dataRowVersion
-     * @property  {DataRowVersion} original
-     * @property  {DataRowVersion} current
-     */
+        /**
+         * @public
+         * @typedef {$rowVersion} dataRowVersion
+         * @property  {DataRowVersion} original
+         * @property  {DataRowVersion} current
+         */
 
         /**
          * Enumerates possible version of a DataRow field: original, current
@@ -121,29 +120,28 @@
         };
 
 
-    
     /**
-   * Create a DataColumn
-   * @param {string} columnName
-   * @param {string} type of the column field
-   **/
+     * Create a DataColumn
+     * @param {string} columnName
+     * @param {string} type of the column field
+     **/
     function DataColumn(name, ctype) {
 
         /**
-        * name of the column 
-        * @property {string} name
-        **/
+         * name of the column
+         * @property {string} name
+         **/
         this.name = name;
 
         /**
-        * type of the column 
-        * @property {string} ctype
-        **/
+         * type of the column
+         * @property {string} ctype
+         **/
         this.ctype = ctype;
 
-    }   
-    
-    
+    }
+
+
     /**
      * DataRow shim, provides methods to manage objects as Ado.Net DataRows
      * @module DataSet
@@ -164,7 +162,6 @@
          */
         this.r = d;
     }
-
 
 
     DataRowObserver.prototype = {
@@ -198,7 +195,8 @@
                         that.r.old[property] = that.r.removed[property];
                     }
                     delete that.r.removed[property];
-                } else {
+                }
+                else {
                     that.r.added[property] = added[property];
                 }
             });
@@ -211,11 +209,13 @@
 //                getOldValueFn(property); // its old value
                 if (that.r.added.hasOwnProperty(property)) {
                     delete that.r.added[property];
-                } else {
+                }
+                else {
                     if (that.r.old.hasOwnProperty(property)) {
                         //removing a property that had been previously modified
                         that.r.removed[property] = that.r.old[property];
-                    } else {
+                    }
+                    else {
                         that.r.removed[property] = getOldValueFn(property);
                     }
                 }
@@ -230,7 +230,8 @@
                 if (!that.r.added.hasOwnProperty(property)) {
                     if (!that.r.old.hasOwnProperty(property)) {
                         that.r.old[property] = getOldValueFn(property);
-                    } else {
+                    }
+                    else {
                         if (that.r.old[property] === changed[property]) {
                             delete that.r.old[property];
                         }
@@ -253,7 +254,7 @@
      * @class ObjectRow
      * @public
      */
-     function ObjectRow(){
+    function ObjectRow() {
         //dummy constructor
         /**
          * Gets the DataRow linked to an ObjectRow
@@ -261,22 +262,19 @@
          * @method getRow
          * @returns {DataRow}
          */
-        this.getRow  = function(){
+        this.getRow = function () {
         }
     }
 
-
-    
 
     /**
      * Provides methods to manage objects as Ado.Net DataRows
      * @class DataRow
      */
 
- 
 
     /**
-     * 
+     *
      * Creates a DataRow from a generic plain object, and returns the DataRow
      * @method DataRow
      * @param {object} o this is the main object managed by the application logic, it is attached to a getRow function
@@ -291,7 +289,7 @@
 
         if (o.getRow) {
             if (this && this.constructor === DataRow) {
-                o=_.clone(o);
+                o = _.clone(o);
                 //throw 'Called new DataRow with an object already attached to a DataRow';
             }
             else {
@@ -352,7 +350,8 @@
                         Object.keys(that.added).length === 0 &&
                         Object.keys(that.removed).length === 0) {
                         that.myState = $rowState.unchanged;
-                    } else {
+                    }
+                    else {
                         that.myState = $rowState.modified;
                     }
                 }
@@ -450,20 +449,20 @@
          * @param r {DataRow}
          * @return {DataRow}
          */
-        makeSameAs: function(r){
-            if (this.state === $rowState.deleted){
+        makeSameAs: function (r) {
+            if (this.state === $rowState.deleted) {
                 this.rejectChanges();
             }
-            if (r.state === $rowState.deleted){
+            if (r.state === $rowState.deleted) {
                 return this.makeEqualTo(r.originalRow()).acceptChanges().del();
             }
-            if (r.state === $rowState.unchanged){
+            if (r.state === $rowState.unchanged) {
                 return this.makeEqualTo(r.current).acceptChanges();
             }
-            if (r.state === $rowState.modified){
+            if (r.state === $rowState.modified) {
                 return this.makeEqualTo(r.originalRow()).acceptChanges().makeEqualTo(r.current);
             }
-            if (r.state === $rowState.added){ //assumes this also is already in the state of "added"
+            if (r.state === $rowState.added) { //assumes this also is already in the state of "added"
                 return this.makeEqualTo(r.current());
             }
             return this;
@@ -545,7 +544,7 @@
                 return this;
             }
             this.commit();
-            this._reset();
+            this.reset();
             return this;
         },
 
@@ -563,22 +562,18 @@
                 this.detach();
                 return this;
             }
-
-            var fieldToDel,
-                fieldToAdd;
             this.commit();
             _.extend(this.current, this.old);
-            for (fieldToDel in this.added) {
-                if (this.added.hasOwnProperty(fieldToDel)) {
-                    delete this.current[fieldToDel];
-                }
-            }
-            for (fieldToAdd in this.removed) {
-                if (this.removed.hasOwnProperty(fieldToAdd)) {
-                    this.current[fieldToAdd] = this.removed[fieldToAdd];
-                }
-            }
-            this._reset();
+            var that=this;
+            _.forEach(this.added,function(value,fieldToDel){
+                delete that.current[fieldToDel];
+            });
+            _.forEach(this.removed,function(value,fieldToAdd){
+                that.current[fieldToAdd] = that.removed[fieldToAdd];
+            });
+
+
+            this.reset();
             return this;
         },
 
@@ -588,7 +583,7 @@
          * @method _reset
          * @return {DataRow}
          */
-        _reset: function () {
+        reset: function () {
             this.old = {};
             this.added = {};
             this.removed = {};
@@ -823,9 +818,9 @@
          * true if this field is a number
          * @property {number} [isNumber=false]
          **/
-        if (typeof options.isNumber === 'undefined') {
-            this.isNumber = (this.idLen === 0) && (typeof this.prefixField === 'undefined')
-                && (typeof this.middleConst === 'undefined');
+        if (options.isNumber === undefined) {
+            this.isNumber = (this.idLen === 0) && (this.prefixField === undefined) &&
+                 (this.middleConst === undefined);
         }
         else {
             this.isNumber = options.isNumber;
@@ -847,18 +842,19 @@
      */
     AutoIncrementColumn.prototype.getFieldSelectorMask = function (row) {
         var that = this;
-        if (typeof this.getInternalSelector === 'undefined') {
+        if (this.getInternalSelector === undefined) {
             this.getInternalSelector = function (r) {
                 return dataQuery.and(
                     _.map(that.selector, function (field, index) {
                         if (that.selectorMask && that.selectorMask[index]) {
                             return dataQuery.testMask(field, that.selectorMask[index], r[field]);
-                        } else {
+                        }
+                        else {
                             return dataQuery.eq(field, r[field]);
                         }
                     })
                 );
-            }
+            };
         }
         return this.getInternalSelector(row);
     };
@@ -888,8 +884,9 @@
     AutoIncrementColumn.prototype.getPrefix = function (r) {
         var prefix = '';
         if (this.prefixField) {
-            if (r[this.prefixField] !== null && r[this.prefixField] !== undefined)
+            if (r[this.prefixField] !== null && r[this.prefixField] !== undefined) {
                 prefix += r[this.prefixField];
+            }
         }
         if (this.middleConst) {
             prefix += this.middleConst;
@@ -916,16 +913,15 @@
     };
 
 
-
     /**
      * Optional custom function to be called to evaluate the maximum value
      * @method customFunction
      * @param {ObjectRow} r
      * @param {string} columnName
-     * @param {DataAccess} conn
+     * @param {js\DataAccess} conn
      * @return {object}
      **/
-    AutoIncrementColumn.prototype.customFunction = undefined;
+    AutoIncrementColumn.prototype.customFunction = null;
 
 
     /**
@@ -975,7 +971,7 @@
         /**
          * Dictionary of DataColumn
          * @property columns
-         * @type {}
+         * @type {DataColumns[]}
          */
         this.columns = {};
 
@@ -1009,7 +1005,7 @@
          */
         setOptimized: function (value) {
             if (value === false) {
-                this.maxCache = undefined;
+                delete this.maxCache;
                 return;
             }
             if (this.maxCache === undefined) {
@@ -1052,14 +1048,14 @@
             this.maxCache[hash] = num;
         },
 
-        
-        setDataColumn : function(name,ctype){
-        
+
+        setDataColumn: function (name, ctype) {
+
             this.columns[name] = new DataColumn(name, ctype);
 
-        },       
-        
-        
+        },
+
+
         /**
          * get/set the minimum temp value for a field, assuming 0 if undefined
          * @method minimumTempValue
@@ -1073,14 +1069,14 @@
                     return 0;
                 }
                 this.autoIncrementColumns[field] = new AutoIncrementColumn(field, {minimum: value});
-            } else {
+            }
+            else {
                 if (value === undefined) {
                     return autoInfo.minimum || 0;
                 }
                 autoInfo.minimum = value;
             }
         },
-
 
 
         /**
@@ -1137,14 +1133,16 @@
                 rows;
             if (start === 0 && len === 0) {
                 expr = dataQuery.max(field);
-            } else {
+            }
+            else {
                 expr = dataQuery.max(dataQuery.convertToInt(dataQuery.substring(field, start, len)));
             }
 
             rows = this.selectAll(filter);
             if (rows.length === 0) {
                 res = 0;
-            } else {
+            }
+            else {
                 res = expr(rows);
             }
 
@@ -1224,8 +1222,8 @@
          */
         sameKey: function (a, b) {
             return _.find(this.myKey, function (k) {
-                    return a[k] !== b[k];
-                }) !== undefined;
+                return a[k] !== b[k];
+            }) !== undefined;
         },
 
         /**
@@ -1241,7 +1239,8 @@
             }
             if (_.isArray(k)) {
                 this.myKey = _.clone(k);
-            } else {
+            }
+            else {
                 this.myKey = Array.prototype.slice.call(arguments);
             }
             return this;
@@ -1303,7 +1302,7 @@
             if (this.myKey.length === 0) {
                 var i = this.rows.indexOf(obj);
                 if (i === -1) {
-                    return undefined
+                    return undefined;
                 }
                 return this.rows[i];
             }
@@ -1318,7 +1317,7 @@
          * Adds an object to the table setting the datarow in the state of "unchanged"
          * @method load
          * @param {object} obj plain object to load in the table
-         * @param {bool} [safe=true] if false doesn't verify existence of row
+         * @param {boolean} [safe=true] if false doesn't verify existence of row
          * @returns {DataRow} created DataRow
          */
         load: function (obj, safe) {
@@ -1339,11 +1338,11 @@
          * Adds an object to the table setting the datarow in the state of 'unchanged'
          * @method loadArray
          * @param {object[]} arr array of plain objects
-         * @param {bool} safe if false doesn't verify existence of row
+         * @param {boolean} safe if false doesn't verify existence of row
          * @return *
          */
         loadArray: function (arr, safe) {
-            var that=this;
+            var that = this;
             _.forEach(arr, function (o) {
                 that.load(o, safe);
             });
@@ -1362,7 +1361,8 @@
                 if (dr.state === $rowState.deleted) {
                     dr.table = null;
                     dr.detach();
-                } else {
+                }
+                else {
                     dr.acceptChanges();
                     newRows.push(o);
                 }
@@ -1384,15 +1384,16 @@
                  * @param {ObjectRow} o
                  */
                 function (o) {
-                var dr = o.getRow();
-                if (dr.state === $rowState.added) {
-                    dr.table = null;
-                    dr.detach();
-                } else {
-                    dr.rejectChanges();
-                    newRows.push(o);
-                }
-            });
+                    var dr = o.getRow();
+                    if (dr.state === $rowState.added) {
+                        dr.table = null;
+                        dr.detach();
+                    }
+                    else {
+                        dr.rejectChanges();
+                        newRows.push(o);
+                    }
+                });
             this.rows = newRows;
         },
 
@@ -1595,12 +1596,16 @@
          * @returns string
          */
         columnList: function () {
-            var c = [ ];
-            for( var key in columns ) {
-                c.push(columns[key].name);
+            var c = _.map(
+                this.columns,
+                function (c) {
+                    return c.name;
+                }
+            );
+            if (this.c.length > 0) {
+                return c.join(",");
             }
-            if (this.c.length > 0) {return c.join(",");}
-            return '*';   
+            return '*';
         },
 
         /**
@@ -1623,14 +1628,15 @@
             if (autoIncrementInfo !== undefined) {
                 this.autoIncrementColumns[fieldName] = new AutoIncrementColumn(fieldName, autoIncrementInfo);
                 return this;
-            } else {
+            }
+            else {
                 return this.autoIncrementColumns[fieldName];
             }
         },
 
         /**
          * Get a serializable version of this table. If serializeStructure=true, also structure information is serialized
-         * @param {bool} [serializeStructure=false]
+         * @param {boolean} [serializeStructure=false]
          * @param {function} [filterRow] optional function for filtering rows to serialize
          * @return {object} the serialization object derived from this DataTable
          */
@@ -1641,8 +1647,11 @@
                 t.tableForReading = this.tableForReading();
                 t.tableForWriting = this.tableForWriting();
                 t.orderBy = this.orderBy();
-                //TODO: make a serializable version of sqlFun and use it for staticFilter
+
                 //t.staticFilter(this.staticFilter());
+                if (this.staticFilter){
+                    t.staticFilter( dataQuery.toObject(t.staticFilter));
+                }
                 t.skipSecurity = this.skipSecurity();
                 t.defaults = this.defaults();
                 t.autoIncrementColumns = this.autoIncrementColumns;
@@ -1660,7 +1669,7 @@
                 if (rowState === $rowState.deleted || rowState === $rowState.unchanged || rowState === $rowState.modified) {
                     newRow.old = row.originalRow();
                 }
-                if (rowState === $rowState.modified || rowState == $rowState.added) {
+                if (rowState === $rowState.modified || rowState === $rowState.added) {
                     newRow.curr = _.clone(r);
                 }
                 t.rows.push(newRow);
@@ -1683,6 +1692,9 @@
                 this.skipSecurity(t.skipSecurity);
                 this.defaults(t.defaults);
                 this.orderBy(t.orderBy);
+                if (t.staticFilter){
+                    this.staticFilter = dataQuery.fromObject(t.staticFilter);
+                }
                 if (t.autoIncrementColumns) {
                     this.autoIncrementColumns = _.clone(t.autoIncrementColumns);
                 }
@@ -1714,7 +1726,7 @@
          * @method parentRelations
          * @returns {DataRelation[]}
          */
-        parentRelations: function() {
+        parentRelations: function () {
             return this.dataset.relationsByChild[this.name];
         },
 
@@ -1723,7 +1735,7 @@
          * @method childRelations
          * @returns {DataRelation[]}
          */
-        childRelations: function() {
+        childRelations: function () {
             return this.dataset.relationsByParent[this.name];
         },
 
@@ -1736,7 +1748,7 @@
          * @return {*}
          */
         mergeArray: function (arr, overwrite) {
-            var that=this;
+            var that = this;
             _.forEach(arr, function (r) {
                     var oldRow = that.existingRow(r);
                     if (oldRow) {
@@ -1744,7 +1756,8 @@
                             oldRow.getRow().makeEqualTo(r);
                             oldRow.acceptChanges();
                         }
-                    } else {
+                    }
+                    else {
                         that.load(r, false);
                     }
                 }
@@ -1826,7 +1839,7 @@
          * @param {object} value
          */
         avoidCollisions: function (r, field, value) {
-            var that=this;
+            var that = this;
             var deps = this.fieldDependencies(field);
             if (this.autoIncrementColumns[field]) {
                 deps.unshift(field);
@@ -1847,7 +1860,7 @@
          * @param {sqlFun} filter
          */
         avoidCollisionsOnField: function (field, filter) {
-            var that=this;
+            var that = this;
             _.forEach(this.select(filter), function (rCollide) {
                 that.calcTemporaryId(rCollide, field);
             });
@@ -1922,7 +1935,7 @@
          * @returns {*}
          */
         updateDependencies: function (row, field) {
-            var that=this;
+            var that = this;
             _.forEach(this.fieldDependencies(field), function (f) {
                 that.calcTemporaryId(row, f);
             });
@@ -1938,7 +1951,7 @@
          * @param {string} [field]
          */
         calcTemporaryId: function (r, field) {
-            var that=this;
+            var that = this;
             if (field === undefined) {
                 _.forEach(_.keys(this.autoIncrementColumns), function (field) {
                     that.calcTemporaryId(r, field);
@@ -1953,7 +1966,8 @@
                 startSearch;
             if (autoIncrementInfo.isNumber) {
                 evaluatedMax = this.cachedMaxSubstring(field, 0, 0, selector) + 1;
-            } else {
+            }
+            else {
                 prefix = autoIncrementInfo.getPrefix(r);
                 startSearch = prefix.length + 1;
                 evaluatedMax = this.cachedMaxSubstring(field, startSearch, autoIncrementInfo.idLen, selector) + 1;
@@ -1961,7 +1975,8 @@
 
             if (autoIncrementInfo.isNumber) {
                 newID = evaluatedMax;
-            } else {
+            }
+            else {
 
                 newID = evaluatedMax.toString();
                 if (autoIncrementInfo.idLen > 0) {
@@ -1984,14 +1999,15 @@
          */
         mergeAsPut: function (t) {
             var that = this;
-                _.forEach(t.rows, function (r) {
-                    var existingRow = that.select(that.keyFilter(r));
-                    if (existingRow.length === 0) {
-                        that.add(_.clone(r.current));  // new row state is 'added'
-                    } else {
-                        existingRow[0].getRow().makeEqualTo(r.current); //new row state is modified
-                    }
-                });
+            _.forEach(t.rows, function (r) {
+                var existingRow = that.select(that.keyFilter(r));
+                if (existingRow.length === 0) {
+                    that.add(_.clone(r.current));  // new row state is 'added'
+                }
+                else {
+                    existingRow[0].getRow().makeEqualTo(r.current); //new row state is modified
+                }
+            });
         },
 
         /**
@@ -2003,9 +2019,9 @@
          */
         mergeAsPost: function (t) {
             var that = this;
-                _.forEach(t.rows, function (r) {
-                    that.add(_.clone(r.current)); //row is always simply  added
-                });
+            _.forEach(t.rows, function (r) {
+                that.add(_.clone(r.current)); //row is always simply  added
+            });
         },
 
         /**
@@ -2017,11 +2033,11 @@
          */
         mergeAsPatch: function (t) {
             var that = this;
-                _.forEach(t.rows, function (r) {
-                    var existingRow = that.select(t.keyFilter(r));
-                    if (existingRow.length === 1) {
-                        existingRow[0].getRow().patchTo(r); //row is now in the state of updated
-                    }
+            _.forEach(t.rows, function (r) {
+                var existingRow = that.select(t.keyFilter(r));
+                if (existingRow.length === 1) {
+                    existingRow[0].getRow().patchTo(r); //row is now in the state of updated
+                }
             });
         },
 
@@ -2033,26 +2049,26 @@
          */
         merge: function (t) {
             var that = this;
-                _.forEach(t.rows, function (r) {
-                    var existingRow = that.select(t.keyFilter(r));
-                    if (r.getRow().state === $rowState.deleted) {
-                        if (existingRow.length === 1) {
-                            existingRow[0].makeSameAs(r);
-                        }
-                        else {
-                            that.add(_.clone(r)).acceptChanges().del();
-                        }
+            _.forEach(t.rows, function (r) {
+                var existingRow = that.select(t.keyFilter(r));
+                if (r.getRow().state === $rowState.deleted) {
+                    if (existingRow.length === 1) {
+                        existingRow[0].makeSameAs(r);
                     }
                     else {
-                        if (existingRow.length === 1) {
-                            existingRow[0].getRow().makeSameAs(r);
-                        }
-                        else {
-                            that.add({}).makeSameAs(r);
-                        }
+                        that.add(_.clone(r)).acceptChanges().del();
                     }
+                }
+                else {
+                    if (existingRow.length === 1) {
+                        existingRow[0].getRow().makeSameAs(r);
+                    }
+                    else {
+                        that.add({}).makeSameAs(r);
+                    }
+                }
             });
-        },
+        }
 
     };
 
@@ -2189,7 +2205,8 @@
                     return s.trim();
                 })
                 : _.clone(childColsName);
-        } else {
+        }
+        else {
             this.childCols = this.parentCols;
         }
     }
@@ -2276,7 +2293,19 @@
             return rel;
         },
 
-        deSerialize: function () {
+        deSerialize: function (rel) {
+            //relation name is not serialized here, it is a key in the parent
+            this.parentTable = rel.parentTable;
+            //parent cols are serialized as a comma separated field list
+            this.parentCols = rel.parentCols.split();
+            this.childTable = rel.childTable;
+            //child cols are not serialized if are same as parent cols
+            if (rel.childCols) {
+                this.childCols = rel.childCols.split();
+            }
+            else {
+                this.childCols = rel.parentCols.split();
+            }
         },
 
         /**
@@ -2289,7 +2318,8 @@
         activationFilter: function (filter) {
             if (filter) {
                 this.myActivationFilter = filter;
-            } else {
+            }
+            else {
                 return this.myActivationFilter;
             }
         },
@@ -2307,7 +2337,7 @@
                 return false;
             }
             //parent columns must be the key for parent table
-            if (_.difference(parentKey, this.parentCols).length != 0) {
+            if (_.difference(parentKey, this.parentCols).length !== 0) {
                 return false;
             }
             //child columns must be a subset of the child table key
@@ -2326,14 +2356,26 @@
          * @return {*}
          */
         makeChild: function (parentRow, childRow) {
-            var i;
-            for (i = 0; i < this.parentCols.length; i += 1) {
+            // _.chain(_.zip(this.parentCols,this.childCols))
+            //     .zipObject(["parentCol","childCol"])
+            //     .each(function(pair){
+            //         if (parentRow === undefined || parentRow === null) {
+            //             childRow[pair.childCol] = null;
+            //         }
+            //         else {
+            //             childRow[pair.childCol] = parentRow[pair.parentCol];
+            //         }
+            //     })
+            //     .value();
+
+            _.forEach(_.zip(this.parentCols,this.childCols),function(colPair){
                 if (parentRow === undefined || parentRow === null) {
-                    childRow[this.childCols[i]] = null;
-                } else {
-                    childRow[this.childCols[i]] = parentRow[this.parentCols[i]];
+                    childRow[colPair[1]] = null;
                 }
-            }
+                else {
+                    childRow[colPair[1]] = parentRow[colPair[0]];
+                }
+            });
         }
     };
 
@@ -2403,10 +2445,10 @@
             return "dataSet " + this.name;
         },
 
-        getParentChildRelation: function (parentName,childName){
-          return _(this.relationsByChild[childName])
-              .filter({parentTable:parentName})
-              .value();
+        getParentChildRelation: function (parentName, childName) {
+            return _(this.relationsByChild[childName])
+                .filter({parentTable: parentName})
+                .value();
         },
         /**
          * Clones a DataSet replicating its structure but without copying any ObjectRow
@@ -2541,7 +2583,7 @@
         cascadeDelete: function (row) {
             var r = row.getRow(),
                 table = r.table,
-                that=this;
+                that = this;
             _.forEach(this.relationsByParent[table.name], function (rel) {
                 if (rel.isEntityRelation()) {
                     _.forEach(rel.getChilds(row), function (toDel) {
@@ -2549,7 +2591,8 @@
                             that.cascadeDelete(toDel);
                         }
                     })
-                } else {
+                }
+                else {
                     _.forEach(rel.getChilds(row), function (toUnlink) {
                             rel.makeChild(null, toUnlink)
                         }
