@@ -1253,10 +1253,33 @@
             else {
                 this.myKey = Array.prototype.slice.call(arguments);
             }
+            _.forEach(this.columns,function(c){
+               delete c.isPrimaryKey;
+            });
+            var self=this;
+            _.forEach(this.myKey,function(k){
+                if (!self.columns[k]){
+                    return true;
+                }
+                self.columns[k].isPrimaryKey=true;
+            });
             return this;
         },
 
-
+        /**
+         * Check if a column is key
+         * @param {string} k
+         * @returns {boolean}
+         */
+        isKey: function(k){
+            if (k.isPrimaryKey){
+                return true;
+            }
+            if (this.columns[k]){
+                return this.columns[k].isPrimaryKey;
+            }
+            return this.myKey.indexOf(k)>=0;
+        },
         /**
          * Clears the table detaching all rows.
          * @method clear
