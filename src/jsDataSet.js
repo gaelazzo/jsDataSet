@@ -1170,7 +1170,10 @@
          */
         select: function (filter) {
             if (filter === null || filter === undefined) {
-                return this.rows;
+                return _.filter(this.rows, function (r) {
+                    return r.getRow().state !== $rowState.deleted;
+
+                });
             }
             if (filter) {
                 if (filter.isTrue) {
