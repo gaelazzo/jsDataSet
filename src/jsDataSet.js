@@ -2765,6 +2765,7 @@
     var jsDataSet = {
         dataRowState: $rowState,
         dataRowVersion: $rowVersion,
+        DataColumn: DataColumn,
         DataRow: DataRow,
         DataTable: DataTable,
         DataSet: DataSet,
