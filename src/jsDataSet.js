@@ -2684,7 +2684,7 @@
                 if (t === undefined) {
                     t = that.newTable(tableName);
                 }
-                t.deSerialize(d.tables[tableName]);
+                t.deSerialize(d.tables[tableName],deSerializeStructure);
             });
             if (deSerializeStructure) {
                 _.forEach(_.keys(d.relations), function (relationName) {
