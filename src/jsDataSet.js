@@ -1690,8 +1690,8 @@
                 t.orderBy = this.orderBy();
 
                 //t.staticFilter(this.staticFilter());
-                if (this.staticFilter) {
-                    t.staticFilter(dataQuery.toObject(t.staticFilter));
+                if (this.staticFilter()) {
+                    t.staticFilter=dataQuery.toObject(this.staticFilter());
                 }
                 t.skipSecurity = this.skipSecurity();
                 t.defaults = this.defaults();
@@ -1734,7 +1734,7 @@
                 this.defaults(t.defaults);
                 this.orderBy(t.orderBy);
                 if (t.staticFilter) {
-                    this.staticFilter = dataQuery.fromObject(t.staticFilter);
+                    this.staticFilter(dataQuery.fromObject(t.staticFilter));
                 }
                 if (t.autoIncrementColumns) {
                     this.autoIncrementColumns = _.clone(t.autoIncrementColumns);
