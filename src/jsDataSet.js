@@ -1643,7 +1643,7 @@
                     return c.name;
                 }
             );
-            if (this.c.length > 0) {
+            if (c.length > 0) {
                 return c.join(",");
             }
             return '*';
