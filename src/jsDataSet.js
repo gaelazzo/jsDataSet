@@ -470,7 +470,7 @@
                 return this.makeEqualTo(r.originalRow()).acceptChanges().makeEqualTo(r.current);
             }
             if (r.state === $rowState.added) { //assumes this also is already in the state of "added"
-                return this.makeEqualTo(r.current());
+                return this.makeEqualTo(r.current);
             }
             return this;
         },
