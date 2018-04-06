@@ -1698,6 +1698,7 @@
                 t.autoIncrementColumns = this.autoIncrementColumns;
                 t.columns = this.columns;
             }
+            t.name= this.name;
             t.rows = [];
             _.forEach(this.rows, function (r) {
                 if (filterRow && filterRow(r) === false) {
@@ -1743,6 +1744,7 @@
                     this.columns = _.clone(t.columns);
                 }
             }
+            that.name=this.name;
             _.forEach(t.rows, function (r) {
                 var rowState = r.state;
                 if (rowState === $rowState.added) {
