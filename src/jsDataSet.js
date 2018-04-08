@@ -1682,6 +1682,9 @@
          * @return {object} the serialization object derived from this DataTable
          */
         serialize: function (serializeStructure, filterRow) {
+            var clean= function (r){
+                return _.pickBy(r,function(o){return o!==null && o!==undefined;});
+            }
             var t = {};
             if (serializeStructure) {
                 t.key = this.key().join();
@@ -1709,11 +1712,12 @@
                     newRow = {state: rowState};
                 row.commit();
                 if (rowState === $rowState.deleted || rowState === $rowState.unchanged || rowState === $rowState.modified) {
-                    newRow.old = row.originalRow();
+                    newRow.old = clean(row.originalRow());
                 }
                 if (rowState === $rowState.modified || rowState === $rowState.added) {
-                    newRow.curr = _.clone(r);
+                    newRow.curr = clean(r); //_.clone(r)
                 }
+
                 t.rows.push(newRow);
             });
             return t;
