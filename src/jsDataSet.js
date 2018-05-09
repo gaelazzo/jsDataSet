@@ -2100,18 +2100,18 @@
                 var existingRow = that.select(t.keyFilter(r));
                 if (r.getRow().state === $rowState.deleted) {
                     if (existingRow.length === 1) {
-                        existingRow[0].makeSameAs(r);
+                        existingRow[0].makeSameAs(r.getRow());
                     }
                     else {
-                        that.add(_.clone(r)).acceptChanges().del();
+                        that.add(_.clone(r.getRow())).acceptChanges().del();
                     }
                 }
                 else {
                     if (existingRow.length === 1) {
-                        existingRow[0].getRow().makeSameAs(r);
+                        existingRow[0].getRow().makeSameAs(r.getRow());
                     }
                     else {
-                        that.add({}).makeSameAs(r);
+                        that.add({}).makeSameAs(r.getRow());
                     }
                 }
             });
