@@ -1690,6 +1690,8 @@
                 t.key = this.key().join();
                 t.tableForReading = this.tableForReading();
                 t.tableForWriting = this.tableForWriting();
+                t.isCached = this.isCached;
+                t.isTemporaryTable = this.isTemporaryTable;
                 t.orderBy = this.orderBy();
 
                 //t.staticFilter(this.staticFilter());
@@ -1735,6 +1737,9 @@
                 this.key(t.key.split(','));
                 this.tableForReading(t.tableForReading);
                 this.tableForWriting(t.tableForWriting);
+                this.isCached = t.isCached;
+                this.isTemporaryTable = t.isTemporaryTable;
+
                 this.skipSecurity(t.skipSecurity);
                 this.defaults(t.defaults);
                 this.orderBy(t.orderBy);
