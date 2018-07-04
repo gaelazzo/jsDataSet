@@ -1,0 +1,3438 @@
+{
+    "project": {
+        "linkNatives": "true",
+        "name": "jsDataSet",
+        "description": "DataSet (like .Net) made available for javascript and more",
+        "version": "1.0.1",
+        "url": "https://github.com/gaelazzo/jsDataSet"
+    },
+    "files": {
+        "src\\jsDataSet.js": {
+            "name": "src\\jsDataSet.js",
+            "modules": {
+                "DataSet": 1,
+                "DataRow": 1
+            },
+            "classes": {
+                "dataRowState": 1,
+                "DataRowVersion": 1,
+                "DataRowObserver": 1,
+                "ObjectRow": 1,
+                "DataRow": 1,
+                "AutoIncrementColumn": 1,
+                "DataTable": 1,
+                "OptimisticLocking": 1,
+                "DataRelation": 1,
+                "DataSet": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "DataSet": {
+            "name": "DataSet",
+            "submodules": {
+                "DataRow": 1
+            },
+            "elements": {},
+            "classes": {
+                "dataRowState": 1,
+                "DataRowVersion": 1,
+                "DataRowObserver": 1,
+                "ObjectRow": 1,
+                "DataRow": 1,
+                "AutoIncrementColumn": 1,
+                "DataTable": 1,
+                "OptimisticLocking": 1,
+                "DataRelation": 1,
+                "DataSet": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "src\\jsDataSet.js",
+            "line": 2436,
+            "description": "Provides shim for Ado.net DataSet class"
+        },
+        "DataRow": {
+            "name": "DataRow",
+            "submodules": {},
+            "elements": {},
+            "classes": {
+                "DataRowVersion": 1,
+                "DataRowObserver": 1,
+                "ObjectRow": 1,
+                "DataRow": 1,
+                "AutoIncrementColumn": 1,
+                "DataTable": 1
+            },
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "DataSet",
+            "namespace": "",
+            "file": "src\\jsDataSet.js",
+            "line": 937,
+            "description": "DataRow shim, provides methods to manage objects as Ado.Net DataRows"
+        }
+    },
+    "classes": {
+        "dataRowState": {
+            "name": "$rowState",
+            "shortname": "dataRowState",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "DataSet",
+            "file": "src\\jsDataSet.js",
+            "line": 90,
+            "itemtype": "property",
+            "access": "public",
+            "tagname": ""
+        },
+        "DataRowVersion": {
+            "name": "$rowVersion",
+            "shortname": "DataRowVersion",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "DataSet",
+            "file": "src\\jsDataSet.js",
+            "line": 111,
+            "description": "Enumerates possible version of a DataRow field: original, current",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "submodule": "DataRow"
+        },
+        "DataRowObserver": {
+            "name": "DataRowObserver",
+            "shortname": "DataRowObserver",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "DataSet",
+            "submodule": "DataRow",
+            "namespace": "",
+            "file": "src\\jsDataSet.js",
+            "line": 151,
+            "description": "Internal class attached to dataRow model data and used to track object changes",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "d",
+                    "description": "",
+                    "type": "ObjectRow"
+                }
+            ],
+            "is_constructor": 1
+        },
+        "ObjectRow": {
+            "name": "ObjectRow",
+            "shortname": "ObjectRow",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "DataSet",
+            "submodule": "DataRow",
+            "namespace": "",
+            "file": "src\\jsDataSet.js",
+            "line": 252,
+            "description": "class type to host data",
+            "access": "public",
+            "tagname": ""
+        },
+        "DataRow": {
+            "name": "DataRow",
+            "shortname": "DataRow",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "DataSet",
+            "submodule": "DataRow",
+            "namespace": "",
+            "file": "src\\jsDataSet.js",
+            "line": 274,
+            "description": "Provides methods to manage objects as Ado.Net DataRows"
+        },
+        "AutoIncrementColumn": {
+            "name": "AutoIncrementColumn",
+            "shortname": "AutoIncrementColumn",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "DataSet",
+            "submodule": "DataRow",
+            "namespace": "",
+            "file": "src\\jsDataSet.js",
+            "line": 762,
+            "description": "Describe how to evaluate the value of a column before posting it"
+        },
+        "DataTable": {
+            "name": "DataTable",
+            "shortname": "DataTable",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "DataSet",
+            "submodule": "DataRow",
+            "namespace": "",
+            "file": "src\\jsDataSet.js",
+            "line": 937,
+            "description": "A DataTable is s collection of ObjectRow and provides information about the structure of logical table"
+        },
+        "OptimisticLocking": {
+            "name": "OptimisticLocking",
+            "shortname": "OptimisticLocking",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "DataSet",
+            "namespace": "",
+            "file": "src\\jsDataSet.js",
+            "line": 2132,
+            "description": "Manages auto fill of locking purposed fields and evaluates filter for optimistic locking for update\nIn his basic implementation accept a list of fields to fill. Values for filling are taken from\n environment."
+        },
+        "DataRelation": {
+            "name": "DataRelation",
+            "shortname": "DataRelation",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "DataSet",
+            "namespace": "",
+            "file": "src\\jsDataSet.js",
+            "line": 2204,
+            "description": "creates a DataRelation",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "relationName",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "parentTableName",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "parentColsName",
+                    "description": "array of string",
+                    "type": "String|String[]"
+                },
+                {
+                    "name": "childTableName",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "childColsName",
+                    "description": "optional names of child columns",
+                    "type": "String|String[]",
+                    "optional": true,
+                    "optdefault": "parentColsName"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "DataRelation"
+            }
+        },
+        "DataSet": {
+            "name": "DataSet",
+            "shortname": "DataSet",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "DataSet",
+            "namespace": "",
+            "file": "src\\jsDataSet.js",
+            "line": 2436,
+            "description": "Stores and manages a set of DataTables and DataRelations"
+        }
+    },
+    "elements": {},
+    "classitems": [
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1,
+            "description": "Created by Gaetano Lazzo on 07/02/2015.\nThanks to lodash, ObjectObserve",
+            "class": "dataRowState"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 12,
+            "class": "dataRowState"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 39,
+            "class": "dataRowState"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 46,
+            "description": "Used as a reference to the global object. (thanks lodash)\n\nThe `this` value is used if it is the global object to avoid Greasemonkey's\nrestricted `window` object, otherwise the `window` object is used.",
+            "class": "dataRowState"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 55,
+            "class": "dataRowState"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 59,
+            "class": "dataRowState"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 63,
+            "class": "dataRowState"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 70,
+            "class": "dataRowState"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 79,
+            "access": "public",
+            "tagname": "",
+            "typedef": "{$rowState} dataRowState",
+            "itemtype": "property",
+            "name": "{DataRowState} modified",
+            "type": "DataRowState",
+            "class": "dataRowState"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 104,
+            "access": "public",
+            "tagname": "",
+            "typedef": "{$rowVersion} dataRowVersion",
+            "itemtype": "property",
+            "name": "{DataRowVersion} current",
+            "type": "DataRowVersion",
+            "class": "dataRowState"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 123,
+            "description": "Create a DataColumn",
+            "params": [
+                {
+                    "name": "columnName",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "type",
+                    "description": "of the column field",
+                    "type": "String"
+                }
+            ],
+            "class": "DataRowVersion"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 130,
+            "description": "name of the column",
+            "itemtype": "property",
+            "name": "name",
+            "type": "String",
+            "class": "DataRowVersion"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 136,
+            "description": "type of the column",
+            "itemtype": "property",
+            "name": "ctype",
+            "type": "String",
+            "class": "DataRowVersion"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 159,
+            "itemtype": "property",
+            "name": "r",
+            "type": "{ObjectRow}",
+            "class": "DataRowObserver",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 170,
+            "description": "Take track of object changes, managing added fields, removed fields, modified fields.\nThis is called automatically by the ObjectObserver attached to the object",
+            "internal": "",
+            "itemtype": "method",
+            "name": "dataRowReactOnChange",
+            "params": [
+                {
+                    "name": "added",
+                    "description": ""
+                },
+                {
+                    "name": "removed",
+                    "description": ""
+                },
+                {
+                    "name": "changed",
+                    "description": ""
+                },
+                {
+                    "name": "getOldValueFn",
+                    "description": ""
+                }
+            ],
+            "class": "DataRowObserver",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 262,
+            "description": "Gets the DataRow linked to an ObjectRow",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "getRow",
+            "return": {
+                "description": "",
+                "type": "DataRow"
+            },
+            "class": "ObjectRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 280,
+            "description": "Creates a DataRow from a generic plain object, and returns the DataRow",
+            "itemtype": "method",
+            "name": "DataRow",
+            "params": [
+                {
+                    "name": "o",
+                    "description": "this is the main object managed by the application logic, it is attached to a getRow function",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "DataRow"
+            },
+            "is_constructor": 1,
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 313,
+            "description": "current value of the DataRow is the ObjectRow o itself",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "current",
+            "type": "ObjectRow",
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 319,
+            "description": "previous values of the DataRow, only previous values of changed fields are stored",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "old",
+            "type": "Object",
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 326,
+            "description": "fields added to object (after last acceptChanges())",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "added",
+            "type": "Object",
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 333,
+            "description": "fields removed (with delete o.field) from object (after last acceptChanges())",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "removed",
+            "type": "Object",
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 344,
+            "description": "State of the DataRow, possible values are added unchanged modified deleted detached",
+            "itemtype": "property",
+            "name": "state",
+            "type": "DataRowState",
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 371,
+            "description": "Get the DataRow attached to an object. This method is attached to the object itself,\n so you can get the DataRow calling o.getRow() where o is the plain object\nThis transforms o into an ObjectRow",
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 391,
+            "type": "{DataRow}",
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 397,
+            "description": "get the value of a field of the object. If dataRowVer is omitted, it's equivalent to o.fieldName",
+            "itemtype": "method",
+            "name": "getValue",
+            "params": [
+                {
+                    "name": "fieldName",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "dataRowVer",
+                    "description": "possible values are 'original', 'current'",
+                    "type": "DataRowVersion",
+                    "optional": true,
+                    "optdefault": "'current'"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Object"
+            },
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 421,
+            "description": "Gets the original row, before changes was made, undefined if current state is added",
+            "itemtype": "method",
+            "name": "originalRow",
+            "return": {
+                "description": "",
+                "type": "Object"
+            },
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 454,
+            "description": "Make this row identical to another row (both in state, original and current value)",
+            "params": [
+                {
+                    "name": "r",
+                    "description": "",
+                    "type": "DataRow"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "DataRow"
+            },
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 479,
+            "description": "changes current row to make it's current values equal to another one. Deleted rows becomes modified\ncompared to patchTo, this also removes values that are not present in other row",
+            "itemtype": "method",
+            "name": "makeEqualTo",
+            "params": [
+                {
+                    "name": "o",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "DataRow"
+            },
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 487,
+            "type": "{DataRow}",
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 509,
+            "description": "changes current row to make it's current values equal to another one. Deleted rows becomes modified",
+            "itemtype": "method",
+            "name": "patchTo",
+            "params": [
+                {
+                    "name": "o",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "DataRow"
+            },
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 529,
+            "description": "get changes from the ObjectObserver",
+            "itemtype": "method",
+            "name": "commit",
+            "internal": "",
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 543,
+            "description": "Makes changes permanents, discarding old values. state becomes unchanged.",
+            "itemtype": "method",
+            "name": "acceptChanges",
+            "return": {
+                "description": "",
+                "type": "DataRow"
+            },
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 561,
+            "description": "Discard changes, restoring the original values of the object. state becomes unchanged",
+            "itemtype": "method",
+            "name": "rejectChanges",
+            "return": {
+                "description": "",
+                "type": "DataRow"
+            },
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 590,
+            "description": "resets all change and sets state to unchanged",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "_reset",
+            "return": {
+                "description": "",
+                "type": "DataRow"
+            },
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 604,
+            "description": "Detaches row, loosing all changes made. object is also removed from the underlying DataTable",
+            "itemtype": "method",
+            "name": "detach",
+            "return": {
+                "description": "",
+                "type": "Undefined"
+            },
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 623,
+            "description": "Deletes the row. If it is in added state it becomes detached. Otherwise any changes are lost, and\n only rejectChanges can bring the row into life again",
+            "itemtype": "method",
+            "name": "del",
+            "return": {
+                "description": "",
+                "type": "DataRow"
+            },
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 645,
+            "description": "Debug - helper function",
+            "itemtype": "method",
+            "name": "toString",
+            "return": {
+                "description": "",
+                "type": "String"
+            },
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 657,
+            "description": "Gets the parent(s) of this row in the dataSet it is contained, following the relation with the\n specified name",
+            "itemtype": "method",
+            "name": "getParentRows",
+            "params": [
+                {
+                    "name": "relName",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "ObjectRow[]"
+            },
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 672,
+            "description": "Gets all parent rows of this one",
+            "return": {
+                "description": "",
+                "type": "ObjectRow[]"
+            },
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 684,
+            "description": "Gets parents row of this row in a given table",
+            "itemtype": "method",
+            "name": "getParentsInTable",
+            "params": [
+                {
+                    "name": "parentTableName",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "ObjectRow[]"
+            },
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 700,
+            "description": "Gets the child(s) of this row in the dataSet it is contained, following the relation with the\n specified name",
+            "itemtype": "method",
+            "name": "getChildRows",
+            "params": [
+                {
+                    "name": "relName",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "ObjectRow[]"
+            },
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 715,
+            "description": "Gets all child rows of this one",
+            "return": {
+                "description": "",
+                "type": "ObjectRow[]"
+            },
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 728,
+            "description": "Gets child rows of this row in a given table",
+            "itemtype": "method",
+            "name": "getChildsInTable",
+            "params": [
+                {
+                    "name": "childTableName",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "ObjectRow[]"
+            },
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 744,
+            "description": "DataTable that contains this DataRow",
+            "itemtype": "property",
+            "name": "table",
+            "type": "DataTable",
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 750,
+            "description": "Get an object with all key fields of this row",
+            "itemtype": "method",
+            "name": "keySample",
+            "return": {
+                "description": "",
+                "type": "Object"
+            },
+            "class": "DataRow",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 768,
+            "description": "Create a AutoIncrementColumn",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "columnName",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "options",
+                    "description": "same options as AutoIncrement properties",
+                    "type": "Object"
+                }
+            ],
+            "class": "AutoIncrementColumn",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 775,
+            "description": "name of the column that has to be auto-incremented",
+            "itemtype": "property",
+            "name": "columnName",
+            "type": "String",
+            "class": "AutoIncrementColumn",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 781,
+            "description": "Array of column names of selector fields. The max() is evaluating filtering the values of those fields",
+            "itemtype": "property",
+            "name": "[selector]",
+            "type": "String[]",
+            "class": "AutoIncrementColumn",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 787,
+            "description": "Array of bit mask to use for comparing selector. If present, only corrisponding bits will be compared,\n i.e. instead of sel=value it will be compared (sel & mask) = value",
+            "itemtype": "property",
+            "name": "[selectorMask]",
+            "type": "Number[]",
+            "class": "AutoIncrementColumn",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 794,
+            "description": "A field to use as prefix for the evaluated field",
+            "itemtype": "property",
+            "name": "[prefixField]",
+            "type": "String",
+            "class": "AutoIncrementColumn",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 800,
+            "description": "String literal to be appended to the prefix before the evaluated max",
+            "itemtype": "property",
+            "name": "[middleConst]",
+            "type": "String",
+            "class": "AutoIncrementColumn",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 807,
+            "description": "for string id, the len of the evaluated max. It is not the overall size of the evaluated id, because a\n prefix and a middle const might be present\nIf idLen = 0 and there is no prefix, the field is assumed to be a number, otherwise a 0 prefixed string-number",
+            "itemtype": "property",
+            "name": "[idLen=0]",
+            "type": "Number",
+            "class": "AutoIncrementColumn",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 815,
+            "description": "Indicates that numbering does NOT depend on prefix value, I.e. is linear in every section of the calculated field",
+            "itemtype": "property",
+            "name": "[linearField=false]",
+            "type": "Boolean",
+            "class": "AutoIncrementColumn",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 821,
+            "description": "Minimum temporary value for in-memory rows",
+            "itemtype": "property",
+            "name": "[minimum=0]",
+            "type": "Number",
+            "class": "AutoIncrementColumn",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 827,
+            "description": "true if this field is a number",
+            "itemtype": "property",
+            "name": "[isNumber=false]",
+            "type": "Number",
+            "class": "AutoIncrementColumn",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 848,
+            "description": "Gets a function that filter selector fields eventually masking with selectorMask",
+            "params": [
+                {
+                    "name": "row",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "SqlFun"
+            },
+            "class": "AutoIncrementColumn",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 872,
+            "description": "evaluates the function to filter selector on a specified row and column",
+            "itemtype": "method",
+            "name": "getSelector",
+            "params": [
+                {
+                    "name": "r",
+                    "description": "",
+                    "type": "ObjectRow"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "SqlFun"
+            },
+            "class": "AutoIncrementColumn",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 888,
+            "description": "Gets the prefix evaluated for a given row",
+            "itemtype": "method",
+            "name": "getPrefix",
+            "params": [
+                {
+                    "name": "r",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "string"
+            },
+            "class": "AutoIncrementColumn",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 907,
+            "description": "gets the expression to be used for retrieving the max",
+            "itemtype": "method",
+            "name": "getExpression",
+            "params": [
+                {
+                    "name": "r",
+                    "description": "",
+                    "type": "ObjectRow"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "SqlFun"
+            },
+            "class": "AutoIncrementColumn",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 926,
+            "description": "Optional custom function to be called to evaluate the maximum value",
+            "itemtype": "method",
+            "name": "customFunction",
+            "params": [
+                {
+                    "name": "r",
+                    "description": "",
+                    "type": "ObjectRow"
+                },
+                {
+                    "name": "columnName",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "conn",
+                    "description": "",
+                    "type": "JsDataAccess"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Object"
+            },
+            "class": "AutoIncrementColumn",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 942,
+            "description": "DataSet to which this table belongs",
+            "itemtype": "property",
+            "name": "dataset",
+            "type": "DataSet",
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 947,
+            "description": "Creates an empty DataTable",
+            "params": [
+                {
+                    "name": "tableName",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "is_constructor": 1,
+            "return": {
+                "description": "",
+                "type": "DataTable"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 954,
+            "description": "Name of the table",
+            "itemtype": "property",
+            "name": "name",
+            "type": "String",
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 960,
+            "description": "Collection of rows, each one hiddenly surrounded with a DataRow object",
+            "itemtype": "property",
+            "name": "rows",
+            "type": "ObjectRow[]",
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 967,
+            "description": "Array of key column names",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "myKey",
+            "type": "String[]",
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 974,
+            "description": "Set of properties to be assigned to new rows when they are created",
+            "itemtype": "property",
+            "name": "myDefaults",
+            "type": "Object",
+            "access": "private",
+            "tagname": "",
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 981,
+            "description": "Dictionary of DataColumn",
+            "itemtype": "property",
+            "name": "columns",
+            "type": "{DataColumn[]}",
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 988,
+            "itemtype": "property",
+            "name": "autoIncrementColumns",
+            "type": "{AutoIncrementColumn[]}",
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 994,
+            "description": "A ordering to use for posting of this table",
+            "itemtype": "property",
+            "name": "postingOrder",
+            "type": "string | string[] | function",
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1004,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "maxCache",
+            "type": "object",
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1010,
+            "description": "Mark the table as optimized / not optimized\nAn optimized table has a cache for all autoincrement field",
+            "itemtype": "method",
+            "name": "setOptimize",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1026,
+            "description": "Check if this table is optimized",
+            "itemtype": "method",
+            "name": "isOptimized",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1035,
+            "description": "Clear evaluated max cache",
+            "itemtype": "method",
+            "name": "clearMaxCache",
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1045,
+            "description": "Set a value in the max cache",
+            "itemtype": "method",
+            "name": "setMaxExpr",
+            "params": [
+                {
+                    "name": "field",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "expr",
+                    "description": "",
+                    "type": "SqlFun"
+                },
+                {
+                    "name": "filter",
+                    "description": "",
+                    "type": "SqlFun"
+                },
+                {
+                    "name": "num",
+                    "description": "",
+                    "type": "Int"
+                }
+            ],
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1069,
+            "description": "get/set the minimum temp value for a field, assuming 0 if undefined",
+            "itemtype": "method",
+            "name": "minimumTempValue",
+            "params": [
+                {
+                    "name": "field",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "",
+                    "type": "Number",
+                    "optional": true
+                }
+            ],
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1092,
+            "description": "gets the max in cache for a field and updates the cache",
+            "itemtype": "method",
+            "name": "getMaxExpr",
+            "params": [
+                {
+                    "name": "field",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "expr",
+                    "description": "",
+                    "type": "SqlFun|string"
+                },
+                {
+                    "name": "filter",
+                    "description": "",
+                    "type": "SqlFun"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1110,
+            "description": "Evaluates the max of an expression eventually using a cached value",
+            "itemtype": "method",
+            "name": "cachedMaxSubstring",
+            "params": [
+                {
+                    "name": "field",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "start",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "len",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "filter",
+                    "description": "",
+                    "type": "SqlFun"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1129,
+            "description": "Evaluates the max of an expression without using any cached value. If len = 0 the expression is managed\n as a number with max(field) otherwise it is performed max(convertToInt(substring(field,start,len)))",
+            "params": [
+                {
+                    "name": "field",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "start",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "len",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "filter",
+                    "description": "",
+                    "type": "SqlFun"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1165,
+            "description": "Extract a set of rows matching a filter function - skipping deleted rows",
+            "itemtype": "method",
+            "name": "select",
+            "params": [
+                {
+                    "name": "filter",
+                    "description": "",
+                    "type": "SqlFun",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "ObjectRow[]"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1203,
+            "description": "Extract a set of rows matching a filter function - including deleted rows",
+            "itemtype": "method",
+            "name": "selectAll",
+            "params": [
+                {
+                    "name": "filter",
+                    "description": "",
+                    "type": "SqlFun"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "ObjectRow[]"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1217,
+            "description": "Get the filter that compares key fields of a given row",
+            "itemtype": "method",
+            "name": "keyFilter",
+            "params": [
+                {
+                    "name": "row",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*|sqlFun"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1230,
+            "description": "Compares the key of two objects",
+            "params": [
+                {
+                    "name": "a",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "b",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1242,
+            "description": "Get/Set the primary key in a Jquery fashioned style. If k is given, the key is set, otherwise the existing\n key is returned",
+            "itemtype": "method",
+            "name": "key",
+            "params": [
+                {
+                    "name": "k",
+                    "description": "",
+                    "type": "String[]",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*|string[]"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1272,
+            "description": "Check if a column is key",
+            "params": [
+                {
+                    "name": "k",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1286,
+            "description": "Clears the table detaching all rows.",
+            "itemtype": "method",
+            "name": "clear",
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1300,
+            "description": "Detaches a row from the table",
+            "itemtype": "method",
+            "name": "detach",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": ""
+                }
+            ],
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1316,
+            "description": "Adds an object to the table setting the datarow in the state of \"added\"",
+            "itemtype": "method",
+            "name": "add",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "plain object"
+                }
+            ],
+            "return": {
+                "description": "DataRow created"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1330,
+            "description": "check if a row is present in the table. If there is  a key, it is used for finding the row,\n otherwise a ==== comparison is made",
+            "itemtype": "method",
+            "name": "existingRow",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "DataRow | undefined"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1352,
+            "description": "Adds an object to the table setting the datarow in the state of \"unchanged\"",
+            "itemtype": "method",
+            "name": "load",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "plain object to load in the table",
+                    "type": "Object"
+                },
+                {
+                    "name": "safe",
+                    "description": "if false doesn't verify existence of row",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "true"
+                }
+            ],
+            "return": {
+                "description": "created DataRow",
+                "type": "DataRow"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1373,
+            "description": "Adds an object to the table setting the datarow in the state of 'unchanged'",
+            "itemtype": "method",
+            "name": "loadArray",
+            "params": [
+                {
+                    "name": "arr",
+                    "description": "array of plain objects",
+                    "type": "Object[]"
+                },
+                {
+                    "name": "safe",
+                    "description": "if false doesn't verify existence of row",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "*"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1387,
+            "description": "Accept any changes setting all dataRows in the state of 'unchanged'.\nDeleted rows become detached and are removed from the table",
+            "itemtype": "method",
+            "name": "acceptChanges",
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1396,
+            "type": "{ObjectRow}",
+            "params": [
+                {
+                    "name": "o",
+                    "description": ""
+                }
+            ],
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1414,
+            "description": "Reject any changes putting all to 'unchanged' state.\nAdded rows become detached.",
+            "itemtype": "method",
+            "name": "rejectChanges",
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1423,
+            "itemtype": "method",
+            "name": "",
+            "params": [
+                {
+                    "name": "o",
+                    "description": "",
+                    "type": "ObjectRow"
+                }
+            ],
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1441,
+            "description": "Check if any DataRow in the table has changes",
+            "itemtype": "method",
+            "name": "hasChanges",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1453,
+            "description": "gets an array of all modified/added/deleted rows",
+            "itemtype": "method",
+            "name": "getChanges",
+            "return": {
+                "description": "",
+                "type": "Array"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1464,
+            "description": "Debug-helper function",
+            "itemtype": "method",
+            "name": "toString",
+            "return": {
+                "description": "",
+                "type": "String"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1473,
+            "description": "import a row preserving it's state, the row should already have a DataRow attached",
+            "itemtype": "method",
+            "name": "importRow",
+            "params": [
+                {
+                    "name": "row",
+                    "description": "input",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "created",
+                "type": "DataRow"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1496,
+            "description": "Get/set the object defaults in a JQuery fashioned style. When def is present, its fields and values are\n merged into existent defaults.",
+            "itemtype": "method",
+            "name": "defaults",
+            "params": [
+                {
+                    "name": "def",
+                    "description": "",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Object|*"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1511,
+            "description": "Clears any stored default value for the table",
+            "itemtype": "method",
+            "name": "clearDefaults",
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1519,
+            "description": "creates a DataRow and returns the created object. The created object has the default values merged to the\n values in the optional parameter obj.",
+            "itemtype": "method",
+            "name": "newRow",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "contains the initial value of the created objects.",
+                    "type": "Object",
+                    "optional": true
+                },
+                {
+                    "name": "parentRow",
+                    "description": "",
+                    "type": "ObjectRow",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Object"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1541,
+            "description": "Make childRow child of parentRow if a relation between the two is found",
+            "itemtype": "method",
+            "name": "makeChild",
+            "params": [
+                {
+                    "name": "childRow",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "parentTable",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "parentRow",
+                    "description": "",
+                    "type": "ObjectRow",
+                    "optional": true
+                }
+            ],
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1562,
+            "description": "Get/Set a flag indicating that this table is not subjected to security functions in a Jquery fashioned\n style",
+            "itemtype": "method",
+            "name": "skipSecurity",
+            "params": [
+                {
+                    "name": "arg",
+                    "description": "",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*|boolean"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1580,
+            "description": "Get/Set the name of table  to be used to read data from database in a Jquery fashioned style",
+            "itemtype": "method",
+            "name": "tableForReading",
+            "params": [
+                {
+                    "name": "tableName",
+                    "description": "",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*|DataTable.myTableForReading|DataTable.name"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1594,
+            "description": "Get/Set the name of table  to be used to write data from database in a Jquery fashioned style",
+            "itemtype": "method",
+            "name": "tableForWriting",
+            "params": [
+                {
+                    "name": "tableName",
+                    "description": "",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*|DataTable.myTableForWriting|DataTable.name"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1608,
+            "description": "Get/Set a static filter  to be used to read data from database in a Jquery fashioned style",
+            "itemtype": "method",
+            "name": "staticFilter",
+            "params": [
+                {
+                    "name": "filter",
+                    "description": "",
+                    "type": "SqlFun",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "SqlFun"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1621,
+            "description": "Get/set the ordering that have to be user reading from db",
+            "params": [
+                {
+                    "name": "fieldList",
+                    "description": "",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1634,
+            "description": "get the list of columns or * if there is no column set",
+            "itemtype": "method",
+            "name": "columnList",
+            "return": {
+                "description": "string"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1652,
+            "description": "Gets all autoincrement column names of this table",
+            "itemtype": "method",
+            "name": "getAutoIncrementColumns",
+            "return": {
+                "description": "",
+                "type": "String[]"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1661,
+            "description": "Get/Set autoincrement properties of fields",
+            "itemtype": "method",
+            "name": "autoIncrement",
+            "params": [
+                {
+                    "name": "fieldName",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "autoIncrementInfo",
+                    "description": "//see AutoIncrementColumn properties for details",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*|AutoIncrementColumn"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1678,
+            "description": "Get a serializable version of this table. If serializeStructure=true, also structure information is serialized",
+            "params": [
+                {
+                    "name": "serializeStructure",
+                    "description": "",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                },
+                {
+                    "name": "filterRow",
+                    "description": "optional function for filtering rows to serialize",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "the serialization object derived from this DataTable",
+                "type": "Object"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1728,
+            "description": "Get data from a serialized structure. If serializeStructure=true, also structure information is serialized",
+            "params": [
+                {
+                    "name": "t",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "deserializeStructure",
+                    "description": "",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1776,
+            "description": "Get all relation where THIS table is the child and another table is the parent",
+            "itemtype": "method",
+            "name": "parentRelations",
+            "return": {
+                "description": "",
+                "type": "DataRelation[]"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1785,
+            "description": "Get all relation where THIS table is the parent and another table is the child",
+            "itemtype": "method",
+            "name": "childRelations",
+            "return": {
+                "description": "",
+                "type": "DataRelation[]"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1794,
+            "description": "adds an array of objects to collection, as unchanged, if they still are not present. Existence is verified\n basing on  key",
+            "itemtype": "method",
+            "name": "mergeArray",
+            "params": [
+                {
+                    "name": "arr",
+                    "description": "",
+                    "type": "ObjectRow []"
+                },
+                {
+                    "name": "overwrite",
+                    "description": "",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1819,
+            "description": "clones table structure without copying any DataRow",
+            "itemtype": "method",
+            "name": "clone",
+            "return": {
+                "description": "",
+                "type": "DataTable"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1838,
+            "description": "Clones table structure and copies data\nmethod @copy",
+            "return": {
+                "description": "",
+                "type": "DataTable"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1851,
+            "description": "Gets a filter of colliding rows supposing to change r[field]= value, on  a specified column",
+            "itemtype": "method",
+            "name": "collisionFilter",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "r",
+                    "description": "",
+                    "type": "ObjectRow"
+                },
+                {
+                    "name": "field",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "autoInfo",
+                    "description": "",
+                    "type": "AutoIncrementColumn"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "SqlFun"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1872,
+            "description": "Assign a field assuring it will not cause duplicates on table's autoincrement fields",
+            "itemtype": "method",
+            "name": "safeAssign",
+            "params": [
+                {
+                    "name": "r",
+                    "description": "",
+                    "type": "ObjectRow"
+                },
+                {
+                    "name": "field",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1885,
+            "description": "check if changing a key field of a row it would collide with come autoincrement field. If it would,\n recalculates colliding rows/filter in accordance",
+            "itemtype": "method",
+            "name": "avoidCollisions",
+            "params": [
+                {
+                    "name": "r",
+                    "description": "",
+                    "type": "ObjectRow"
+                },
+                {
+                    "name": "field",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1907,
+            "description": "Recalc a field to avoid collisions on some rows identified by a filter",
+            "itemtype": "method",
+            "name": "avoidCollisionsOnField",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "field",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "filter",
+                    "description": "",
+                    "type": "SqlFun"
+                }
+            ],
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1921,
+            "description": "Assign a value to a field and update all dependencies",
+            "itemtype": "method",
+            "name": "assignField",
+            "params": [
+                {
+                    "name": "r",
+                    "description": "",
+                    "type": "ObjectRow"
+                },
+                {
+                    "name": "field",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1934,
+            "description": "assign a value to a field in a row and all descending child rows",
+            "itemtype": "method",
+            "name": "cascadeAssignField",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "r",
+                    "description": "",
+                    "type": "ObjectRow"
+                },
+                {
+                    "name": "parentField",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1959,
+            "description": "Gets all autoincrement fields that depends on a given field, i.e. those having field as selector or prefixfield",
+            "itemtype": "method",
+            "name": "fieldDependencies",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "field",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "String[]"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1981,
+            "description": "Re calculate temporaryID affected by a field change. It should be done for every autoincrement field\n that has that field as a selector or as a prefix field",
+            "itemtype": "method",
+            "name": "updateDependencies",
+            "params": [
+                {
+                    "name": "row",
+                    "description": "",
+                    "type": "ObjectRow"
+                },
+                {
+                    "name": "field",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 1997,
+            "description": "Augment r[field] in order to avoid collision with another row that needs to take that value\nif field is not specified, this is applied to all autoincrement field of the table\nPrecondition: r[[field] should be an autoincrement field",
+            "itemtype": "method",
+            "name": "calcTemporaryId",
+            "params": [
+                {
+                    "name": "r",
+                    "description": "",
+                    "type": "ObjectRow"
+                },
+                {
+                    "name": "field",
+                    "description": "",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2045,
+            "description": "merges changes from dataTable t assuming they are unchanged and they can be present in this or not.\nIf a row is not present, it is added. If it is present, it is updated.\nIt is assumed that \"this\" dataTable is unchanged at the beginning",
+            "itemtype": "method",
+            "name": "mergeAsPut",
+            "params": [
+                {
+                    "name": "t",
+                    "description": "",
+                    "type": "DataTable"
+                }
+            ],
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2065,
+            "description": "merges changes from dataTable t assuming they are unchanged and they are not present in this dataTable.\nRows are all added 'as is' to this, in the state of ADDED\nIt is assumed that \"this\" dataTable is unchanged at the beginning",
+            "itemtype": "method",
+            "name": "mergeAsPost",
+            "params": [
+                {
+                    "name": "t",
+                    "description": "",
+                    "type": "DataTable"
+                }
+            ],
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2079,
+            "description": "merges changes from dataTable t assuming they are unchanged and they are all present in this dataTable.\nRows are updated, but only  fields actually present in d are modified. Other field are left unchanged.\nIt is assumed that \"this\" dataTable is unchanged at the beginning",
+            "itemtype": "method",
+            "name": "mergeAsPatch",
+            "params": [
+                {
+                    "name": "t",
+                    "description": "",
+                    "type": "DataTable"
+                }
+            ],
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2096,
+            "description": "merge any row present in dataTable t. Rows are merged as unchanged if they are unchanged,\n otherwise their values are copied into existent dataTable\n DataSet must have same table structure",
+            "params": [
+                {
+                    "name": "t",
+                    "description": "",
+                    "type": "DataTable"
+                }
+            ],
+            "class": "DataTable",
+            "module": "DataSet",
+            "submodule": "DataRow"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2138,
+            "itemtype": "method",
+            "name": "OptimisticLocking",
+            "params": [
+                {
+                    "name": "updateFields",
+                    "description": "Fields to fill and to check during update operations",
+                    "type": "String[]"
+                },
+                {
+                    "name": "createFields",
+                    "description": "Fields to fill and to check during insert operations",
+                    "type": "String[]"
+                }
+            ],
+            "is_constructor": 1,
+            "class": "OptimisticLocking",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2152,
+            "description": "This function is called before posting row into db for every insert/update",
+            "itemtype": "method",
+            "name": "prepareForPosting",
+            "params": [
+                {
+                    "name": "r",
+                    "description": "",
+                    "type": "ObjectRow"
+                },
+                {
+                    "name": "env",
+                    "description": "",
+                    "type": "Environment"
+                }
+            ],
+            "class": "OptimisticLocking",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2175,
+            "description": "Get the optimistic lock for updating or deleting a row",
+            "itemtype": "method",
+            "name": "getOptimisticLock",
+            "params": [
+                {
+                    "name": "r",
+                    "description": "",
+                    "type": "ObjectRow"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "SqlFun"
+            },
+            "class": "OptimisticLocking",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2217,
+            "description": "Parent table name",
+            "itemtype": "property",
+            "name": "parentTable",
+            "type": "string",
+            "class": "DataRelation",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2224,
+            "description": "DataSet to which this DataRelation belongs to. It is used to retrieve parent and child table",
+            "itemtype": "property",
+            "name": "dataSet",
+            "type": "DataSet",
+            "class": "DataRelation",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2231,
+            "description": "Array of parent column names or comma separated column names",
+            "itemtype": "property",
+            "name": "parentCols",
+            "type": "String|String[]",
+            "class": "DataRelation",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2242,
+            "description": "Child table name",
+            "itemtype": "property",
+            "name": "childTable",
+            "type": "string",
+            "class": "DataRelation",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2249,
+            "description": "Array of child column names  or comma separated column names",
+            "itemtype": "property",
+            "name": "childCols",
+            "type": "string|string[]",
+            "class": "DataRelation",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2267,
+            "description": "Gets a filter that will be applied to the child table and will find any child row of a given ObjectRow",
+            "itemtype": "method",
+            "name": "getChildsFilter",
+            "params": [
+                {
+                    "name": "parentRow",
+                    "description": "",
+                    "type": "ObjectRow"
+                },
+                {
+                    "name": "alias",
+                    "description": "when present is used to attach an alias for the parent table in the composed filter",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "class": "DataRelation",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2283,
+            "description": "Get any child of a given ObjectRow following this DataRelation",
+            "itemtype": "method",
+            "name": "getChilds",
+            "params": [
+                {
+                    "name": "parentRow",
+                    "description": "",
+                    "type": "ObjectRow"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "ObjectRow[]"
+            },
+            "class": "DataRelation",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2298,
+            "description": "Gets a filter that will be applied to the parent table and will find any parent row of a given ObjectRow",
+            "itemtype": "method",
+            "name": "getParentsFilter",
+            "params": [
+                {
+                    "name": "childRow",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "alias",
+                    "description": "when present is used to attach an alias for the parent table in the composed filter",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "class": "DataRelation",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2315,
+            "description": "Get any parent of a given ObjectRow following this DataRelation",
+            "itemtype": "method",
+            "name": "getParents",
+            "params": [
+                {
+                    "name": "childRow",
+                    "description": "",
+                    "type": "ObjectRow"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "ObjectRow[]"
+            },
+            "class": "DataRelation",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2330,
+            "description": "Get a serialized version of this relation",
+            "return": {
+                "description": "}"
+            },
+            "class": "DataRelation",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2363,
+            "description": "get/set the activation filter for the relation, i.e. a condition that must be satisfied in order to\n follow the relation when automatically filling dataset from database. The condition is meant to be applied\n to parent rows",
+            "params": [
+                {
+                    "name": "filter",
+                    "description": "",
+                    "type": "SqlFun",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": "DataRelation",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2379,
+            "description": "Establish if  a relation links the key of  a table into a subset of another table key",
+            "itemtype": "method",
+            "name": "isEntityRelation",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "DataRelation",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2402,
+            "description": "Modifies childRow in order to make it child of parentRow. Sets to null corresponding fields if\n parentRow is null or undefined",
+            "itemtype": "method",
+            "name": "makeChild",
+            "params": [
+                {
+                    "name": "parentRow",
+                    "description": "",
+                    "type": "ObjectRow"
+                },
+                {
+                    "name": "childRow",
+                    "description": "",
+                    "type": "ObjectRow"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": "DataRelation",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2441,
+            "description": "Creates an empty DataSet",
+            "itemtype": "method",
+            "name": "DataSet",
+            "params": [
+                {
+                    "name": "dataSetName",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "DataSet"
+            },
+            "is_constructor": 1,
+            "class": "DataSet",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2452,
+            "description": "DataSet name",
+            "itemtype": "property",
+            "name": "name",
+            "class": "DataSet",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2459,
+            "description": "Collection of DataTable where tables[tableName] is a DataTable named tableName",
+            "itemtype": "property",
+            "name": "tables",
+            "type": "Hash",
+            "class": "DataSet",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2466,
+            "description": "Collection of DataRelation  where relations[relName] is a DataRelation named relName",
+            "itemtype": "property",
+            "name": "relations",
+            "type": "Hash",
+            "class": "DataSet",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2472,
+            "description": "Gets all relations where the parent table is the key of the hash\nrelationsByParent['a'] is an array of all DataRelations where 'a' is the parent",
+            "itemtype": "property",
+            "name": "relationsByParent",
+            "type": "DataRelation[][]",
+            "class": "DataSet",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2480,
+            "description": "Gets all relations where the child table is the key of the hash\nrelationsByChild['a'] is an array of all DataRelations where 'a' is the child",
+            "itemtype": "property",
+            "name": "relationsByChild",
+            "type": "DataRelation[][]",
+            "class": "DataSet",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2488,
+            "description": "DataSet - level optmistic locking, this property is set in custom implementations",
+            "itemtype": "property",
+            "name": "optimisticLocking",
+            "type": "OptimisticLocking",
+            "class": "DataSet",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2506,
+            "description": "Clones a DataSet replicating its structure but without copying any ObjectRow",
+            "itemtype": "method",
+            "name": "clone",
+            "return": {
+                "description": "",
+                "type": "DataSet"
+            },
+            "class": "DataSet",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2527,
+            "description": "Creates a new DataTable attaching it to the DataSet",
+            "itemtype": "method",
+            "name": "newTable",
+            "params": [
+                {
+                    "name": "tableName",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "DataTable"
+            },
+            "class": "DataSet",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2545,
+            "description": "Creates a copy of the DataSet, including both structure and data.",
+            "itemtype": "method",
+            "name": "copy",
+            "return": {
+                "description": "",
+                "type": "DataSet"
+            },
+            "class": "DataSet",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2561,
+            "description": "Calls acceptChanges to all contained DataTables",
+            "itemtype": "method",
+            "name": "acceptChanges",
+            "class": "DataSet",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2571,
+            "description": "Calls rejectChanges to all contained DataTables",
+            "itemtype": "method",
+            "name": "rejectChanges",
+            "class": "DataSet",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2581,
+            "description": "Check if any contained DataTable has any changes",
+            "itemtype": "method",
+            "name": "hasChanges",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "DataSet",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2592,
+            "description": "Creates a new DataRelation and attaches it to the DataSet",
+            "itemtype": "method",
+            "name": "newRelation",
+            "params": [
+                {
+                    "name": "relationName",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "parentTableName",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "parentColsName",
+                    "description": "array of string",
+                    "type": "String[]"
+                },
+                {
+                    "name": "childTableName",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "childColsName",
+                    "description": "array of string",
+                    "type": "String[]"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "DataRelation"
+            },
+            "class": "DataSet",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2630,
+            "description": "Deletes a row with all subentity child",
+            "itemtype": "method",
+            "name": "cascadeDelete",
+            "params": [
+                {
+                    "name": "row",
+                    "description": "",
+                    "type": "ObjectRow"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": "DataSet",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2658,
+            "description": "Creates a serializable version of this DataSet",
+            "itemtype": "method",
+            "name": "serialize",
+            "params": [
+                {
+                    "name": "serializeStructure",
+                    "description": "when true serialized also structure, when false only row data",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                },
+                {
+                    "name": "filterRow",
+                    "description": "function to select which rows have to be serialized",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Object"
+            },
+            "class": "DataSet",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2682,
+            "description": "Restores data from an object obtained with serialize().",
+            "itemtype": "method",
+            "name": "deSerialize",
+            "params": [
+                {
+                    "name": "d",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "deSerializeStructure",
+                    "description": "",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "DataSet",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2709,
+            "description": "merges changes from DataSet d assuming they are unchanged and they can be present in this or not.\nIf a row is not present, it is added. If it is present, it is updated.\nIt is assumed that \"this\" dataset is unchanged at the beginning",
+            "itemtype": "method",
+            "name": "mergeAsPut",
+            "params": [
+                {
+                    "name": "d",
+                    "description": "",
+                    "type": "DataSet"
+                }
+            ],
+            "class": "DataSet",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2723,
+            "description": "merges changes from DataSet d assuming they are unchanged and they are not present in this dataset.\nRows are all added 'as is' to this, in the state of ADDED\nIt is assumed that \"this\" dataset is unchanged at the beginning",
+            "itemtype": "method",
+            "name": "mergeAsPost",
+            "params": [
+                {
+                    "name": "d",
+                    "description": "",
+                    "type": "DataSet"
+                }
+            ],
+            "class": "DataSet",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2737,
+            "description": "merges changes from DataSet d assuming they are unchanged and they are all present in this dataset.\nRows are updated, but only  fields actually present in d are modified. Other field are left unchanged.\nIt is assumed that \"this\" dataset is unchanged at the beginning",
+            "itemtype": "method",
+            "name": "mergeAsPatch",
+            "params": [
+                {
+                    "name": "d",
+                    "description": "",
+                    "type": "DataSet"
+                }
+            ],
+            "class": "DataSet",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2751,
+            "description": "merge any row present in dataset d. Rows are merged as unchanged if they are unchanged,\n otherwise their values are copied into existent dataset\n DataSet must have same table structure",
+            "params": [
+                {
+                    "name": "d",
+                    "description": ""
+                }
+            ],
+            "class": "DataSet",
+            "module": "DataSet"
+        },
+        {
+            "file": "src\\jsDataSet.js",
+            "line": 2764,
+            "description": "Import data from a given dataset",
+            "itemtype": "method",
+            "name": "importData",
+            "params": [
+                {
+                    "name": "d",
+                    "description": "",
+                    "type": "DataSet"
+                }
+            ],
+            "class": "DataSet",
+            "module": "DataSet"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "unknown tag: typedef",
+            "line": " src\\jsDataSet.js:79"
+        },
+        {
+            "message": "unknown tag: typedef",
+            "line": " src\\jsDataSet.js:104"
+        },
+        {
+            "message": "unknown tag: internal",
+            "line": " src\\jsDataSet.js:170"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:262"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:280"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:397"
+        },
+        {
+            "message": "unknown tag: internal",
+            "line": " src\\jsDataSet.js:529"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:623"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:645"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:657"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:672"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:684"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:700"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:715"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:728"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:750"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:848"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:872"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:888"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:1026"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:1165"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:1203"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:1217"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:1230"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:1242"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:1272"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:1316"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:1352"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:1441"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:1453"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:1464"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:1473"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:1496"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:1519"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:1562"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:1580"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:1594"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:1608"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:1621"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:1634"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:1652"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:1661"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:1776"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:1785"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:1981"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:2175"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:2283"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:2315"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:2330"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:2363"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:2379"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:2441"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:2506"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:2527"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:2545"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:2581"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\jsDataSet.js:2658"
+        },
+        {
+            "message": "Missing item type\nCreated by Gaetano Lazzo on 07/02/2015.\nThanks to lodash, ObjectObserve",
+            "line": " src\\jsDataSet.js:1"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src\\jsDataSet.js:12"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src\\jsDataSet.js:39"
+        },
+        {
+            "message": "Missing item type\nUsed as a reference to the global object. (thanks lodash)\n\nThe `this` value is used if it is the global object to avoid Greasemonkey's\nrestricted `window` object, otherwise the `window` object is used.",
+            "line": " src\\jsDataSet.js:46"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src\\jsDataSet.js:55"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src\\jsDataSet.js:59"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src\\jsDataSet.js:63"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src\\jsDataSet.js:70"
+        },
+        {
+            "message": "Missing item type\nCreate a DataColumn",
+            "line": " src\\jsDataSet.js:123"
+        },
+        {
+            "message": "Missing item type\nGet the DataRow attached to an object. This method is attached to the object itself,\n so you can get the DataRow calling o.getRow() where o is the plain object\nThis transforms o into an ObjectRow",
+            "line": " src\\jsDataSet.js:371"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src\\jsDataSet.js:391"
+        },
+        {
+            "message": "Missing item type\nMake this row identical to another row (both in state, original and current value)",
+            "line": " src\\jsDataSet.js:454"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src\\jsDataSet.js:487"
+        },
+        {
+            "message": "Missing item type\nGets all parent rows of this one",
+            "line": " src\\jsDataSet.js:672"
+        },
+        {
+            "message": "Missing item type\nGets all child rows of this one",
+            "line": " src\\jsDataSet.js:715"
+        },
+        {
+            "message": "Missing item type\nCreate a AutoIncrementColumn",
+            "line": " src\\jsDataSet.js:768"
+        },
+        {
+            "message": "Missing item type\nGets a function that filter selector fields eventually masking with selectorMask",
+            "line": " src\\jsDataSet.js:848"
+        },
+        {
+            "message": "Missing item type\nCreates an empty DataTable",
+            "line": " src\\jsDataSet.js:947"
+        },
+        {
+            "message": "Missing item type\nEvaluates the max of an expression without using any cached value. If len = 0 the expression is managed\n as a number with max(field) otherwise it is performed max(convertToInt(substring(field,start,len)))",
+            "line": " src\\jsDataSet.js:1129"
+        },
+        {
+            "message": "Missing item type\nCompares the key of two objects",
+            "line": " src\\jsDataSet.js:1230"
+        },
+        {
+            "message": "Missing item type\nCheck if a column is key",
+            "line": " src\\jsDataSet.js:1272"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src\\jsDataSet.js:1396"
+        },
+        {
+            "message": "Missing item type\nGet/set the ordering that have to be user reading from db",
+            "line": " src\\jsDataSet.js:1621"
+        },
+        {
+            "message": "Missing item type\nGet a serializable version of this table. If serializeStructure=true, also structure information is serialized",
+            "line": " src\\jsDataSet.js:1678"
+        },
+        {
+            "message": "Missing item type\nGet data from a serialized structure. If serializeStructure=true, also structure information is serialized",
+            "line": " src\\jsDataSet.js:1728"
+        },
+        {
+            "message": "Missing item type\nClones table structure and copies data\nmethod @copy",
+            "line": " src\\jsDataSet.js:1838"
+        },
+        {
+            "message": "Missing item type\nmerge any row present in dataTable t. Rows are merged as unchanged if they are unchanged,\n otherwise their values are copied into existent dataTable\n DataSet must have same table structure",
+            "line": " src\\jsDataSet.js:2096"
+        },
+        {
+            "message": "Missing item type\nGet a serialized version of this relation",
+            "line": " src\\jsDataSet.js:2330"
+        },
+        {
+            "message": "Missing item type\nget/set the activation filter for the relation, i.e. a condition that must be satisfied in order to\n follow the relation when automatically filling dataset from database. The condition is meant to be applied\n to parent rows",
+            "line": " src\\jsDataSet.js:2363"
+        },
+        {
+            "message": "Missing item type\nmerge any row present in dataset d. Rows are merged as unchanged if they are unchanged,\n otherwise their values are copied into existent dataset\n DataSet must have same table structure",
+            "line": " src\\jsDataSet.js:2751"
+        }
+    ]
+}
