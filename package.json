@@ -8,18 +8,18 @@
     "test": "test"
   },
   "dependencies": {
+    "jsDataQuery": "git+https://github.com/gaelazzo/jsDataQuery.git",
     "lodash": "4.17.4",
-    "observe-js": "0.5.7",
-    "jsDataQuery": "https://github.com/gaelazzo/jsDataQuery"
+    "observe-js": "0.5.7"
   },
   "devDependencies": {
     "grunt": "~0.4.5",
     "grunt-contrib-watch": "1.0.0",
     "grunt-contrib-yuidoc": "1.0.0",
-    "grunt-jasmine-node": "https://github.com/gaelazzo/grunt-jasmine-node",
-    "grunt-karma": "^0.10.1",
+    "grunt-jasmine-node": "git+https://github.com/gaelazzo/grunt-jasmine-node.git",
+    "grunt-karma": "^2.0.0",
     "jasmine-collection-matchers": "*",
-    "jasmine-core": "^2.2.0",
+    "jasmine-core": "^2.99.1",
     "jasmine-node": "2.0.0-beta4",
     "karma": "^1.7.1",
     "karma-chrome-launcher": "^2.2.0",
@@ -27,8 +27,8 @@
     "karma-junit-reporter": "^0.2.2",
     "karma-phantomjs-launcher": "^0.1.4",
     "karma-sauce-launcher": "^0.2.10",
-    "load-grunt-tasks": "^3.1.0",
-    "time-grunt": "^1.0.0"
+    "load-grunt-tasks": "^3.5.2",
+    "time-grunt": "^1.4.0"
   },
   "eslintConfig": {
     "env": {
