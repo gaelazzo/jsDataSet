@@ -1746,9 +1746,11 @@
                 if (t.staticFilter) {
                     this.staticFilter(dataQuery.fromObject(t.staticFilter));
                 }
-                if (t.autoIncrementColumns) {
-                    this.autoIncrementColumns = _.clone(t.autoIncrementColumns);
-                }
+                _.forEach(t.autoIncrementColumns, function (aiObj) {
+                    var columnName = aiObj.columnName;
+                    var options  = _.pick(aiObj, ['prefixField', 'idLen', 'middleConst', 'selector', 'selectorMask', 'minimum']);
+                    that.autoIncrementColumns[columnName] = new AutoIncrementColumn(columnName, options);
+                });
                 if (t.columns) {
                     this.columns = _.clone(t.columns);
                 }
