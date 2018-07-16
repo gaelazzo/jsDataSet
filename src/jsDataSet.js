@@ -1748,7 +1748,7 @@
                 }
                 _.forEach(t.autoIncrementColumns, function (aiObj) {
                     var columnName = aiObj.columnName;
-                    var options  = _.pick(aiObj, ['prefixField', 'idLen', 'middleConst', 'selector', 'selectorMask', 'minimum']);
+                    var options  = _.pick(aiObj, ['prefixField', 'linearField', 'idLen', 'middleConst', 'selector', 'selectorMask', 'minimum']);
                     that.autoIncrementColumns[columnName] = new AutoIncrementColumn(columnName, options);
                 });
                 if (t.columns) {
