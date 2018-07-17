@@ -1702,6 +1702,13 @@
                 t.defaults = this.defaults();
                 t.autoIncrementColumns = this.autoIncrementColumns;
                 t.columns = this.columns;
+                _.forEach(t.columns, function (c) {
+                    if (c.expression) {
+                        //the first passage is necessary to create a pointer to a new location
+                        c.expression = _.cloneDeep(c.expression)
+                        c.expression = jsDataQuery.toObject(c.expression);
+                    }
+                });
             }
             t.name= this.name;
             t.rows = [];
@@ -1752,7 +1759,12 @@
                     that.autoIncrementColumns[columnName] = new AutoIncrementColumn(columnName, options);
                 });
                 if (t.columns) {
-                    this.columns = _.clone(t.columns);
+                    this.columns = _.cloneDeep(t.columns);
+                    _.forEach(this.columns, function (c) {
+                        if (_.isObject(c.expression)) {
+                            c.expression = jsDataQuery.fromObject(c.expression);
+                        }
+                    });
                 }
             }
             that.name=this.name;
