@@ -1701,12 +1701,24 @@
                 t.skipSecurity = this.skipSecurity();
                 t.defaults = this.defaults();
                 t.autoIncrementColumns = this.autoIncrementColumns;
-                t.columns = this.columns;
-                _.forEach(t.columns, function (c) {
-                    if (c.expression) {
-                        //the first passage is necessary to create a pointer to a new location
-                        c.expression = _.cloneDeep(c.expression)
-                        c.expression = jsDataQuery.toObject(c.expression);
+                t.columns = {};
+
+                //if one of the columns has the property "expression" then
+                //the expression gets serialized.
+                var o = {};
+                _.forOwn(this.columns, function (val, key) {
+                    if (val.hasOwnProperty('expression')) {
+                        o = {};
+                        _.forOwn(val, function (v, k) {
+                            if ((k === 'expression') && (_.isFunction(v) || _.isArray(v))) {
+                                o[k] = jsDataQuery.toObject(v);
+                            } else {
+                                o[k] = v;
+                            }
+                        });
+                        t.columns[key] = o;
+                    } else {
+                        t.columns[key] = val;
                     }
                 });
             }
