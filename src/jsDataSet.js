@@ -1703,23 +1703,17 @@
                 t.autoIncrementColumns = this.autoIncrementColumns;
                 t.columns = {};
 
-                //if one of the columns has the property "expression" then
-                //the expression gets serialized.
                 var o = {};
-                _.forOwn(this.columns, function (val, key) {
-                    if (val.hasOwnProperty('expression')) {
-                        o = {};
-                        _.forOwn(val, function (v, k) {
-                            if ((k === 'expression') && (_.isFunction(v) || _.isArray(v))) {
-                                o[k] = jsDataQuery.toObject(v);
-                            } else {
-                                o[k] = v;
-                            }
-                        });
-                        t.columns[key] = o;
-                    } else {
-                        t.columns[key] = val;
-                    }
+                _.forOwn(this.columns, function (val, key) {                   
+                    o = {};
+                    _.forOwn(val, function (v, k) {
+                        if ((k === 'expression') && (_.isFunction(v) || _.isArray(v))) {
+                            o[k] = jsDataQuery.toObject(v);
+                        } else {
+                            o[k] = v;
+                        }
+                    });
+                    t.columns[key] = o;
                 });
             }
             t.name= this.name;
@@ -1753,6 +1747,7 @@
         deSerialize: function (t, deserializeStructure) {
             var that = this;
             if (deserializeStructure) {
+                //console.log(JSON.stringify(t))
                 this.key(t.key.split(','));
                 this.tableForReading(t.tableForReading);
                 this.tableForWriting(t.tableForWriting);
@@ -1771,14 +1766,22 @@
                     that.autoIncrementColumns[columnName] = new AutoIncrementColumn(columnName, options);
                 });
                 if (t.columns) {
-                    this.columns = _.cloneDeep(t.columns);
-                    _.forEach(this.columns, function (c) {
-                        if (_.isObject(c.expression)) {
-                            c.expression = jsDataQuery.fromObject(c.expression);
-                        }
+                    var o = {};
+                    that.columns = {}
+                    _.forOwn(t.columns, function (val, key) {
+                        o = {};
+                        _.forOwn(val, function (v, k) {
+                            if (k === 'expression' && _.isObject(v)) {
+                                o.expression = jsDataQuery.fromObject(v);
+                            } else {
+                                o[k] = v;
+                            }
+                        });
+                        that.columns[key] = o;
                     });
                 }
             }
+            
             that.name=this.name;
             _.forEach(t.rows, function (r) {
                 var rowState = r.state;
