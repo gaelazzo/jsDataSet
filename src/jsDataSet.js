@@ -1747,7 +1747,6 @@
         deSerialize: function (t, deserializeStructure) {
             var that = this;
             if (deserializeStructure) {
-                //console.log(JSON.stringify(t))
                 this.key(t.key.split(','));
                 this.tableForReading(t.tableForReading);
                 this.tableForWriting(t.tableForWriting);
@@ -1781,7 +1780,7 @@
                     });
                 }
             }
-            
+
             that.name=this.name;
             _.forEach(t.rows, function (r) {
                 var rowState = r.state;
