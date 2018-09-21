@@ -1719,7 +1719,20 @@
                 t.skipInsertCopy = this.skipInsertCopy();
                 t.defaults = this.defaults();
                 t.autoIncrementColumns = this.autoIncrementColumns;
-                t.columns = this.columns;
+                t.columns = {};
+
+                var o = {};
+                _.forOwn(this.columns, function (val, key) {                   
+                    o = {};
+                    _.forOwn(val, function (v, k) {
+                        if ((k === 'expression') && (_.isFunction(v) || _.isArray(v))) {
+                            o[k] = jsDataQuery.toObject(v);
+                        } else {
+                            o[k] = v;
+                        }
+                    });
+                    t.columns[key] = o;
+                });
             }
             t.name= this.name;
             t.rows = [];
@@ -1767,13 +1780,28 @@
                 }
                 _.forEach(t.autoIncrementColumns, function (aiObj) {
                     var columnName = aiObj.columnName;
-                    var options  = _.pick(aiObj, ['prefixField', 'idLen', 'middleConst', 'selector', 'selectorMask', 'minimum']);
+
+                    var options  = _.pick(aiObj, ['prefixField', 'linearField', 'idLen', 'middleConst', 'selector', 'selectorMask', 'minimum']);
+
                     that.autoIncrementColumns[columnName] = new AutoIncrementColumn(columnName, options);
                 });
                 if (t.columns) {
-                    this.columns = _.clone(t.columns);
+                    var o = {};
+                    that.columns = {}
+                    _.forOwn(t.columns, function (val, key) {
+                        o = {};
+                        _.forOwn(val, function (v, k) {
+                            if (k === 'expression' && _.isObject(v)) {
+                                o.expression = jsDataQuery.fromObject(v);
+                            } else {
+                                o[k] = v;
+                            }
+                        });
+                        that.columns[key] = o;
+                    });
                 }
             }
+
             that.name=this.name;
             _.forEach(t.rows, function (r) {
                 var rowState = r.state;
