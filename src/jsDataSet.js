@@ -1578,6 +1578,23 @@
         },
 
         /**
+         * Get/Set a flag indicating that this table is not subjected to the Inser and Copy function
+         * @method skipInsertCopy
+         * @param {boolean} [arg]
+         * @returns {*|boolean}
+         */
+        skipInsertCopy: function (arg) {
+            if (arg === undefined) {
+                if (this.hasOwnProperty('isSkipInsertCopy')) {
+                    return this.isSkipInsertCopy;
+                }
+                return false;
+            }
+            this.isSkipInsertCopy = arg;
+            return this;
+        },
+
+        /**
          * Get/Set the name of table  to be used to read data from database in a Jquery fashioned style
          * @method tableForReading
          * @param {string} [tableName]
@@ -1699,6 +1716,7 @@
                     t.staticFilter=dataQuery.toObject(this.staticFilter());
                 }
                 t.skipSecurity = this.skipSecurity();
+                t.skipInsertCopy = this.skipInsertCopy();
                 t.defaults = this.defaults();
                 t.autoIncrementColumns = this.autoIncrementColumns;
                 t.columns = this.columns;
@@ -1741,6 +1759,7 @@
                 this.isTemporaryTable = t.isTemporaryTable;
 
                 this.skipSecurity(t.skipSecurity);
+                this.skipInsertCopy(t.skipInsertCopy);
                 this.defaults(t.defaults);
                 this.orderBy(t.orderBy);
                 if (t.staticFilter) {
@@ -1830,6 +1849,7 @@
             cloned.tableForWriting(this.tableForWriting());
             cloned.staticFilter(this.staticFilter());
             cloned.skipSecurity(this.skipSecurity());
+            cloned.skipInsertCopy(this.skipInsertCopy());
             cloned.defaults(this.defaults());
             cloned.autoIncrementColumns = _.clone(this.autoIncrementColumns);
             cloned.columns = _.clone(this.columns);
