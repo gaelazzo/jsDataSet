@@ -1578,7 +1578,7 @@
         },
 
         /**
-         * Get/Set a flag indicating that this table is not subjected to the Inser and Copy function
+         * Get/Set a flag indicating that this table is not subjected to the Insert and Copy function
          * @method skipInsertCopy
          * @param {boolean} [arg]
          * @returns {*|boolean}
