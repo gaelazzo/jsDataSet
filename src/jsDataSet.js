@@ -1765,7 +1765,7 @@
         deSerialize: function (t, deserializeStructure) {
             var that = this;
             if (deserializeStructure) {
-                this.key(t.key.split(','));
+
                 this.tableForReading(t.tableForReading);
                 this.tableForWriting(t.tableForWriting);
                 this.isCached = t.isCached;
@@ -1800,6 +1800,8 @@
                         that.columns[key] = o;
                     });
                 }
+
+                this.key(t.key.split(','));
             }
 
             that.name=this.name;
