@@ -582,7 +582,7 @@
                 that.current[fieldToAdd] = that.removed[fieldToAdd];
             });
 
-
+            this.commit();
             this.reset();
             return this;
         },
