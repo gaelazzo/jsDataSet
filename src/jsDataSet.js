@@ -2385,30 +2385,32 @@
          */
         serialize: function () {
             var rel = {};
+			var sep = ",";
             //relation name is not serialized here, it is a key in the parent
             rel.parentTable = this.parentTable;
             //parent cols are serialized as a comma separated field list
-            rel.parentCols = this.parentCols.join();
+            rel.parentCols = this.parentCols.join(sep);
             rel.childTable = this.childTable;
             //child cols are not serialized if are same as parent cols
             if (this.childCols !== this.parentCols) {
-                rel.childCols = this.childCols.join();
+                rel.childCols = this.childCols.join(sep);
             }
             return rel;
         },
 
         deSerialize: function (rel) {
+			var sep = ",";
             //relation name is not serialized here, it is a key in the parent
             this.parentTable = rel.parentTable;
             //parent cols are serialized as a comma separated field list
-            this.parentCols = rel.parentCols.split();
+            this.parentCols = rel.parentCols.split(sep);
             this.childTable = rel.childTable;
             //child cols are not serialized if are same as parent cols
             if (rel.childCols) {
-                this.childCols = rel.childCols.split();
+                this.childCols = rel.childCols.split(sep);
             }
             else {
-                this.childCols = rel.parentCols.split();
+                this.childCols = rel.parentCols.split(sep);
             }
         },
 
