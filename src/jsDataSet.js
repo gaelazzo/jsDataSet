@@ -2,9 +2,9 @@
  * Created by Gaetano Lazzo on 07/02/2015.
  * Thanks to lodash, ObjectObserve
  */
-/*jslint nomen: true*/
-/*jslint bitwise: true */
-/*globals Environment,jsDataAccess */
+/* jslint nomen: true */
+/* jslint bitwise: true */
+/*globals Environment,jsDataAccess,Function */
 
 
 (function (_, ObjectObserver, dataQuery) {
@@ -1684,7 +1684,7 @@
         serialize: function (serializeStructure, filterRow) {
             var clean= function (r){
                 return _.pickBy(r,function(o){return o!==null && o!==undefined;});
-            }
+            };
             var t = {};
             if (serializeStructure) {
                 t.key = this.key().join();
@@ -2643,7 +2643,7 @@
                         if (toDel.getRow().state !== $rowState.deleted) {
                             that.cascadeDelete(toDel);
                         }
-                    })
+                    });
                 }
                 else {
                     _.forEach(rel.getChilds(row), function (toUnlink) {
