@@ -1595,6 +1595,23 @@
         },
 
         /**
+         * Get/Set DenyClear. === y avoid to clear table on backend reads
+         * @method denyClear
+         * @param {string} [arg]
+         * @returns {*|string}
+         */
+        denyClear: function (arg) {
+            if (arg === undefined) {
+                if (this.hasOwnProperty('myDenyClear')) {
+                    return this.myDenyClear;
+                }
+                return false;
+            }
+            this.myDenyClear = arg;
+            return this;
+        },
+
+        /**
          * Get/Set a table name, that represents the view table associated to the table
          * @method viewTable
          * @param {string} [arg]
@@ -1753,6 +1770,7 @@
                 t.skipInsertCopy = this.skipInsertCopy();
                 t.realTable = this.realTable();
                 t.viewTable = this.viewTable();
+                t.denyClear = this.denyClear();
                 t.defaults = this.defaults();
                 t.autoIncrementColumns = this.autoIncrementColumns;
                 t.columns = {};
@@ -1811,6 +1829,7 @@
                 this.skipInsertCopy(t.skipInsertCopy);
                 this.realTable(t.realTable);
                 this.viewTable(t.viewTable);
+                this.denyClear(t.denyClear);
                 this.defaults(t.defaults);
                 this.orderBy(t.orderBy);
                 if (t.staticFilter) {
@@ -1920,6 +1939,7 @@
             cloned.skipInsertCopy(this.skipInsertCopy());
             cloned.realTable(this.realTable());
             cloned.viewTable(this.viewTable());
+            cloned.denyClear(this.denyClear());
             cloned.defaults(this.defaults());
             cloned.autoIncrementColumns = _.clone(this.autoIncrementColumns);
             cloned.columns = _.clone(this.columns);
