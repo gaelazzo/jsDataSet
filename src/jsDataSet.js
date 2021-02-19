@@ -1558,6 +1558,57 @@
         },
 
         /**
+         * Get/Set DenyClear. === y avoid to clear table on backend reads
+         * @method denyClear
+         * @param {string} [arg]
+         * @returns {*|string}
+         */
+        denyClear: function (arg) {
+            if (arg === undefined) {
+                if (this.hasOwnProperty('myDenyClear')) {
+                    return this.myDenyClear;
+                }
+                return false;
+            }
+            this.myDenyClear = arg;
+            return this;
+        },
+
+        /**
+         * Get/Set a table name, that represents the view table associated to the table
+         * @method viewTable
+         * @param {string} [arg]
+         * @returns {*|string}
+         */
+        viewTable: function (arg) {
+            if (arg === undefined) {
+                if (this.hasOwnProperty('myViewTable')) {
+                    return this.myViewTable;
+                }
+                return false;
+            }
+            this.myViewTable = arg;
+            return this;
+        },
+
+        /**
+         * Get/Set a table name, that represents the real table associated to the table
+         * @method realTable
+         * @param {string} [arg]
+         * @returns {*|string}
+         */
+        realTable: function (arg) {
+            if (arg === undefined) {
+                if (this.hasOwnProperty('myRealTable')) {
+                    return this.myRealTable;
+                }
+                return false;
+            }
+            this.myRealTable = arg;
+            return this;
+        },
+
+        /**
          * Get/Set the name of table  to be used to read data from database in a Jquery fashioned style
          * @method tableForReading
          * @param {string} [tableName]
@@ -1680,6 +1731,9 @@
                 }
                 t.skipSecurity = this.skipSecurity();
                 t.skipInsertCopy = this.skipInsertCopy();
+                t.realTable = this.realTable();
+                t.viewTable = this.viewTable();
+                t.denyClear = this.denyClear();
                 t.defaults = this.defaults();
                 t.autoIncrementColumns = this.autoIncrementColumns;
                 t.columns = {};
@@ -1735,6 +1789,9 @@
 
                 this.skipSecurity(t.skipSecurity);
                 this.skipInsertCopy(t.skipInsertCopy);
+                this.realTable(t.realTable);
+                this.viewTable(t.viewTable);
+                this.denyClear(t.denyClear);
                 this.defaults(t.defaults);
                 this.orderBy(t.orderBy);
                 if (t.staticFilter) {
@@ -1842,6 +1899,9 @@
             cloned.staticFilter(this.staticFilter());
             cloned.skipSecurity(this.skipSecurity());
             cloned.skipInsertCopy(this.skipInsertCopy());
+            cloned.realTable(this.realTable());
+            cloned.viewTable(this.viewTable());
+            cloned.denyClear(this.denyClear());
             cloned.defaults(this.defaults());
             cloned.autoIncrementColumns = _.clone(this.autoIncrementColumns);
             cloned.columns = _.clone(this.columns);
