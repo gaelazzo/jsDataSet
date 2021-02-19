@@ -401,9 +401,10 @@ describe('DataSet',
       it('prepareForPosting should fill update fields for modified rows', function(){
         var t = ds.newTable('a'),
           r = t.newRow({a:1,b:2,ct:'ct',lt:'lt',cu:'cu',lu:'lu'}),
+            p= r.getRow().current,
           o = new $ol(['lt', 'lu'], ['ct', 'cu', 'lt', 'lu']);
         t.acceptChanges();
-        r.a=10;
+        p.a=10;
         o.prepareForPosting(r, stubEnv);
         expect(r).toEqual({a:10,b:2,ct:'ct',cu:'cu',lt:'field_lt',lu:'field_lu'});
       });

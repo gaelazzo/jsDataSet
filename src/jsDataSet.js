@@ -7,7 +7,7 @@
 /*globals Environment,jsDataAccess,Function */
 
 
-(function (_, ObjectObserver, dataQuery) {
+(function (_,  dataQuery) {
     'use strict';
     /** Used as a safe reference for `undefined` in pre-ES5 environments. (thanks lodash)*/
     var undefined;
@@ -101,6 +101,7 @@
         },
 
 
+
         /**
          * @public
          * @typedef {$rowVersion} dataRowVersion
@@ -119,7 +120,76 @@
             current: "current"
         };
 
+        function dataRowDefineProperty(r, target, property,value){
+            if (r.removed.hasOwnProperty(property)) {
+                //adding a property that was previously removed
+                if (r.removed[property] !== value) {
+                    //if the property had been removed with a different value, that values now goes into
+                    // old values
+                    r.old[property] = r.removed[property];
+                }
+                delete r.removed[property];
+            }
+            else {
+                r.added[property] = value;
+            }
+        }
 
+    const proxyObjectRow = {
+        set: function(target, property, value, receiver) {
+            var r  = target.getRow();
+            if (!r){
+                return false;
+            }
+            if (!target.hasOwnProperty(property)){
+                dataRowDefineProperty(r,target,property);
+            }
+            //if property is added, old values has not to be set
+            if (!r.added.hasOwnProperty(property)) {
+                if (!r.old.hasOwnProperty(property)) {//only original value has to be saved
+                    r.old[property] = target[property];
+                }
+                else {
+                    if (r.old[property] === value) {
+                        delete r.old[property];
+                    }
+                }
+            }
+            target[property]=value;
+            return true;
+        },
+        defineProperty: function(target, property, descriptor) {
+            var r  = target.getRow();
+            if (!r){
+                return false;
+            }
+            dataRowDefineProperty(r,target,property,target[property]);
+            return Reflect.defineProperty(target, property, descriptor);
+        },
+
+        deleteProperty: function(target, property) {
+            var r  = target.getRow();
+            if (!r){
+                return false;
+            }
+//                property; // a property which has been been removed from obj
+//                getOldValueFn(property); // its old value
+            if (r.added.hasOwnProperty(property)) {
+                delete r.added[property];
+            }
+            else {
+                if (r.old.hasOwnProperty(property)) {
+                    //removing a property that had been previously modified
+                    r.removed[property] = r.old[property];
+                }
+                else {
+                    r.removed[property] = target[property];
+                }
+            }
+            delete target[property];
+            return true;
+        }
+    };
     /**
      * Create a DataColumn
      * @param {string} columnName
@@ -148,105 +218,8 @@
      * @submodule DataRow
      */
 
-    /**
-     * Internal class attached to dataRow model data and used to track object changes
-     * @private
-     * @class DataRowObserver
-     * @param {ObjectRow} d
-     * @constructor
-     */
-    function DataRowObserver(d) {
-        /**
-         * @property r
-         * @type {ObjectRow}
-         */
-        this.r = d;
-    }
 
 
-    DataRowObserver.prototype = {
-        constructor: DataRowObserver,
-
-        /**
-         * Take track of object changes, managing added fields, removed fields, modified fields.
-         * This is called automatically by the ObjectObserver attached to the object
-         * @internal
-         * @method dataRowReactOnChange
-         * @param added
-         * @param removed
-         * @param changed
-         * @param getOldValueFn
-         */
-        dataRowReactOnChange: function (added, removed, changed, getOldValueFn) {
-            if (this.r.state === $rowState.deleted || this.r.state === $rowState.added) {
-                return;
-            }
-            var that = this;
-            // respond to changes to the obj.
-            Object.keys(added).forEach(function (property) {
-                if (isAngularField(property)) {
-                    return;
-                }
-                if (that.r.removed.hasOwnProperty(property)) {
-                    //adding a property that was previously removed
-                    if (that.r.removed[property] !== added[property]) {
-                        //if the property had been removed with a different value, that values now goes into
-                        // old values
-                        that.r.old[property] = that.r.removed[property];
-                    }
-                    delete that.r.removed[property];
-                }
-                else {
-                    that.r.added[property] = added[property];
-                }
-            });
-
-            Object.keys(removed).forEach(function (property) {
-                if (isAngularField(property)) {
-                    return;
-                }
-//                property; // a property which has been been removed from obj
-//                getOldValueFn(property); // its old value
-                if (that.r.added.hasOwnProperty(property)) {
-                    delete that.r.added[property];
-                }
-                else {
-                    if (that.r.old.hasOwnProperty(property)) {
-                        //removing a property that had been previously modified
-                        that.r.removed[property] = that.r.old[property];
-                    }
-                    else {
-                        that.r.removed[property] = getOldValueFn(property);
-                    }
-                }
-            });
-
-            Object.keys(changed).forEach(function (property) {
-                if (isAngularField(property)) {
-                    return;
-                }
-
-                //if property is added, old values has not to be set
-                if (!that.r.added.hasOwnProperty(property)) {
-                    if (!that.r.old.hasOwnProperty(property)) {
-                        that.r.old[property] = getOldValueFn(property);
-                    }
-                    else {
-                        if (that.r.old[property] === changed[property]) {
-                            delete that.r.old[property];
-                        }
-                    }
-                }
-                //property; // a property on obj which has changed value.
-                //changed[property]; // its new value
-                //getOldValueFn(property); // its old value
-            });
-        },
-        toString: function () {
-            return 'DataRowObserver on ' + this.r;
-        }
-
-    };
 
 
     /**
@@ -256,7 +229,8 @@
      */
     function ObjectRow() {
         return null;
-    }
+    };
+
     ObjectRow.prototype = {
         constructor: ObjectRow,
         /**
@@ -268,7 +242,9 @@
         getRow : function () {
             return null;
         }
-    }
+    };
+
+
 
 
     /**
@@ -311,11 +287,12 @@
         }
 
         /**
-         * current value of the DataRow is the ObjectRow o itself
+         * current value of the DataRow is the ObjectRow attached to it
          * @private
          * @property {ObjectRow} current
          */
         this.current = o;
+
         /**
          * previous values of the DataRow, only previous values of changed fields are stored
          * @private
@@ -338,8 +315,7 @@
         this.removed = {};
 
         this.myState = $rowState.unchanged;
-        var that = this,
-            dObs;
+        var that = this;
 
         /**\
          * State of the DataRow, possible values are added unchanged modified deleted detached
@@ -348,7 +324,6 @@
          */
         Object.defineProperty(this, 'state', {
             get: function () {
-                this.commit();
                 if (that.myState === $rowState.modified || that.myState === $rowState.unchanged) {
                     if (Object.keys(that.old).length === 0 &&
                             Object.keys(that.added).length === 0 &&
@@ -381,11 +356,17 @@
             configurable: true   //allows a successive deletion of this property
         });
 
+        this.original = o;
 
         //Create an observer on this
-        dObs = new DataRowObserver(this);
-        this.observer = new ObjectObserver(this.current);
-        this.observer.open(dObs.dataRowReactOnChange.bind(dObs));
+        this.revocableProxy = Proxy.revocable(o,proxyObjectRow);
+        /**
+         * current value of the DataRow is the ObjectRow attached to it
+         * @private
+         * @property {ObjectRow} current
+         */
+        this.current = this.revocableProxy.proxy;
+
     }
 
     /**
@@ -402,7 +383,6 @@
          * @returns {object}
          */
         getValue: function (fieldName, dataRowVer) {
-            this.commit();
             if (dataRowVer === $rowVersion.original) {
                 if (this.old.hasOwnProperty(fieldName)) {
                     return this.old[fieldName];
@@ -424,7 +404,6 @@
          * @return {object}
          */
         originalRow: function () {
-            this.commit();
             if (this.state === $rowState.unchanged || this.state === $rowState.deleted) {
                 return this.current;
             }
@@ -503,7 +482,6 @@
                 that.current[k] = o[k];
             });
 
-            this.commit();
             return that;
         },
         /**
@@ -523,19 +501,9 @@
                 that.current[k] = o[k];
             });
 
-            this.commit();
             return this;
         },
-        /**
-         * get changes from the ObjectObserver
-         * @method commit
-         * @internal
-         */
-        commit: function () {
-            if (this.observer) {
-                this.observer.deliver();
-            }
-        },
+
         getModifiedFields: function () {
             return _.union(_.keys(this.old), _.keys(this.removed), _.keys(this.added));
         },
@@ -553,7 +521,6 @@
                 this.detach();
                 return this;
             }
-            this.commit();
             this.reset();
             return this;
         },
@@ -572,7 +539,6 @@
                 this.detach();
                 return this;
             }
-            this.commit();
             _.extend(this.current, this.old);
             var that = this;
             _.forEach(this.added, function (value, fieldToDel) {
@@ -582,7 +548,6 @@
                 that.current[fieldToAdd] = that.removed[fieldToAdd];
             });
 
-            this.commit();
             this.reset();
             return this;
         },
@@ -608,10 +573,10 @@
          */
         detach: function () {
             this.state = $rowState.detached;
-            if (this.observer) {
-                this.observer.discardChanges();
-                this.observer.close();
-                delete this.observer;
+            if (this.revocableProxy) {
+                this.revocableProxy.revoke();
+                delete this.revocableProxy;
+                this.current=this.original;
             }
             if (this.table) {
                 this.table.detach(this.current);
@@ -1480,7 +1445,6 @@
             var dr = row.getRow(),
                 newR,
                 newDr;
-            dr.commit();
             newR = {};
             _.forOwn(row, function (val, key) {
                 newR[key] = val;
@@ -1534,8 +1498,7 @@
                 this.makeChild(n, parentRow.getRow().table.name, parentRow);
             }
             this.calcTemporaryId(n);
-            this.add(n);
-            return n;
+            return this.add(n).current;
         },
 
         /**
@@ -1743,7 +1706,6 @@
                 var row = r.getRow(),
                     rowState = row.state,
                     newRow = {state: rowState};
-                row.commit();
                 if (rowState === $rowState.deleted || rowState === $rowState.unchanged || rowState === $rowState.modified) {
                     newRow.old = clean(row.originalRow());
                 }
@@ -2875,7 +2837,6 @@
     }
 }).call(this,
     (typeof _ === 'undefined') ? require('lodash') : _,
-    (typeof ObjectObserver === 'undefined') ? require('observe-js').ObjectObserver : ObjectObserver,
     (typeof jsDataQuery === 'undefined') ? require('jsDataQuery').jsDataQuery : jsDataQuery
 );
 

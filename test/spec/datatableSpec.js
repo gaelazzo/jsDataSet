@@ -149,18 +149,18 @@ describe('DataTable module test', function () {
       expect(o1.getRow).toBeUndefined();
     });
 
-    it('datarows haven\'t any observer  when  detached', function () {
+    it('datarows haven\'t any proxy  when  detached', function () {
       var o1 = {a: 1, b: 2};
       t.add(o1);
       t.load({a: 2, b: 3});
       t.add({a: 2, b: 3});
       t.acceptChanges();
       var dr = o1.getRow();
-      var obs = dr.observer;
+      var obs = dr.revocableProxy;
       expect(obs).toBeDefined();
       dr.del();
       t.acceptChanges();
-      expect(dr.observer).toBeUndefined();
+      expect(dr.revocableProxy).toBeUndefined();
     });
 
 
@@ -176,33 +176,38 @@ describe('DataTable module test', function () {
       expect(t.rows.length).toBe(3);
     });
 
-    it('after acceptChanges no modification are left', function () {
-      var o1 = {a: 1, b: 2};
+
+    it('after acceptChanges no modification are left (update-rejectChanges)', function () {
+      var o3 = {a: 1, b: 3};
+      t.add(o3);
+      t.acceptChanges();
+      o3.a=2;
+      t.rejectChanges();
+      expect(t.hasChanges()).toBeFalsy();
+      expect(o3.getRow().state).toBe(dsSpace.dataRowState.unchanged);
+    });
+
+    it('after rejectChanges no modification are left (add-acceptChanges)', function () {
       var o2 = {a: 1, b: 3};
       var o3 = {a: 1, b: 3};
-      t.add(o1);
       t.add(o2);
       t.add(o3);
       t.acceptChanges();
-      o1.getRow().del();
       t.add({a: 3, c: 5});
-      t.acceptChanges();
+      t.rejectChanges();
       expect(t.hasChanges()).toBeFalsy();
     });
 
-    it('after rejectChanges no modification are left', function () {
+    it('after rejectChanges no modification are left (del-acceptChanges)', function () {
       var o1 = {a: 1, b: 2};
-      var o2 = {a: 1, b: 3};
-      var o3 = {a: 1, b: 3};
       t.add(o1);
-      t.add(o2);
-      t.add(o3);
       t.acceptChanges();
       o1.getRow().del();
       t.add({a: 3, c: 5});
       t.rejectChanges();
       expect(t.hasChanges()).toBeFalsy();
     });
+
 
     it('rejectChanges should undo deletions', function () {
       var o1 = {a: 1, b: 2};
@@ -262,12 +267,13 @@ describe('DataTable module test', function () {
       var o1 = {a: 1, b: 2};
       var o2 = {a: 1, b: 3};
       var o3 = {a: 1, b: 3};
-      t.add(o1);
-      t.add(o2);
-      t.add(o3);
+      var p1= t.add(o1).current;
+      var p2=  t.add(o2).current;
+      var p3= t.add(o3).current;
       t.acceptChanges();
-      o3.c = 'a';
-      o2.a = 2;
+      p3.c = 'a';
+      p2.a = 2;
+      var qq1=t.getChanges();
       expect(t.getChanges().indexOf(o3)).toBeGreaterThan(-1);
       expect(t.getChanges().indexOf(o2)).toBeGreaterThan(-1);
     });

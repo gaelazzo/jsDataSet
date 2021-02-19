@@ -37,6 +37,11 @@ describe('DataRow module test', function () {
             p2 = t.load(o2);
             p3 = t.load(o3);
             p4 = t.load(o4);
+            o= p.current;
+            o2= p2.current;
+            o3= p3.current;
+            o4= p4.current;
+
 
         });
         afterEach(function () {
@@ -111,8 +116,8 @@ describe('DataRow module test', function () {
 
         it('Changes does modify rowstate to modified', function () {
             o.a = 2;
-            expect(o.getRow().state).toBe($rowState.modified);
-            o.getRow().acceptChanges();
+            expect(p.state).toBe($rowState.modified);
+            p.acceptChanges();
             expect(o.getRow().state).toBe($rowState.unchanged);
             o.a = 3;
             expect(o.getRow().state).toBe($rowState.modified);
