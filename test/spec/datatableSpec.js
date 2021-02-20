@@ -247,8 +247,8 @@ describe('DataTable module test', function () {
       t.add(o3);
       t.acceptChanges();
       var o4 = {k: 1};
-      t.add(o4);
-      expect(t.getChanges().indexOf(o4)).toBeGreaterThan(-1);
+      var p4= t.add(o4).current;
+      expect(t.getChanges().indexOf(p4)).toBeGreaterThan(-1);
     });
 
     it('getChanges should contain deleted rows', function () {
@@ -257,10 +257,11 @@ describe('DataTable module test', function () {
       var o3 = {a: 1, b: 3};
       t.add(o1);
       t.add(o2);
-      t.add(o3);
+      var p3= t.add(o3).current;
       t.acceptChanges();
-      o3.getRow().del();
-      expect(t.getChanges().indexOf(o3)).toBeGreaterThan(-1);
+      //o3.getRow().del();
+      p3.del();
+      expect(t.getChanges().indexOf(p3)).toBeGreaterThan(-1);
     });
 
     it('getChanges should contain modified rows', function () {
@@ -274,8 +275,8 @@ describe('DataTable module test', function () {
       p3.c = 'a';
       p2.a = 2;
       var qq1=t.getChanges();
-      expect(t.getChanges().indexOf(o3)).toBeGreaterThan(-1);
-      expect(t.getChanges().indexOf(o2)).toBeGreaterThan(-1);
+      expect(t.getChanges().indexOf(p3)).toBeGreaterThan(-1);
+      expect(t.getChanges().indexOf(p2)).toBeGreaterThan(-1);
     });
 
     it('getChanges should not contain false updates', function () {

@@ -5,9 +5,9 @@
 'use strict';
 
 describe('System status', function () {
-  var dsSpace = jsDataSet,
-      $q = jsDataQuery,
-      ds;
+  const dsSpace = jsDataSet,
+      $q = jsDataQuery;
+  let ds;
 
 
   beforeEach(function () {
@@ -28,9 +28,9 @@ describe('System status', function () {
 
 describe('DataSet',
   function () {
-    var dsSpace = jsDataSet,
-        $q = jsDataQuery,
-        ds;
+    const dsSpace = jsDataSet,
+        $q = jsDataQuery;
+    let ds;
 
 
     beforeEach(function () {
@@ -154,9 +154,9 @@ describe('DataSet',
 
 
       it('ds.copy should copy rows', function () {
-        var tA = ds.newTable('a'),
-          newDs,
-          newTa;
+        let tA = ds.newTable('a'),
+            newDs,
+            newTa;
         tA.add({a: 1});
         tA.add({a: 2});
         ds.newTable('b');
@@ -184,7 +184,7 @@ describe('DataSet',
       it('calling ds.newRelation adds a relation to ds.relations', function () {
         ds.newTable('a');
         ds.newTable('b');
-        var rel = ds.newRelation('ab', 'a', ['field1'], 'b', ['field2']);
+        const rel = ds.newRelation('ab', 'a', ['field1'], 'b', ['field2']);
         expect(ds.relations.ab).toBe(rel);
       });
 
@@ -192,15 +192,15 @@ describe('DataSet',
         it('newRelation adds a relation to ds.relations', function () {
         ds.newTable('a');
         ds.newTable('b');
-        var rel = ds.newRelation('ab', 'a', ['field1'], 'b', ['field2']);
-        expect(ds.relations.ab).toBe(rel);
+          const rel = ds.newRelation('ab', 'a', ['field1'], 'b', ['field2']);
+          expect(ds.relations.ab).toBe(rel);
       });
 
       it('newRelation  adds a relation to ds.relations (case with comma separated field list)', function () {
         ds.newTable('a');
         ds.newTable('b');
-        var rel = ds.newRelation('ab', 'a', 'field1,field2', 'b', 'field3,field4');
-        expect(ds.relations.ab).toBe(rel);
+        const rel = ds.newRelation('ab', 'a', 'field1,field2', 'b', 'field3,field4');
+        expect(ds.relations.ab.toBe(rel));
         expect(rel.parentCols.length).toBe(2);
         expect(rel.childCols.length).toBe(2);
       });
@@ -209,76 +209,76 @@ describe('DataSet',
       it('relation.getChildsFilter should be a function', function () {
         ds.newTable('a');
         ds.newTable('b');
-        var rel = ds.newRelation('a_b', 'a', ['field1'], 'b', ['field2']);
+        const rel = ds.newRelation('a_b', 'a', ['field1'], 'b', ['field2']);
         expect(rel.getChildsFilter).toEqual(jasmine.any(Function));
       });
 
       it('relation.getChildsFilter should return a function', function () {
         ds.newTable('a');
         ds.newTable('b');
-        var rel = ds.newRelation('a_b', 'a', ['field1'], 'b', ['field2']),
-          r = {a: 1};
+        const rel = ds.newRelation('a_b', 'a', ['field1'], 'b', ['field2']),
+            r = {a: 1};
         expect(rel.getChildsFilter(r)).toEqual(jasmine.any(Function));
       });
 
       it('relation.getChildsFilter().toSql should be a function', function () {
         ds.newTable('a');
         ds.newTable('b');
-        var rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
-          r = {A0: 3, A1: null, A2: 'nino', A3: 'arance'};
+        const rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
+            r = {A0: 3, A1: null, A2: 'nino', A3: 'arance'};
         expect(rel.getChildsFilter(r).toSql).toEqual(jasmine.any(Function));
       });
 
       it('relation.getChildsFilter() should return false on non matching objects', function () {
         ds.newTable('a');
         ds.newTable('b');
-        var rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
-          rA = {A0: 6, A1: 12, A2: 'nino', A3: 'arance'},
-          rB = {B0: 6, B1: 12, B2: 'anna', B3: 'arance'};
+        const rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
+            rA = {A0: 6, A1: 12, A2: 'nino', A3: 'arance'},
+            rB = {B0: 6, B1: 12, B2: 'anna', B3: 'arance'};
         expect(rel.getChildsFilter(rA)(rB)).toBeFalsy();
       });
 
       it('relation.getChildsFilter() should return true on matching objects', function () {
         ds.newTable('a');
         ds.newTable('b');
-        var rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
-          rA = {A0: 10, A1: 12, A2: 'nino', A3: 'arance'},
-          rB = {B0: 10, B1: 12, B2: 'nino', B3: 'pere'};
+        const rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
+            rA = {A0: 10, A1: 12, A2: 'nino', A3: 'arance'},
+            rB = {B0: 10, B1: 12, B2: 'nino', B3: 'pere'};
         expect(rel.getChildsFilter(rA)(rB)).toBeTruthy();
       });
 
       it('relation.getChildsFilter() should return false on (with null)-matching objects', function () {
         ds.newTable('a');
         ds.newTable('b');
-        var rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
-          rA = {A0: 10, A1: null, A2: 'nino', A3: 'arance'},
-          rB = {B0: 10, B1: null, B2: 'nino', B3: 'pere'};
+        const rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
+            rA = {A0: 10, A1: null, A2: 'nino', A3: 'arance'},
+            rB = {B0: 10, B1: null, B2: 'nino', B3: 'pere'};
         expect(rel.getChildsFilter(rA)(rB)).toBeFalsy();
       });
       it('relation.getParentsFilter() should return false on non matching objects', function () {
         ds.newTable('a');
         ds.newTable('b');
-        var rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
-          rA = {A0: 6, A1: 13, A2: 'nino', A3: 'arance'},
-          rB = {B0: 6, B1: 13, B2: 'anna', B3: 'arance'};
+        const rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
+            rA = {A0: 6, A1: 13, A2: 'nino', A3: 'arance'},
+            rB = {B0: 6, B1: 13, B2: 'anna', B3: 'arance'};
         expect(rel.getParentsFilter(rB)(rA)).toBeFalsy();
       });
 
       it('relation.getParentsFilter() should return true on matching objects', function () {
         ds.newTable('a');
         ds.newTable('b');
-        var rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
-          rA = {A0: 10, A1: 13, A2: 'nino', A3: 'arance'},
-          rB = {B0: 10, B1: 13, B2: 'nino', B3: 'pere'};
+        const rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
+            rA = {A0: 10, A1: 13, A2: 'nino', A3: 'arance'},
+            rB = {B0: 10, B1: 13, B2: 'nino', B3: 'pere'};
         expect(rel.getParentsFilter(rB)(rA)).toBeTruthy();
       });
 
       it('relation.getParentsFilter() should return false on (with null)-matching objects', function () {
         ds.newTable('a');
         ds.newTable('b');
-        var rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
-          rA = {A0: 10, A1: null, A2: 'nino', A3: 'arance'},
-          rB = {B0: 10, B1: null, B2: 'nino', B3: 'pere'};
+        const rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
+            rA = {A0: 10, A1: null, A2: 'nino', A3: 'arance'},
+            rB = {B0: 10, B1: null, B2: 'nino', B3: 'pere'};
         expect(rel.getParentsFilter(rB)(rA)).toBeFalsy();
       });
 
@@ -286,8 +286,8 @@ describe('DataSet',
         ds.newTable('a');
         ds.newTable('b');
         spyOn(dsSpace.myLoDash, 'map').and.callThrough();
-        var rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
-          rA = {A0: 3, A1: null, A2: 'nino', A3: 'arance'};
+        const rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
+            rA = {A0: 3, A1: null, A2: 'nino', A3: 'arance'};
 
         rel.getChildsFilter(rA, 'qq');
         expect(dsSpace.myLoDash.map).toHaveBeenCalled();
@@ -296,8 +296,8 @@ describe('DataSet',
       it('getting a getChildsFilter function should call _.map with  parentCols as first argument ', function () {
         ds.newTable('a');
         ds.newTable('b');
-        var rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
-          rA = {A0: 4, A1: null, A2: 'nino', A3: 'arance'};
+        const rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
+            rA = {A0: 4, A1: null, A2: 'nino', A3: 'arance'};
         spyOn(dsSpace.myLoDash, 'map').and.callThrough();
         rel.getChildsFilter(rA);
         expect(dsSpace.myLoDash.map.calls.first().args[0]).toBe(rel.parentCols);
@@ -306,8 +306,8 @@ describe('DataSet',
       it('getting a getParentsFilter function should call _.map with  childCols as first argument ', function () {
         ds.newTable('a');
         ds.newTable('b');
-        var rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
-          rB = {B0: 3, B1: null, B2: 'nino', B3: 'pere'};
+        const rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
+            rB = {B0: 3, B1: null, B2: 'nino', B3: 'pere'};
         spyOn(dsSpace.myLoDash, 'map').and.callThrough();
         rel.getParentsFilter(rB);
         expect(dsSpace.myLoDash.map.calls.first().args[0]).toBe(rel.childCols);
@@ -317,10 +317,10 @@ describe('DataSet',
       it('calling a relation function should not call _.map', function () {
         ds.newTable('a');
         ds.newTable('b');
-        var rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
-          rA = {A0: 8, A1: null, A2: 'nino', A3: 'arance'},
-          rB = {B0: 9, B1: null, B2: 'nino', B3: 'pere'},
-          f = rel.getChildsFilter(rA, 'qq');
+        const rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
+            rA = {A0: 8, A1: null, A2: 'nino', A3: 'arance'},
+            rB = {B0: 9, B1: null, B2: 'nino', B3: 'pere'},
+            f = rel.getChildsFilter(rA, 'qq');
         spyOn(dsSpace.myLoDash, 'map').and.callThrough();
         f(rB);
         expect(dsSpace.myLoDash.map).not.toHaveBeenCalled();
@@ -330,7 +330,7 @@ describe('DataSet',
       it('dataSet.relationsByParent and should be set relationsByChild after calling newRelation', function () {
         ds.newTable('a');
         ds.newTable('b');
-        var rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']);
+        const rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']);
         expect(ds.relationsByParent.a).toEqual([rel]);
         expect(ds.relationsByChild.b).toEqual([rel]);
         expect(ds.relationsByParent.b).toEqual([]);
@@ -340,8 +340,8 @@ describe('DataSet',
         it('dataSet.relationsByParent and should be set relationsByChild after calling newRelation', function () {
             ds.newTable('a');
             ds.newTable('b');
-            var rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']);
-            expect(ds.getParentChildRelation('b','a')).toEqual([]);
+          const rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']);
+          expect(ds.getParentChildRelation('b','a')).toEqual([]);
             expect(ds.getParentChildRelation('a','c')).toEqual([]);
             expect(ds.getParentChildRelation('a','b')).toEqual([rel]);
         });
@@ -351,10 +351,10 @@ describe('DataSet',
         it('clone should preserve relationsByParent relationsByChild and ', function () {
         ds.newTable('a');
         ds.newTable('b');
-        var rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
-          d2 = ds.clone();
+          const rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
+              d2 = ds.clone();
 
-        expect(_.map(d2.relationsByParent.a, function(r){
+          expect(_.map(d2.relationsByParent.a, function(r){
           return _.pick(r,['parentTable','parentCols','childTable','childCols']);
          } ))
          .toEqual([_.pick(rel, ['parentTable', 'parentCols', 'childTable', 'childCols'])]);
@@ -368,13 +368,13 @@ describe('DataSet',
     });
 
     describe('OptimisticLocking functions', function(){
-      var $ol,stubEnv;
+      let $ol, stubEnv;
       beforeEach(function(){
         $ol = dsSpace.OptimisticLocking;
         stubEnv= {
           sys:function(field){return 'sys_'+field;},
           usr:function(field){return 'usr_'+field;},
-          field: function(field){return 'field_'+field}
+          field: function(field){return 'field_'+field;}
         };
       });
 
@@ -388,21 +388,21 @@ describe('DataSet',
       });
 
       it('OptimisticLocking should return an object with a method prepareForPosting ', function () {
-        var o = new $ol(['lt', 'lu'], ['ct','cu','lt','lu']);
+        const o = new $ol(['lt', 'lu'], ['ct', 'cu', 'lt', 'lu']);
         expect(o.prepareForPosting).toEqual(jasmine.any(Function));
 
       });
 
       it('OptimisticLocking should return an object with a method getOptimisticLock ', function () {
-        var o = new $ol(['lt', 'lu'],['ct', 'cu', 'lt', 'lu']);
+        const o = new $ol(['lt', 'lu'], ['ct', 'cu', 'lt', 'lu']);
         expect(o.getOptimisticLock).toEqual(jasmine.any(Function));
       });
 
       it('prepareForPosting should fill update fields for modified rows', function(){
-        var t = ds.newTable('a'),
-          r = t.newRow({a:1,b:2,ct:'ct',lt:'lt',cu:'cu',lu:'lu'}),
-            p= r.getRow().current,
-          o = new $ol(['lt', 'lu'], ['ct', 'cu', 'lt', 'lu']);
+        const t = ds.newTable('a'),
+            r = t.newRow({a: 1, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'}),
+            p = r.getRow().current,
+            o = new $ol(['lt', 'lu'], ['ct', 'cu', 'lt', 'lu']);
         t.acceptChanges();
         p.a=10;
         o.prepareForPosting(r, stubEnv);
@@ -410,19 +410,19 @@ describe('DataSet',
       });
 
       it('prepareForPosting should fill create fields for added rows', function () {
-        var t = ds.newTable('a'),
-          r = t.newRow({a: 1, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'}),
-          o = new $ol(['lt', 'lu'], ['ct', 'cu', 'lt', 'lu']);
+        const t = ds.newTable('a'),
+            r = t.newRow({a: 1, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'}),
+            o = new $ol(['lt', 'lu'], ['ct', 'cu', 'lt', 'lu']);
         o.prepareForPosting(r, stubEnv);
         expect(r).toEqual({a: 1, b: 2, ct: 'field_ct', cu: 'field_cu', lt: 'field_lt', lu: 'field_lu'});
       });
 
       it('getOptimisticLock should return a function that matches the original row',  function(){
-        var t = ds.newTable('a'),
-          r= t.newRow({id:10,a: 1, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'}),
-          o = new $ol(['lt', 'lu'], ['ct', 'cu', 'lt', 'lu']);
+        const t = ds.newTable('a'),
+            r = t.newRow({id: 10, a: 1, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'}),
+            o = new $ol(['lt', 'lu'], ['ct', 'cu', 'lt', 'lu']);
         t.key(['id']);
-        var filter = o.getOptimisticLock(r);
+        const filter = o.getOptimisticLock(r);
         expect(t.select(filter)).toEqual([r]);
         //check filter is comparing lt
         r.lt='no';
@@ -452,13 +452,13 @@ describe('DataSet',
       });
 
       it('getOptimisticLock should return a function that matches the original row (no primary key)', function () {
-        var t = ds.newTable('a'),
-          r = t.newRow({id: 10, a: 1, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'}),
-          o = new $ol(['lt', 'lu'], ['ct', 'cu', 'lt', 'lu']);
+        const t = ds.newTable('a'),
+            r = t.newRow({id: 10, a: 1, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'}),
+            o = new $ol(['lt', 'lu'], ['ct', 'cu', 'lt', 'lu']);
 
         //t.key(['id']); no key here
 
-        var filter = o.getOptimisticLock(r);
+        const filter = o.getOptimisticLock(r);
         expect(t.select(filter)).toEqual([r]);
         //check filter is comparing lt
         r.lt = 'no';
@@ -497,7 +497,7 @@ describe('DataSet',
     });
 
     describe('serialize/deserialize', function () {
-      var t, t2, r, r1, r2, s, s1, s2, s3;
+      let t, t2, r, r1, r2, s, s1, s2, s3;
       beforeEach(function () {
         t = ds.newTable('a');
           r = t.newRow({id: 10, a: 1, b: 2, ct: 'ct', lt: 'lt', cu: 'cu', lu: 'lu'});
@@ -514,38 +514,38 @@ describe('DataSet',
         r1.a = 21;
       });
       it('should preserve tables', function () {
-        var sData = JSON.parse(JSON.stringify(ds.serialize()));
-        var ds2= new dsSpace.DataSet('dd');
+        const sData = JSON.parse(JSON.stringify(ds.serialize()));
+        const ds2 = new dsSpace.DataSet('dd');
         ds2.deSerialize(sData);
         expect(_.keys(ds2.tables).length).toBe(2);
       });
 
       it('should preserve row count', function () {
-        var sData = JSON.parse(JSON.stringify(ds.serialize()));
-        var ds2 = new dsSpace.DataSet('dd');
+        const sData = JSON.parse(JSON.stringify(ds.serialize()));
+        const ds2 = new dsSpace.DataSet('dd');
         ds2.deSerialize(sData);
         expect(ds2.tables.a.rows.length).toBe(3);
         expect(ds2.tables.b.rows.length).toBe(4);
       });
 
       it('should preserve row values', function () {
-        var sData = JSON.parse(JSON.stringify(ds.serialize()));
-        var ds2 = new dsSpace.DataSet('dd');
+        const sData = JSON.parse(JSON.stringify(ds.serialize()));
+        const ds2 = new dsSpace.DataSet('dd');
         ds2.deSerialize(sData);
         expect(ds2.tables.a.rows).toEqual(ds.tables.a.rows);
         expect(ds2.tables.b.rows).toEqual(ds.tables.b.rows);
       });
 
       it('should preserve original values', function () {
-        var sData = JSON.parse(JSON.stringify(ds.serialize()));
-        var ds2 = new dsSpace.DataSet('dd');
+        const sData = JSON.parse(JSON.stringify(ds.serialize()));
+        const ds2 = new dsSpace.DataSet('dd');
         ds2.deSerialize(sData);
         expect(ds2.tables.a.select($q.eq('id',11))[0].getRow().getValue('a', dsSpace.dataRowVersion.original)).toBe(123);
       });
 
       it('should preserve current values', function () {
-        var sData = JSON.parse(JSON.stringify(ds.serialize()));
-        var ds2 = new dsSpace.DataSet('dd');
+        const sData = JSON.parse(JSON.stringify(ds.serialize()));
+        const ds2 = new dsSpace.DataSet('dd');
         ds2.deSerialize(sData);
         expect(ds2.tables.a.select($q.eq('id', 11))[0]['a']).toBe(21);
       });

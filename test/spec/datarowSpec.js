@@ -393,15 +393,15 @@ describe('DataRow module test', function () {
 
 
         it('getChildRows should give childs of a row in a specified table', function(){
-            expect(p.getChildsInTable('child1')).toHaveSameItems([o10,o11],true);
-            expect(p2.getChildsInTable('child1')).toEqual([o10]);
-            expect(p3.getChildsInTable('child1')).toHaveSameItems([o10,o11],true);
-            expect(p4.getChildsInTable('child1')).toEqual([]);
+            expect(p.getChildInTable('child1')).toHaveSameItems([o10,o11],true);
+            expect(p2.getChildInTable('child1')).toEqual([o10]);
+            expect(p3.getChildInTable('child1')).toHaveSameItems([o10,o11],true);
+            expect(p4.getChildInTable('child1')).toEqual([]);
 
-            expect(p.getChildsInTable('child2')).toEqual([]);
-            expect(p2.getChildsInTable('child2')).toEqual([]);
-            expect(p3.getChildsInTable('child2')).toEqual([o15]);
-            expect(p4.getChildsInTable('child2')).toEqual([o16]);
+            expect(p.getChildInTable('child2')).toEqual([]);
+            expect(p2.getChildInTable('child2')).toEqual([]);
+            expect(p3.getChildInTable('child2')).toEqual([o15]);
+            expect(p4.getChildInTable('child2')).toEqual([o16]);
 
 
         });
