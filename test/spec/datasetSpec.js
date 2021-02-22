@@ -200,7 +200,7 @@ describe('DataSet',
         ds.newTable('a');
         ds.newTable('b');
         const rel = ds.newRelation('ab', 'a', 'field1,field2', 'b', 'field3,field4');
-        expect(ds.relations.ab.toBe(rel));
+        expect(ds.relations.ab).toBe(rel);
         expect(rel.parentCols.length).toBe(2);
         expect(rel.childCols.length).toBe(2);
       });
