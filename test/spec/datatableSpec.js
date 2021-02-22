@@ -149,18 +149,21 @@ describe('DataTable module test', function () {
       expect(o1.getRow).toBeUndefined();
     });
 
-    it('datarows haven\'t any proxy  when  detached', function () {
+    it('datarows haven\'t any getRow method  when  detached', function () {
       var o1 = {a: 1, b: 2};
       t.add(o1);
       t.load({a: 2, b: 3});
       t.add({a: 2, b: 3});
       t.acceptChanges();
-      var dr = o1.getRow();
-      var obs = dr.revocableProxy;
-      expect(obs).toBeDefined();
+      let gr = o1.getRow;
+      expect(gr).toBeDefined();
+
+      let dr = o1.getRow();
+      expect(dr).toBeDefined();
+
       dr.del();
       t.acceptChanges();
-      expect(dr.revocableProxy).toBeUndefined();
+      expect(dr.getRow).toBeUndefined();
     });
 
 

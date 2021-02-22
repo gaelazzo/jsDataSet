@@ -98,20 +98,26 @@
 
     const proxyObjectRow = {
         get: function(target, prop, receiver) {
-            if (prop === "acceptChanges") {
-                return () => target.getRow().acceptChanges();
-            }
-            if (prop === "rejectChanges") {
-                return () => target.getRow().rejectChanges();
-            }
-            if (prop === "del") {
-                return () => target.getRow().del();
+            if (target.getRow) {
+                if (prop === "acceptChanges") {
+                    return () => target.getRow().acceptChanges();
+                }
+                if (prop === "rejectChanges") {
+                    return () => target.getRow().rejectChanges();
+                }
+                if (prop === "del") {
+                    return () => target.getRow().del();
+                }
             }
             return target[prop];
         },
 
 
         set: function(target, property, value, receiver) {
+            if (!target.getRow) {
+                return  false;
+            }
+
             let r  = target.getRow();
             if (!r){
                 return false;
@@ -134,6 +140,9 @@
             return true;
         },
         defineProperty: function(target, property, descriptor) {
+            if (!target.getRow) {
+                return  false;
+            }
             var r  = target.getRow();
             if (!r){
                 return false;
@@ -143,6 +152,9 @@
         },
 
         deleteProperty: function(target, property) {
+            if (!target.getRow) {
+                return  false;
+            }
             var r  = target.getRow();
             if (!r){
                 return false;
@@ -319,22 +331,14 @@
             configurable: true   //allows a successive deletion of this property
         });
 
-        /**
-         * current value of the DataRow is the ObjectRow attached to it
-         * @public
-         * @property {ObjectRow} plainObject
-         */
-        this.plainObject = o;
 
-        //Create an observer on this
-        this.revocableProxy = Proxy.revocable(o,proxyObjectRow);
 
         /**
          * current value of the DataRow is the ObjectRow attached to it
          * @public
          * @property {ObjectRow} current
          */
-        this.current = this.revocableProxy.proxy;
+        this.current = new Proxy(o,proxyObjectRow);
     }
 
     /**
@@ -547,14 +551,11 @@
         detach: function () {
             this.state = $rowState.detached;
             if (this.table) {
+                //this calls row.detach
                 this.table.detach(this.current);
+                return undefined;
             }
             delete this.current.getRow;
-            if (this.revocableProxy) {
-                this.revocableProxy.revoke();
-                delete this.revocableProxy;
-                this.current=this.plainObject;
-            }
             return undefined;
         },
 

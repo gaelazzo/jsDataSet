@@ -108,4 +108,5 @@ describe('proxy object test', function () {
         expect(x.a).toBe(1);
 
     });
+
 });
