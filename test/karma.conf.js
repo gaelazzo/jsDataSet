@@ -37,7 +37,7 @@ module.exports = function(config) {
         exclude: [],
 
         // web server port
-        port: 8081,
+        port: 9876,
 
         // Start these browsers, currently available:
         // - Chrome
@@ -50,6 +50,8 @@ module.exports = function(config) {
         browsers: [
             'ChromeHeadless'
         ],
+        proxies: {
+        },
 
         // Which plugins to enable
         plugins: [
@@ -72,7 +74,7 @@ module.exports = function(config) {
 
         // level of logging
         // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
-        logLevel: config.LOG_DEBUG
+        logLevel: config.LOG_INFO
 
         // Uncomment the following lines if you are using grunt's server to run the tests
         // proxies: {

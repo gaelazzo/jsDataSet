@@ -210,7 +210,7 @@ describe('DataSet',
         ds.newTable('a');
         ds.newTable('b');
         const rel = ds.newRelation('a_b', 'a', ['field1'], 'b', ['field2']);
-        expect(rel.getChildsFilter).toEqual(jasmine.any(Function));
+        expect(rel.getChildFilter).toEqual(jasmine.any(Function));
       });
 
       it('relation.getChildsFilter should return a function', function () {
@@ -218,7 +218,7 @@ describe('DataSet',
         ds.newTable('b');
         const rel = ds.newRelation('a_b', 'a', ['field1'], 'b', ['field2']),
             r = {a: 1};
-        expect(rel.getChildsFilter(r)).toEqual(jasmine.any(Function));
+        expect(rel.getChildFilter(r)).toEqual(jasmine.any(Function));
       });
 
       it('relation.getChildsFilter().toSql should be a function', function () {
@@ -226,7 +226,7 @@ describe('DataSet',
         ds.newTable('b');
         const rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
             r = {A0: 3, A1: null, A2: 'nino', A3: 'arance'};
-        expect(rel.getChildsFilter(r).toSql).toEqual(jasmine.any(Function));
+        expect(rel.getChildFilter(r).toSql).toEqual(jasmine.any(Function));
       });
 
       it('relation.getChildsFilter() should return false on non matching objects', function () {
@@ -235,7 +235,7 @@ describe('DataSet',
         const rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
             rA = {A0: 6, A1: 12, A2: 'nino', A3: 'arance'},
             rB = {B0: 6, B1: 12, B2: 'anna', B3: 'arance'};
-        expect(rel.getChildsFilter(rA)(rB)).toBeFalsy();
+        expect(rel.getChildFilter(rA)(rB)).toBeFalsy();
       });
 
       it('relation.getChildsFilter() should return true on matching objects', function () {
@@ -244,7 +244,7 @@ describe('DataSet',
         const rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
             rA = {A0: 10, A1: 12, A2: 'nino', A3: 'arance'},
             rB = {B0: 10, B1: 12, B2: 'nino', B3: 'pere'};
-        expect(rel.getChildsFilter(rA)(rB)).toBeTruthy();
+        expect(rel.getChildFilter(rA)(rB)).toBeTruthy();
       });
 
       it('relation.getChildsFilter() should return false on (with null)-matching objects', function () {
@@ -253,7 +253,7 @@ describe('DataSet',
         const rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
             rA = {A0: 10, A1: null, A2: 'nino', A3: 'arance'},
             rB = {B0: 10, B1: null, B2: 'nino', B3: 'pere'};
-        expect(rel.getChildsFilter(rA)(rB)).toBeFalsy();
+        expect(rel.getChildFilter(rA)(rB)).toBeFalsy();
       });
       it('relation.getParentsFilter() should return false on non matching objects', function () {
         ds.newTable('a');
@@ -289,7 +289,7 @@ describe('DataSet',
         const rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
             rA = {A0: 3, A1: null, A2: 'nino', A3: 'arance'};
 
-        rel.getChildsFilter(rA, 'qq');
+        rel.getChildFilter(rA, 'qq');
         expect(dsSpace.myLoDash.map).toHaveBeenCalled();
       });
 
@@ -299,7 +299,7 @@ describe('DataSet',
         const rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
             rA = {A0: 4, A1: null, A2: 'nino', A3: 'arance'};
         spyOn(dsSpace.myLoDash, 'map').and.callThrough();
-        rel.getChildsFilter(rA);
+        rel.getChildFilter(rA);
         expect(dsSpace.myLoDash.map.calls.first().args[0]).toBe(rel.parentCols);
       });
 
@@ -320,7 +320,7 @@ describe('DataSet',
         const rel = ds.newRelation('a_b', 'a', ['A1', 'A2'], 'b', ['B1', 'B2']),
             rA = {A0: 8, A1: null, A2: 'nino', A3: 'arance'},
             rB = {B0: 9, B1: null, B2: 'nino', B3: 'pere'},
-            f = rel.getChildsFilter(rA, 'qq');
+            f = rel.getChildFilter(rA, 'qq');
         spyOn(dsSpace.myLoDash, 'map').and.callThrough();
         f(rB);
         expect(dsSpace.myLoDash.map).not.toHaveBeenCalled();

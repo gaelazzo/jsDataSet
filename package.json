@@ -1,6 +1,6 @@
 {
   "name": "jsDataSet",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "DataSet (like .Net) made available for javascript and more",
   "main": "src/jsDataSet.js",
   "directories": {
@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "jsDataQuery": "git+https://github.com/gaelazzo/jsDataQuery.git",
-    "lodash": "4.17.19"
+    "lodash": "4.17.13"
   },
   "devDependencies": {
     "grunt": "1.3.0",

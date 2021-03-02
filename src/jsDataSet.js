@@ -4,7 +4,7 @@
  */
 /* jslint nomen: true */
 /* jslint bitwise: true */
-/*globals Environment,jsDataAccess,Function */
+/*globals Environment,jsDataAccess,Function,jsDataQuery,define,_ */
 
 
 (function (_,  dataQuery) {
@@ -35,7 +35,7 @@
 
     //noinspection JSUnresolvedVariable
     /** Detect free variable `global` from Node.js or Browserified code and use it as `root`. (thanks lodash)*/
-    const freeGlobal = freeExports && freeModule && typeof global == 'object' && global;
+    const freeGlobal = freeExports && freeModule && typeof global === 'object' && global;
 
     //noinspection JSUnresolvedVariable
     if (freeGlobal && (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal || freeGlobal.self === freeGlobal)) {
@@ -98,15 +98,21 @@
 
     const proxyObjectRow = {
         get: function(target, prop, receiver) {
-            if (target.getRow) {
-                if (prop === "acceptChanges") {
+            if (typeof prop === 'symbol'){
+                return target[prop];
+            }
+            if (target.getRow  && prop.startsWith('$')) { //&&  typeof prop === 'string'
+                if (prop === "$acceptChanges") {
                     return () => target.getRow().acceptChanges();
                 }
-                if (prop === "rejectChanges") {
+                if (prop === "$rejectChanges") {
                     return () => target.getRow().rejectChanges();
                 }
-                if (prop === "del") {
+                if (prop === "$del") {
                     return () => target.getRow().del();
+                }
+                if (prop === "$DataRow") {
+                    return target.getRow();
                 }
             }
             return target[prop];
@@ -143,7 +149,7 @@
             if (!target.getRow) {
                 return  false;
             }
-            var r  = target.getRow();
+            let r  = target.getRow();
             if (!r){
                 return false;
             }
@@ -155,7 +161,7 @@
             if (!target.getRow) {
                 return  false;
             }
-            var r  = target.getRow();
+            let r  = target.getRow();
             if (!r){
                 return false;
             }
@@ -466,7 +472,7 @@
          * @return {DataRow}
          */
         patchTo: function (o) {
-            var that = this;
+            let that = this;
             if (this.state === $rowState.deleted) {
                 this.rejectChanges();
             }
@@ -648,7 +654,7 @@
             if (rel === undefined) {
                 throw 'Relation ' + relName + ' does not exists in dataset ' + this.tables.dataset.name;
             }
-            return rel.getChilds(this.current);
+            return rel.getChild(this.current);
         },
 
         /**
@@ -660,7 +666,7 @@
             return _(this.table.dataset.relationsByParent[this.table.name])
                 .value()
                 .reduce(function (list, rel) {
-                    return list.concat(rel.getChilds(that.current));
+                    return list.concat(rel.getChild(that.current));
                 }, []);
         },
 
@@ -676,7 +682,7 @@
                 .filter({childTable: childTableName})
                 .value()
                 .reduce(function (list, rel) {
-                    return list.concat(rel.getChilds(that.current));
+                    return list.concat(rel.getChild(that.current));
                 }, []);
         },
 
@@ -1956,7 +1962,7 @@
         },
 
         /**
-         * Recalc a field to avoid collisions on some rows identified by a filter
+         * Recalculate a field to avoid collisions on some rows identified by a filter
          * @method avoidCollisionsOnField
          * @private
          * @param {string} field
@@ -1996,7 +2002,7 @@
                 let pos = _.indexOf(rel.parentCols, parentField);
                 if (pos >= 0) {
                     let childField = rel.childCols[pos];
-                    _.forEach(rel.getChilds(r), function (childRow) {
+                    _.forEach(rel.getChild(r), function (childRow) {
                         let childTable = ds.tables[rel.childTable];
                         childTable.cascadeAssignField(childRow, childField, value);
 
@@ -2317,11 +2323,11 @@
     DataRelation.prototype = {
         /**
          * Gets a filter that will be applied to the child table and will find any child row of a given ObjectRow
-         * @method getChildsFilter
+         * @method getChildFilter
          * @param {ObjectRow} parentRow
          * @param {string} [alias] when present is used to attach an alias for the parent table in the composed filter
          */
-        getChildsFilter: function (parentRow, alias) {
+        getChildFilter: function (parentRow, alias) {
             let that = this;
             return dataQuery.mcmp(that.childCols,
                 _.map(that.parentCols, function (col) {
@@ -2333,17 +2339,17 @@
 
         /**
          * Get any child of a given ObjectRow following this DataRelation
-         * @method getChilds
+         * @method getChild
          * @param {ObjectRow} parentRow
          * @returns {ObjectRow[]}
          */
-        getChilds: function (parentRow) {
+        getChild: function (parentRow) {
             let ds = this.dataset;
             if (ds === null) {
                 ds = parentRow.getRow().table.dataset;
             }
             let childTable = ds.tables[this.childTable];
-            return _.filter(childTable.rows, this.getChildsFilter(parentRow));
+            return _.filter(childTable.rows, this.getChildFilter(parentRow));
         },
 
         /**
@@ -2701,14 +2707,14 @@
                 that = this;
             _.forEach(this.relationsByParent[table.name], function (rel) {
                 if (rel.isEntityRelation()) {
-                    _.forEach(rel.getChilds(row), function (toDel) {
+                    _.forEach(rel.getChild(row), function (toDel) {
                         if (toDel.getRow().state !== $rowState.deleted) {
                             that.cascadeDelete(toDel);
                         }
                     });
                 }
                 else {
-                    _.forEach(rel.getChilds(row), function (toUnlink) {
+                    _.forEach(rel.getChild(row), function (toUnlink) {
                             rel.makeChild(null, toUnlink);
                         }
                     );

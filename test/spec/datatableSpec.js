@@ -263,7 +263,7 @@ describe('DataTable module test', function () {
       var p3= t.add(o3).current;
       t.acceptChanges();
       //o3.getRow().del();
-      p3.del();
+      p3.$del();
       expect(t.getChanges().indexOf(p3)).toBeGreaterThan(-1);
     });
 
