@@ -59,7 +59,7 @@
     /**
      * @property $rowState
      * @public
-     * @class DataRowState
+     * @enum DataRowState
      */
     const $rowState = {
             detached: "detached",
@@ -74,7 +74,7 @@
          * Enumerates possible version of a DataRow field: original, current
          * @public
          * @property $rowVersion
-         * @class DataRowVersion
+         * @enum DataRowVersion
          */
         $rowVersion = {
             original: "original",
@@ -186,7 +186,8 @@
     };
 
     /**
-     * Create a DataColumn
+     * @public
+     * @class DataColumn
      * @param {string} columnName
      * @param {string} ctype type of the column field
      **/
@@ -204,6 +205,12 @@
          **/
         this.ctype = ctype;
 
+
+        /**
+         * column name for posting to db
+         * @property {string} forPosting
+         **/
+        this.forPosting= undefined;
     }
 
 
@@ -298,8 +305,9 @@
         this.myState = $rowState.unchanged;
         let that = this;
 
-        /**\
+        /**
          * State of the DataRow, possible values are added unchanged modified deleted detached
+         * @public
          * @property  state
          * @type DataRowState
          */
@@ -307,8 +315,8 @@
             get: function () {
                 if (that.myState === $rowState.modified || that.myState === $rowState.unchanged) {
                     if (Object.keys(that.old).length === 0 &&
-                            Object.keys(that.added).length === 0 &&
-                            Object.keys(that.removed).length === 0) {
+                        Object.keys(that.added).length === 0 &&
+                        Object.keys(that.removed).length === 0) {
                         that.myState = $rowState.unchanged;
                     }
                     else {
@@ -340,11 +348,16 @@
 
 
         /**
-         * current value of the DataRow is the ObjectRow attached to it
          * @public
-         * @property {ObjectRow} current
+         * @property {ObjectRow} current current value of the DataRow is the ObjectRow attached to it
          */
         this.current = new Proxy(o,proxyObjectRow);
+
+        /**
+         * @public
+         * @property {DataTable} table
+         */
+        this.table=undefined;
     }
 
     /**
@@ -926,13 +939,13 @@
         /**
          * Dictionary of DataColumn
          * @property columns
-         * @type Dictionary<string,DataColumn>
+         * @type {{DataColumn}}
          */
         this.columns = {};
 
         /**
          * @property autoIncrementColumns
-         * @type Dictionary<string,AutoIncrementColumn>
+         * @type {{AutoIncrementColumn}}
          */
         this.autoIncrementColumns = {};
 
@@ -1005,7 +1018,9 @@
 
 
         setDataColumn: function (name, ctype) {
-            this.columns[name] = new DataColumn(name, ctype);
+            let c= new DataColumn(name, ctype);
+            this.columns[name] = c;
+            return c;
         },
 
 
@@ -1197,7 +1212,7 @@
                 this.myKey = Array.prototype.slice.call(arguments);
             }
             _.forEach(this.columns,function(c){
-               delete c.isPrimaryKey;
+                delete c.isPrimaryKey;
             });
             let self=this;
             _.forEach(this.myKey,function(k){
@@ -1345,16 +1360,16 @@
                  * @param o
                  */
                 function (o) {
-                let dr = o.getRow();
-                if (dr.state === $rowState.deleted) {
-                    dr.table = null;
-                    dr.detach();
-                }
-                else {
-                    dr.acceptChanges();
-                    newRows.push(o);
-                }
-            });
+                    let dr = o.getRow();
+                    if (dr.state === $rowState.deleted) {
+                        dr.table = null;
+                        dr.detach();
+                    }
+                    else {
+                        dr.acceptChanges();
+                        newRows.push(o);
+                    }
+                });
             this.rows = newRows;
         },
 
@@ -1722,7 +1737,7 @@
                 t.columns = {};
 
                 let o = {};
-                _.forOwn(this.columns, function (val, key) {                   
+                _.forOwn(this.columns, function (val, key) {
                     o = {};
                     _.forOwn(val, function (v, k) {
                         if ((k === 'expression') && (_.isFunction(v) || _.isArray(v))) {
@@ -1855,7 +1870,7 @@
         mergeArray: function (arr, overwrite) {
             let that = this;
             _.forEach(arr, function (r) {
-                let oldRow = that.existingRow(r);
+                    let oldRow = that.existingRow(r);
                     if (oldRow) {
                         if (overwrite) {
                             oldRow.getRow().makeEqualTo(r);
