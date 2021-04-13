@@ -665,7 +665,7 @@
         getChildRows: function (relName) {
             let rel = this.table.dataset.relations[relName];
             if (rel === undefined) {
-                throw 'Relation ' + relName + ' does not exists in dataset ' + this.tables.dataset.name;
+                throw 'Relation ' + relName + ' does not exists in dataset ' + this.table.dataset.name;
             }
             return rel.getChild(this.current);
         },
@@ -2537,7 +2537,7 @@
 
         /**
          * Collection of DataTable where tables[tableName] is a DataTable named tableName
-         * @property {Hash} tables
+         * @property {{DataTable}} tables
          */
         this.tables = {};
 
@@ -2628,6 +2628,28 @@
             this.relationsByChild[tableName] = [];
             this.relationsByParent[tableName] = [];
             return t;
+        },
+
+        /**
+         * Adds a datatable to DataSet
+         * @method addTable
+         * @param {DataTable} table
+         * @returns {DataTable}
+         */
+        addTable: function (table) {
+            let tableName= table.name;
+            if (this.tables[tableName]) {
+                throw ("Table " + tableName + " is already present in dataset");
+            }
+            if (table.dataset) {
+                throw ("Table " + tableName + " already belongs to a dataset");
+            }
+
+            table.dataset = this;
+            this.tables[tableName] = table;
+            this.relationsByChild[tableName] = [];
+            this.relationsByParent[tableName] = [];
+            return table;
         },
 
         /**
