@@ -1018,7 +1018,12 @@
 
 
         setDataColumn: function (name, ctype) {
-            let c= new DataColumn(name, ctype);
+            let c = this.columns[name];
+            if (c){
+                c.ctype= ctype;
+            } else {
+                c= new DataColumn(name, ctype);
+            }
             this.columns[name] = c;
             return c;
         },
