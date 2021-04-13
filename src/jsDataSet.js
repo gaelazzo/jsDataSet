@@ -2537,6 +2537,7 @@
 
         /**
          * Collection of DataTable where tables[tableName] is a DataTable named tableName
+         * @public
          * @property {{DataTable}} tables
          */
         this.tables = {};
