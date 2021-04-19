@@ -46,6 +46,21 @@
     const moduleExports = freeModule && freeModule.exports === freeExports && freeExports;
 
     /**
+     * @property $cType
+     * @public
+     * @enum CType
+     */
+    const $cType = {
+        'string': 'string',
+        'int': 'int',
+        'number': 'number',
+        'date': 'date',
+        'bool': 'bool',
+        'unknown': 'unknown'
+    };
+
+
+    /**
      * @public
      * @typedef {$rowState} dataRowState
      * @property  {DataRowState} detached
@@ -189,7 +204,7 @@
      * @public
      * @class DataColumn
      * @param {string} columnName
-     * @param {string} ctype type of the column field
+     * @param {CType} type of the column field
      **/
     function DataColumn(columnName, ctype) {
 
@@ -201,7 +216,7 @@
 
         /**
          * type of the column
-         * @property {string} ctype
+         * @property {CType} ctype
          **/
         this.ctype = ctype;
 
@@ -1016,7 +1031,12 @@
             this.maxCache[hash] = num;
         },
 
-
+        /**
+         *
+         * @param {string} name
+         * @param {CType} ctype
+         * @return {DataColumn}
+         */
         setDataColumn: function (name, ctype) {
             let c = this.columns[name];
             if (c){
@@ -1235,9 +1255,6 @@
          * @returns {boolean}
          */
         isKey: function(k){
-            if (k.hasOwnProperty("isPrimaryKey")){
-                return true;
-            }
             if (this.columns[k]){
                 return this.columns[k].isPrimaryKey;
             }
@@ -2884,7 +2901,7 @@
     };
 
 
-    var jsDataSet = {
+    let jsDataSet = {
         dataRowState: $rowState,
         dataRowVersion: $rowVersion,
         DataColumn: DataColumn,
@@ -2894,6 +2911,7 @@
         toString: function () {
             return "dataSet Namespace";
         },
+        CType:$cType,
         OptimisticLocking: OptimisticLocking,
         myLoDash: _ //for testing purposes
     };
