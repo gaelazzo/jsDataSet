@@ -1158,7 +1158,11 @@
             if (filter) {
                 if (filter.isTrue) {
                     //console.log("always true: returning this.rows");
-                    return this.rows;
+                    //does not return deleted rows, coherently with other cases
+                    return _.filter(this.rows, function (r) {
+                        return r.getRow().state !== $rowState.deleted;
+                    });
+                    //return this.rows;
                 }
                 if (filter.isFalse) {
                     //console.log("always false: returning []");
