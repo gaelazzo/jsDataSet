@@ -164,7 +164,7 @@ describe('DataSet',
         newDs = ds.copy();
         newTa = newDs.tables.a;
         expect(newTa.rows.length).toEqual(2);
-        expect(newTa.select($q.eq('a', 1)).length).toEqual(1);
+        expect(newTa.select($q.eq('a', 1)).length).toBe(1);
       });
 
 

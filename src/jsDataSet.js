@@ -2566,23 +2566,21 @@
 
         /**
          * Collection of DataRelation  where relations[relName] is a DataRelation named relName
-         * @property {Hash} relations
+         * @property {{DataRelation}} relations
          */
         this.relations = {};
 
         /**
          * Gets all relations where the parent table is the key of the hash
          * relationsByParent['a'] is an array of all DataRelations where 'a' is the parent
-         * @property relationsByParent
-         * @type Dictionary<string,DataRelation[]>
+         * @property {{DataRelation[]}} relationsByParent
          */
         this.relationsByParent = {};
 
         /**
          * Gets all relations where the child table is the key of the hash
          * relationsByChild['a'] is an array of all DataRelations where 'a' is the child
-         * @property relationsByChild
-         * @type Dictionary<string,DataRelation[]>
+         *  @property {{DataRelation[]}}  relationsByChild
          */
         this.relationsByChild = {};
 
