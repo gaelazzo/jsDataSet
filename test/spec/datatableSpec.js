@@ -3,9 +3,10 @@
 
 
 describe('DataTable module test', function () {
-  var  dsSpace = jsDataSet,
-      $q= jsDataQuery,
-      ds,ds2;
+  const dsSpace = jsDataSet,
+      DataTable = dsSpace.DataTable,
+      $q = jsDataQuery;
+  let ds, ds2;
 
   beforeEach(function () {
     ds = new dsSpace.DataSet('temp');
@@ -19,7 +20,7 @@ describe('DataTable module test', function () {
 
 
   describe('DataTable functions', function () {
-    var t;
+    let t;
 
     beforeEach(function () {
       t = ds.newTable('customer');
@@ -52,21 +53,21 @@ describe('DataTable module test', function () {
     it('detaching object to table should modify collection size', function () {
       t.add({a: 1, b: 2});
       t.add({a: 2, b: 3});
-      var c = {a: 2, b: 4};
+      const c = {a: 2, b: 4};
       t.add(c);
       c.getRow().detach();
       expect(t.rows.length).toBe(2);
     });
 
     it('adding and detaching object does not change object values', function () {
-      var c = {a: 2, b: 4};
+      const c = {a: 2, b: 4};
       t.add(c);
       c.getRow().detach();
       expect(c).toEqual({a: 2, b: 4});
     });
 
     it('detaching object does not change object values ', function () {
-      var c = {a: 2, b: 4};
+      const c = {a: 2, b: 4};
       t.add(c);
       c.q = 'n';
       c.getRow().detach();
@@ -76,7 +77,7 @@ describe('DataTable module test', function () {
     it('detached objects are not linked toDataRow anymore', function () {
       t.add({a: 1, b: 2});
       t.add({a: 2, b: 3});
-      var c = {a: 2, b: 4};
+      const c = {a: 2, b: 4};
       t.add(c);
       c.getRow().detach();
       expect(c.getRow).toBeUndefined();
@@ -84,8 +85,8 @@ describe('DataTable module test', function () {
 
 
     it('adding object are given a state of added', function () {
-      var o1 = {a: 1, b: 2},
-        o2 = {a: 2, b: 3};
+      const o1 = {a: 1, b: 2},
+          o2 = {a: 2, b: 3};
       t.add(o1);
       t.load(o2);
       t.add({a: 2, b: 4});
@@ -94,8 +95,8 @@ describe('DataTable module test', function () {
     });
 
     it('loaded object are given a state of unchanged', function () {
-      var o1 = {a: 1, b: 2},
-        o2 = {a: 2, b: 3};
+      const o1 = {a: 1, b: 2},
+          o2 = {a: 2, b: 3};
       t.add(o1);
       t.load(o2);
       t.add({a: 2, b: 4});
@@ -105,7 +106,7 @@ describe('DataTable module test', function () {
 
 
     it('deleting objects should not modify collection size', function () {
-      var o1 = {a: 1, b: 2};
+      const o1 = {a: 1, b: 2};
       t.add(o1);
       t.add({a: 2, b: 3});
       t.add({a: 2, b: 3});
@@ -115,7 +116,7 @@ describe('DataTable module test', function () {
     });
 
     it('deleting objects should modify collection size after acceptChanges', function () {
-      var o1 = {a: 1, b: 2};
+      const o1 = {a: 1, b: 2};
       t.add(o1);
       t.load({a: 2, b: 3});
       t.add({a: 2, b: 3});
@@ -126,31 +127,31 @@ describe('DataTable module test', function () {
     });
 
     it('deleted rows becomes detached after acceptChanges', function () {
-      var o1 = {a: 1, b: 2};
+      const o1 = {a: 1, b: 2};
       t.add(o1);
       t.load({a: 2, b: 3});
       t.add({a: 2, b: 3});
       t.acceptChanges();
-      var dr = o1.getRow();
+      const dr = o1.getRow();
       dr.del();
       t.acceptChanges();
       expect(dr.state).toBe(dsSpace.dataRowState.detached);
     });
 
     it('objects are no longer linked to datarow when those have been detached', function () {
-      var o1 = {a: 1, b: 2};
+      const o1 = {a: 1, b: 2};
       t.add(o1);
       t.load({a: 2, b: 3});
       t.add({a: 2, b: 3});
       t.acceptChanges();
-      var dr = o1.getRow();
+      const dr = o1.getRow();
       dr.del();
       t.acceptChanges();
       expect(o1.getRow).toBeUndefined();
     });
 
     it('datarows haven\'t any getRow method  when  detached', function () {
-      var o1 = {a: 1, b: 2};
+      const o1 = {a: 1, b: 2};
       t.add(o1);
       t.load({a: 2, b: 3});
       t.add({a: 2, b: 3});
@@ -168,9 +169,9 @@ describe('DataTable module test', function () {
 
 
     it('multiple addition of same object should be ignored', function () {
-      var o1 = {a: 1, b: 2};
-      var o2 = {a: 1, b: 3};
-      var o3 = {a: 1, b: 3};
+      const o1 = {a: 1, b: 2};
+      const o2 = {a: 1, b: 3};
+      const o3 = {a: 1, b: 3};
       t.add(o1);
       t.add(o2);
       t.add(o3);
@@ -181,7 +182,7 @@ describe('DataTable module test', function () {
 
 
     it('after acceptChanges no modification are left (update-rejectChanges)', function () {
-      var o3 = {a: 1, b: 3};
+      const o3 = {a: 1, b: 3};
       t.add(o3);
       t.acceptChanges();
       o3.a=2;
@@ -191,8 +192,8 @@ describe('DataTable module test', function () {
     });
 
     it('after rejectChanges no modification are left (add-acceptChanges)', function () {
-      var o2 = {a: 1, b: 3};
-      var o3 = {a: 1, b: 3};
+      const o2 = {a: 1, b: 3};
+      const o3 = {a: 1, b: 3};
       t.add(o2);
       t.add(o3);
       t.acceptChanges();
@@ -202,7 +203,7 @@ describe('DataTable module test', function () {
     });
 
     it('after rejectChanges no modification are left (del-acceptChanges)', function () {
-      var o1 = {a: 1, b: 2};
+      const o1 = {a: 1, b: 2};
       t.add(o1);
       t.acceptChanges();
       o1.getRow().del();
@@ -213,9 +214,9 @@ describe('DataTable module test', function () {
 
 
     it('rejectChanges should undo deletions', function () {
-      var o1 = {a: 1, b: 2};
-      var o2 = {a: 1, b: 3};
-      var o3 = {a: 1, b: 3};
+      const o1 = {a: 1, b: 2};
+      const o2 = {a: 1, b: 3};
+      const o3 = {a: 1, b: 3};
       t.add(o1);
       t.add(o2);
       t.add(o3);
@@ -227,14 +228,14 @@ describe('DataTable module test', function () {
     });
 
     it('rejectChanges should undo additions', function () {
-      var o1 = {a: 1, b: 2};
-      var o2 = {a: 1, b: 3};
-      var o3 = {a: 1, b: 3};
+      const o1 = {a: 1, b: 2};
+      const o2 = {a: 1, b: 3};
+      const o3 = {a: 1, b: 3};
       t.add(o1);
       t.add(o2);
       t.add(o3);
       t.acceptChanges();
-      var o4 = {k: 1};
+      const o4 = {k: 1};
       t.add(o4);
       t.rejectChanges();
       expect(o4.getRow).toBeUndefined();
@@ -242,25 +243,25 @@ describe('DataTable module test', function () {
     });
 
     it('getChanges should contain added rows', function () {
-      var o1 = {a: 1, b: 2};
-      var o2 = {a: 1, b: 3};
-      var o3 = {a: 1, b: 3};
+      const o1 = {a: 1, b: 2};
+      const o2 = {a: 1, b: 3};
+      const o3 = {a: 1, b: 3};
       t.add(o1);
       t.add(o2);
       t.add(o3);
       t.acceptChanges();
-      var o4 = {k: 1};
-      var p4= t.add(o4).current;
+      const o4 = {k: 1};
+      const p4 = t.add(o4).current;
       expect(t.getChanges().indexOf(p4)).toBeGreaterThan(-1);
     });
 
     it('getChanges should contain deleted rows', function () {
-      var o1 = {a: 1, b: 2};
-      var o2 = {a: 1, b: 3};
-      var o3 = {a: 1, b: 3};
+      const o1 = {a: 1, b: 2};
+      const o2 = {a: 1, b: 3};
+      const o3 = {a: 1, b: 3};
       t.add(o1);
       t.add(o2);
-      var p3= t.add(o3).current;
+      const p3 = t.add(o3).current;
       t.acceptChanges();
       //o3.getRow().del();
       p3.$del();
@@ -268,24 +269,24 @@ describe('DataTable module test', function () {
     });
 
     it('getChanges should contain modified rows', function () {
-      var o1 = {a: 1, b: 2};
-      var o2 = {a: 1, b: 3};
-      var o3 = {a: 1, b: 3};
-      var p1= t.add(o1).current;
-      var p2=  t.add(o2).current;
-      var p3= t.add(o3).current;
+      const o1 = {a: 1, b: 2};
+      const o2 = {a: 1, b: 3};
+      const o3 = {a: 1, b: 3};
+      const p1 = t.add(o1).current;
+      const p2 = t.add(o2).current;
+      const p3 = t.add(o3).current;
       t.acceptChanges();
       p3.c = 'a';
       p2.a = 2;
-      var qq1=t.getChanges();
+      const qq1 = t.getChanges();
       expect(t.getChanges().indexOf(p3)).toBeGreaterThan(-1);
       expect(t.getChanges().indexOf(p2)).toBeGreaterThan(-1);
     });
 
     it('getChanges should not contain false updates', function () {
-      var o1 = {a: 1, b: 2};
-      var o2 = {a: 1, b: 3};
-      var o3 = {a: 1, b: 3};
+      const o1 = {a: 1, b: 2};
+      const o2 = {a: 1, b: 3};
+      const o3 = {a: 1, b: 3};
       t.add(o1);
       t.add(o2);
       t.add(o3);
@@ -314,9 +315,9 @@ describe('DataTable module test', function () {
     });
 
     it('select with null as filter should return all rows', function () {
-      var o1 = {a: 1, b: 2};
-      var o2 = {a: 1, b: 3, c: 4};
-      var o3 = {a: 1, b: 3, c: 2};
+      const o1 = {a: 1, b: 2};
+      const o2 = {a: 1, b: 3, c: 4};
+      const o3 = {a: 1, b: 3, c: 2};
       t.add(o1);
       t.add(o2);
       t.add(o3);
@@ -325,9 +326,9 @@ describe('DataTable module test', function () {
     });
 
     it('select should return matching rows', function () {
-      var o1 = {a: 1, b: 2};
-      var o2 = {a: 1, b: 3, c: 4};
-      var o3 = {a: 1, b: 3, c: 2};
+      const o1 = {a: 1, b: 2};
+      const o2 = {a: 1, b: 3, c: 4};
+      const o3 = {a: 1, b: 3, c: 2};
       t.add(o1);
       t.add(o2);
       t.add(o3);
@@ -354,7 +355,7 @@ describe('DataTable module test', function () {
 
     it('after calling defaults(values), new Row has defaults', function () {
       t.defaults({L: 1, a: 'john'});
-      var n = t.newRow();
+      const n = t.newRow();
       expect(n.L).toBe(1);
       expect(n.a).toBe('john');
     });
@@ -362,7 +363,7 @@ describe('DataTable module test', function () {
     it('successive defaults(values) merge their values', function () {
       t.defaults({L: 1, a: 'john'});
       t.defaults({L: 2, b: 'mary'});
-      var n = t.newRow();
+      const n = t.newRow();
       expect(n.L).toBe(2);
       expect(n.a).toBe('john');
       expect(n.b).toBe('mary');
@@ -372,51 +373,51 @@ describe('DataTable module test', function () {
       t.defaults({L: 1, a: 'john'});
       t.newRow();
       t.clearDefaults({});
-      var n1 = t.newRow();
+      const n1 = t.newRow();
       expect(n1.L).toBeUndefined();
       expect(n1.a).toBeUndefined();
       expect(n1.b).toBeUndefined();
 
     });
     it('newRow(o) should have o values where o is given', function () {
-      var o = {L: 1, a: 'hi'};
-      var n = t.newRow(o);
+      const o = {L: 1, a: 'hi'};
+      const n = t.newRow(o);
       expect(n).toEqual(o);
     });
 
     it('newRow(o) should have default  values where not overridden by o ', function () {
-      var o = {L: 1, a: 'hi'};
+      const o = {L: 1, a: 'hi'};
       t.defaults({B: 1, a: 'no'});
-      var n = t.newRow(o);
-      var c = {L: 1, B: 1, a: 'hi'};
+      const n = t.newRow(o);
+      const c = {L: 1, B: 1, a: 'hi'};
       expect(n).toEqual(c);
     });
 
     it('DataRow modification created with newRow does not affect original object', function () {
-      var o = {a: 1};
-      var p = t.newRow(o);
+      const o = {a: 1};
+      const p = t.newRow(o);
       p.a = 2;
       expect(o.a).toBe(1);
     });
 
     it('changing defaults does not change rows', function () {
-      var o = {L: 1, a: 'hi'};
+      const o = {L: 1, a: 'hi'};
       t.defaults({B: 1, a: 'no'});
-      var n = t.newRow(o);
+      const n = t.newRow(o);
       t.defaults({B: 2, a: 'yes'});
-      var c = {L: 1, B: 1, a: 'hi'};
+      const c = {L: 1, B: 1, a: 'hi'};
       expect(n).toEqual(c);
     });
 
     it('loaded rows should be in unchanged state', function () {
-      var o = {L: 1, a: 'hi'};
-      var r = t.load(o);
+      const o = {L: 1, a: 'hi'};
+      const r = t.load(o);
       expect(r.state).toBe(dsSpace.dataRowState.unchanged);
     });
 
     it('false changes should leave state unchanged', function () {
-      var o = {L: 1, a: 'hi'};
-      var r = t.load(o);
+      const o = {L: 1, a: 'hi'};
+      const r = t.load(o);
       o.L = 2;
       o.L = 1;
       expect(r.state).toBe(dsSpace.dataRowState.unchanged);
@@ -424,7 +425,7 @@ describe('DataTable module test', function () {
 
     it('loaded array of rows should be in unchanged state', function () {
       t.acceptChanges();
-      var a = [
+      const a = [
         {L: 1, a: 'hi'},
         {L: 2, a: 'ho'}
       ];
@@ -456,16 +457,51 @@ describe('DataTable module test', function () {
       t.tableForWriting('customer2');
       t.tableForReading('customer3');
       t.autoIncrement('idoperatore',{});
-      var t2 = t.clone();
+      const t2 = t.clone();
       expect(t2.tableForWriting()).toBe('customer2');
       expect(t2.tableForReading()).toBe('customer3');
       expect(t2.autoIncrement('idoperatore').columnName).toEqual('idoperatore');
       expect(t2.name).toBe('customer');
     });
+
+    it("sortRows should return a sorted copy of given rows", function(){
+      let rows=[{a:1,b:1,c:1},{a:2,b:10,c:3},{a:2,b:2,c:1},{a:3,b:2,c:4}];
+      let t = new  DataTable();
+      let s1 = t.sortRows(rows,"a");
+      expect(s1.length).toBe(4);
+      expect(s1[0].a).toBe(1);
+      expect(s1[1].a).toBe(2);
+      expect(s1[2].a).toBe(2);
+      expect(s1[3].a).toBe(3);
+
+      s1 = t.sortRows(rows,"a desc");
+      expect(s1.length).toBe(4);
+      expect(s1[0].a).toBe(3);
+      expect(s1[1].a).toBe(2);
+      expect(s1[2].a).toBe(2);
+      expect(s1[3].a).toBe(1);
+
+      s1 = t.sortRows(rows,"b desc, a");
+      expect(s1.length).toBe(4);
+      expect(s1[0].b).toBe(10);
+      expect(s1[0].a).toBe(2);
+
+      expect(s1[1].b).toBe(2);
+      expect(s1[1].a).toBe(2);
+
+      expect(s1[2].b).toBe(2);
+      expect(s1[2].a).toBe(3);
+
+      expect(s1[3].b).toBe(1);
+      expect(s1[3].a).toBe(1);
+
+
+    });
+
   });
 
   describe('autoIncrement functions', function () {
-    var t;
+    let t;
 
     beforeEach(function () {
       t = ds.newTable('customer');
@@ -536,7 +572,7 @@ describe('DataTable module test', function () {
     });
 
     it('getMaxExpr should throw  when table is not optimized', function () {
-      var f = function(){
+      const f = function () {
         t.getMaxExpr('a', $q.max('id'), $q.eq('year', 2014));
       };
       expect(f).toThrow();
@@ -604,8 +640,8 @@ describe('DataTable module test', function () {
     });
 
     it('unCachedMaxSubstring should consider deleted rows', function () {
-      var o1 = t.newRow({a: 100, b: 0}),
-      o2 = t.newRow({a: 20, b: 10});
+      const o1 = t.newRow({a: 100, b: 0}),
+          o2 = t.newRow({a: 20, b: 10});
       t.newRow({a: 5, b: 0});
       t.newRow({a: 40});
       t.newRow({a: 4, b: 0});
@@ -619,8 +655,8 @@ describe('DataTable module test', function () {
     });
 
     it('unCachedMaxSubstring should take substring when start,len are given', function () {
-      var o1 = t.newRow({a: '000100', b: 0}),
-        o2 = t.newRow({a: '001101', b: 10});
+      const o1 = t.newRow({a: '000100', b: 0}),
+          o2 = t.newRow({a: '001101', b: 10});
       t.newRow({a: '001302', b: 0});
       t.newRow({a: '401212'});
       t.newRow({a: '172182', b: 0});
@@ -634,8 +670,8 @@ describe('DataTable module test', function () {
     });
 
     it('unCachedMaxSubstring should take substring from start where len is greater than string length', function () {
-      var o1 = t.newRow({a: '000100', b: 0}),
-        o2 = t.newRow({a: '001101', b: 10});
+      const o1 = t.newRow({a: '000100', b: 0}),
+          o2 = t.newRow({a: '001101', b: 10});
       t.newRow({a: '001302', b: 0});
       t.newRow({a: '401212'});
       t.newRow({a: '172182', b: 0});
@@ -649,8 +685,8 @@ describe('DataTable module test', function () {
     });
 
     it('unCachedMaxSubstring should give null/undefined if start or len are null/undefined', function () {
-      var o1 = t.newRow({a: '000100', b: 0}),
-        o2 = t.newRow({a: '001101', b: 10});
+      const o1 = t.newRow({a: '000100', b: 0}),
+          o2 = t.newRow({a: '001101', b: 10});
       t.newRow({a: '001302', b: 0});
       t.newRow({a: '401212'});
       t.newRow({a: '172182', b: 0});
@@ -664,8 +700,8 @@ describe('DataTable module test', function () {
     });
 
     it('unCachedMaxSubstring should give 0 when no row matches filter', function () {
-      var o1 = t.newRow({a: '000100', b: 0}),
-        o2 = t.newRow({a: '001101', b: 10});
+      const o1 = t.newRow({a: '000100', b: 0}),
+          o2 = t.newRow({a: '001101', b: 10});
       t.newRow({a: '001302', b: 0});
       t.newRow({a: '401212'});
       t.newRow({a: '172182', b: 0});
@@ -787,10 +823,10 @@ describe('DataTable module test', function () {
 
   describe('newRow', function () {
     beforeEach(function () {
-      var tableA = ds.newTable('a'),
-        tableB = ds.newTable('b'),
-        tableC = ds.newTable('c'),
-        tableD = ds.newTable('d');
+      const tableA = ds.newTable('a'),
+          tableB = ds.newTable('b'),
+          tableC = ds.newTable('c'),
+          tableD = ds.newTable('d');
       tableA.key('idA');
       tableB.key('idA', 'idB');
       tableC.key('idA', 'idB', 'idC');
@@ -804,7 +840,7 @@ describe('DataTable module test', function () {
     });
 
     it ('should assign defaults when those are present', function(){
-      var rA = ds.tables.a.newRow();
+      const rA = ds.tables.a.newRow();
       expect(rA.g0).toBe(0);
       expect(rA.g1).toBe(1);
       expect(rA.g2).toBe(2);
@@ -812,125 +848,125 @@ describe('DataTable module test', function () {
 
     it('should call calcTemporaryId ', function () {
       spyOn(ds.tables.a,'calcTemporaryId').and.callThrough();
-      var rA = ds.tables.a.newRow();
+      const rA = ds.tables.a.newRow();
       expect(ds.tables.a.calcTemporaryId).toHaveBeenCalled();
     });
     it('should call makeChild ', function () {
       spyOn(ds.tables.b, 'makeChild').and.callThrough();
-      var rA = ds.tables.a.newRow(),
-        rB = ds.tables.b.newRow({}, rA);
+      const rA = ds.tables.a.newRow(),
+          rB = ds.tables.b.newRow({}, rA);
       expect(ds.tables.b.makeChild).toHaveBeenCalled();
       expect(rB.idB).toBe('00001');
 
     });
 
     it('should evaluate autoincrement fields on simple case', function () {
-      var rA = ds.tables.a.newRow();
+      const rA = ds.tables.a.newRow();
       expect(rA.idA).toBe(1);
-      var rB = ds.tables.b.newRow();
+      const rB = ds.tables.b.newRow();
       expect(rB.idA).toBeUndefined();
       expect(rB.idB).toBe('00001');
-      var rB2 = ds.tables.b.newRow({},rA);
+      const rB2 = ds.tables.b.newRow({}, rA);
       expect(rB2.idA).toBe(1);
       expect(rB2.idB).toBe('00001');
-      var rB3 = ds.tables.b.newRow({}, rA);
+      const rB3 = ds.tables.b.newRow({}, rA);
       expect(rB3.idA).toBe(1);
       expect(rB3.idB).toBe('00002');
-      var rB4 = ds.tables.b.newRow({}, rA);
+      const rB4 = ds.tables.b.newRow({}, rA);
       expect(rB4.idA).toBe(1);
       expect(rB4.idB).toBe('00003');
-      var rC1 = ds.tables.c.newRow({}, rB4);
+      const rC1 = ds.tables.c.newRow({}, rB4);
       expect(rC1.idA).toBe(1);
       expect(rC1.idB).toBe('00003');
       expect(rC1.idC).toBe(1);
-      var rC2 = ds.tables.c.newRow({}, rB4);
+      const rC2 = ds.tables.c.newRow({}, rB4);
       expect(rC2.idA).toBe(1);
       expect(rC2.idB).toBe('00003');
       expect(rC2.idC).toBe(2);
-      var rC3 = ds.tables.c.newRow({}, rB3);
+      const rC3 = ds.tables.c.newRow({}, rB3);
       expect(rC3.idA).toBe(1);
       expect(rC3.idB).toBe('00002');
       expect(rC3.idC).toBe(1);
-    })
+    });
 
     it('should evaluate autoincrement fields on complex case (prefix field, middle field)', function () {
-      var tableE = ds.newTable('e');
+      const tableE = ds.newTable('e');
       ds.newRelation('e-e','e',['idE'],'e','parIdE');
       tableE.key('idE');
       tableE.autoIncrement('idE', {middleConst: '14', prefixField: 'parIdE', idLen: 6});
-      var rE1 = tableE.newRow({});
+      const rE1 = tableE.newRow({});
       expect(rE1.idE).toBe('14000001');
-      var rE2 = tableE.newRow({},rE1);
+      const rE2 = tableE.newRow({}, rE1);
       expect(rE2.parIdE).toBe('14000001');
       expect(rE2.idE).toBe('1400000114000001');
-      var rE3 = tableE.newRow({}, rE1);
+      const rE3 = tableE.newRow({}, rE1);
       expect(rE3.parIdE).toBe('14000001');
       expect(rE3.idE).toBe('1400000114000002');
-      var rE4 = tableE.newRow({}, rE1);
+      const rE4 = tableE.newRow({}, rE1);
       expect(rE4.parIdE).toBe('14000001');
       expect(rE4.idE).toBe('1400000114000003');
-      var rE5 = tableE.newRow({}, rE2);
+      const rE5 = tableE.newRow({}, rE2);
       expect(rE5.parIdE).toBe('1400000114000001');
       expect(rE5.idE).toBe('140000011400000114000001');
-      var rE6 = tableE.newRow({}, rE2);
+      const rE6 = tableE.newRow({}, rE2);
       expect(rE6.parIdE).toBe('1400000114000001');
       expect(rE6.idE).toBe('140000011400000114000002');
     });
 
     it('should evaluate autoincrement fields on more complex case (selectors, prefix field, middle field)', function () {
-      var tableE = ds.newTable('e');
+      const tableE = ds.newTable('e');
       ds.newRelation('e-e', 'e', ['idE'], 'e', 'parIdE');
       tableE.key('ayear','idE');
       tableE.autoIncrement('idE', {middleConst: '14', prefixField: 'parIdE', idLen: 6, selector:['ayear']});
       tableE.defaults({ayear:2014});
-      var rE1 = tableE.newRow({});
+      const rE1 = tableE.newRow({});
       expect(rE1.idE).toBe('14000001');
       expect(rE1.ayear).toBe(2014);
 
-      var rE1bis = tableE.newRow({ayear:2015});
+      const rE1bis = tableE.newRow({ayear: 2015});
       expect(rE1bis.idE).toBe('14000001');
       expect(rE1bis.ayear).toBe(2015);
 
-      var rE2 = tableE.newRow({}, rE1);
+      const rE2 = tableE.newRow({}, rE1);
       expect(rE2.parIdE).toBe('14000001');
       expect(rE2.idE).toBe('1400000114000001');
 
-      var rE2bis = tableE.newRow({ayear:2015}, rE1bis);
+      const rE2bis = tableE.newRow({ayear: 2015}, rE1bis);
       expect(rE2bis.parIdE).toBe('14000001');
       expect(rE2bis.idE).toBe('1400000114000001');
 
-      var rE2ter = tableE.newRow({ayear: 2014}, rE1bis);
+      const rE2ter = tableE.newRow({ayear: 2014}, rE1bis);
       expect(rE2ter.ayear).toBe(2014);
       expect(rE2ter.parIdE).toBe('14000001');
       expect(rE2ter.idE).toBe('1400000114000002');
 
-      var rE2quater = tableE.newRow({ayear: 2014}, rE1bis);
+      const rE2quater = tableE.newRow({ayear: 2014}, rE1bis);
       expect(rE2quater.ayear).toBe(2014);
       expect(rE2quater.parIdE).toBe('14000001');
       expect(rE2quater.idE).toBe('1400000114000003');
 
 
-      var rE3 = tableE.newRow({}, rE1);
+      const rE3 = tableE.newRow({}, rE1);
       expect(rE3.parIdE).toBe('14000001');
       expect(rE3.idE).toBe('1400000114000004');
-      var rE4 = tableE.newRow({}, rE1);
+      const rE4 = tableE.newRow({}, rE1);
       expect(rE4.parIdE).toBe('14000001');
       expect(rE4.idE).toBe('1400000114000005');
-      var rE5 = tableE.newRow({}, rE2);
+      const rE5 = tableE.newRow({}, rE2);
       expect(rE5.parIdE).toBe('1400000114000001');
       expect(rE5.idE).toBe('140000011400000114000001');
-      var rE6 = tableE.newRow({}, rE2);
+      const rE6 = tableE.newRow({}, rE2);
       expect(rE6.parIdE).toBe('1400000114000001');
       expect(rE6.idE).toBe('140000011400000114000002');
-    })
+    });
   });
 
   describe('assignField', function(){
     beforeEach(function(){
-      var tableA = ds.newTable('a'),
-        tableB = ds.newTable('b'),
-        tableC = ds.newTable('c'),
-        tableD = ds.newTable('d');
+      const tableA = ds.newTable('a'),
+          tableB = ds.newTable('b'),
+          tableC = ds.newTable('c'),
+          tableD = ds.newTable('d');
       tableA.key('idA');
       tableB.key('idA', 'idB');
       tableC.key('idA', 'idB', 'idC');
@@ -944,8 +980,8 @@ describe('DataTable module test', function () {
     });
 
     it ('should assign simple fields', function(){
-      var rowD = ds.tables.d.newRow({x:10,y:20}),
-        rowA = ds.tables.d.newRow({x: 20, y: 30});
+      const rowD = ds.tables.d.newRow({x: 10, y: 20}),
+          rowA = ds.tables.d.newRow({x: 20, y: 30});
       ds.tables.d.assignField(rowD,'idD',5);
       expect(rowD.idD).toBe(5);
       ds.tables.d.assignField(rowA, 'idA', 1);
@@ -954,8 +990,8 @@ describe('DataTable module test', function () {
 
     it('should call cascadeAssignField', function () {
       spyOn(ds.tables.d,'cascadeAssignField').and.callThrough();
-      var rowD = ds.tables.d.newRow({x: 10, y: 20}),
-        rowA = ds.tables.d.newRow({x: 20, y: 30});
+      const rowD = ds.tables.d.newRow({x: 10, y: 20}),
+          rowA = ds.tables.d.newRow({x: 20, y: 30});
       ds.tables.d.assignField(rowD, 'idD', 5);
       expect(rowD.idD).toBe(5);
       expect(ds.tables.d.cascadeAssignField.calls.count()).toEqual(1);
@@ -966,16 +1002,16 @@ describe('DataTable module test', function () {
 
 
     it('should cascade assign fields (simple case)', function (){
-      var rA = ds.tables.a.newRow();  //idA = 1
+      const rA = ds.tables.a.newRow();  //idA = 1
 
-      var rB = ds.tables.b.newRow(); //idA undefined idB 00001
+      const rB = ds.tables.b.newRow(); //idA undefined idB 00001
 
-      var rB2 = ds.tables.b.newRow({}, rA);//idA 1  idB 00001
-      var rB3 = ds.tables.b.newRow({}, rA);//idA 1  idB 00002
-      var rB4 = ds.tables.b.newRow({}, rA);//idA 1  idB 00003
-      var rC1 = ds.tables.c.newRow({}, rB4);//idA 1 idB 00003 idC 1
-      var rC2 = ds.tables.c.newRow({}, rB4);//idA 1 idB 00003 idC 2
-      var rC3 = ds.tables.c.newRow({}, rB3);//idA 1 idB 00002 idC 1
+      const rB2 = ds.tables.b.newRow({}, rA);//idA 1  idB 00001
+      const rB3 = ds.tables.b.newRow({}, rA);//idA 1  idB 00002
+      const rB4 = ds.tables.b.newRow({}, rA);//idA 1  idB 00003
+      const rC1 = ds.tables.c.newRow({}, rB4);//idA 1 idB 00003 idC 1
+      const rC2 = ds.tables.c.newRow({}, rB4);//idA 1 idB 00003 idC 2
+      const rC3 = ds.tables.c.newRow({}, rB3);//idA 1 idB 00002 idC 1
       expect(rC3.idB).toBe('00002');
       ds.tables.b.assignField(rB3, 'idB', '00005');
       expect(rB3.idB).toBe('00005');
@@ -988,16 +1024,16 @@ describe('DataTable module test', function () {
     });
 
     it('should cascade assign fields on complex case (prefix field, middle field)', function () {
-      var tableE = ds.newTable('e');
+      const tableE = ds.newTable('e');
       ds.newRelation('e-e', 'e', ['idE'], 'e', 'parIdE');
       tableE.key('idE');
       tableE.autoIncrement('idE', {middleConst: '14', prefixField: 'parIdE', idLen: 6});
-      var rE1 = tableE.newRow({});       //idE 14000001
-      var rE2 = tableE.newRow({}, rE1);  //idE 1400000114000001 parIdE 14000001
-      var rE3 = tableE.newRow({}, rE1);  //idE 1400000114000002 parIdE 14000001
-      var rE4 = tableE.newRow({}, rE1);  //idE 1400000114000003 parIdE 14000001
-      var rE5 = tableE.newRow({}, rE2);  //idE 140000011400000114000001  parIdE 1400000114000001
-      var rE6 = tableE.newRow({}, rE2);  //idE 140000011400000114000002  parIdE 1400000114000001
+      const rE1 = tableE.newRow({});       //idE 14000001
+      const rE2 = tableE.newRow({}, rE1);  //idE 1400000114000001 parIdE 14000001
+      const rE3 = tableE.newRow({}, rE1);  //idE 1400000114000002 parIdE 14000001
+      const rE4 = tableE.newRow({}, rE1);  //idE 1400000114000003 parIdE 14000001
+      const rE5 = tableE.newRow({}, rE2);  //idE 140000011400000114000001  parIdE 1400000114000001
+      const rE6 = tableE.newRow({}, rE2);  //idE 140000011400000114000002  parIdE 1400000114000001
 
       expect(rE2.idE).toBe('1400000114000001');
       tableE.assignField(rE1,'idE', '14000104');
@@ -1009,16 +1045,16 @@ describe('DataTable module test', function () {
     });
 
     it('should cascade assign fields on complex case (linear) (prefix field, middle field)', function () {
-      var tableE = ds.newTable('e');
+      const tableE = ds.newTable('e');
       ds.newRelation('e-e', 'e', ['idE'], 'e', 'parIdE');
       tableE.key('idE');
       tableE.autoIncrement('idE', {middleConst: '14', prefixField: 'parIdE', idLen: 6, linearField:true});
-      var rE1 = tableE.newRow({});       //idE 14000001
-      var rE2 = tableE.newRow({}, rE1);  //idE 1400000114000001 parIdE 14000001
-      var rE3 = tableE.newRow({}, rE1);  //idE 1400000114000002 parIdE 14000001
-      var rE4 = tableE.newRow({}, rE1);  //idE 1400000114000003 parIdE 14000001
-      var rE5 = tableE.newRow({}, rE2);  //idE 140000011400000114000001  parIdE 1400000114000001
-      var rE6 = tableE.newRow({}, rE2);  //idE 140000011400000114000002  parIdE 1400000114000001
+      const rE1 = tableE.newRow({});       //idE 14000001
+      const rE2 = tableE.newRow({}, rE1);  //idE 1400000114000001 parIdE 14000001
+      const rE3 = tableE.newRow({}, rE1);  //idE 1400000114000002 parIdE 14000001
+      const rE4 = tableE.newRow({}, rE1);  //idE 1400000114000003 parIdE 14000001
+      const rE5 = tableE.newRow({}, rE2);  //idE 140000011400000114000001  parIdE 1400000114000001
+      const rE6 = tableE.newRow({}, rE2);  //idE 140000011400000114000002  parIdE 1400000114000001
 
       expect(rE2.idE).toBe('1400000114000001');
       tableE.assignField(rE1, 'idE', '14000104');
@@ -1031,21 +1067,21 @@ describe('DataTable module test', function () {
 
 
     it('should evaluate autoincrement fields on more complex case (selectors, prefix field, middle field)', function () {
-      var tableE = ds.newTable('e');
+      const tableE = ds.newTable('e');
       ds.newRelation('e-e', 'e', ['ayear','idE'], 'e', ['ayear','parIdE']);
       tableE.key('ayear', 'idE');
       tableE.autoIncrement('idE', {middleConst: '14', prefixField: 'parIdE', idLen: 6, selector: ['ayear']});
       tableE.defaults({ayear: 2014});
-      var rE1 = tableE.newRow({});                         //ayear 2014 idE 14000001
-      var rE1bis = tableE.newRow({ayear: 2015});           //ayear 2015 idE 14000001
-      var rE2 = tableE.newRow({}, rE1);                    //ayear 2014 idE 1400000114000001  parIdE  14000001
-      var rE2bis = tableE.newRow({ayear: 2015}, rE1bis);   //ayear 2015 idE 1400000114000001  parIdE  14000001
-      var rE2ter = tableE.newRow({ayear: 2014}, rE1bis);   //ayear 2015 idE 1400000114000002  parIdE  14000001
-      var rE2quater = tableE.newRow({ayear: 2014}, rE1bis);//ayear 2015 idE 1400000114000003  parIdE  14000001
-      var rE3 = tableE.newRow({}, rE1);                    //ayear 2014 idE 1400000114000002  parIdE  14000001
-      var rE4 = tableE.newRow({}, rE1);                    //ayear 2014 idE 1400000114000003  parIdE  14000001
-      var rE5 = tableE.newRow({}, rE2);     //ayear 2014 idE 140000011400000114000001  parIdE  1400000114000001
-      var rE6 = tableE.newRow({}, rE2);     //ayear 2014 idE 140000011400000114000002  parIdE  1400000114000001
+      const rE1 = tableE.newRow({});                         //ayear 2014 idE 14000001
+      const rE1bis = tableE.newRow({ayear: 2015});           //ayear 2015 idE 14000001
+      const rE2 = tableE.newRow({}, rE1);                    //ayear 2014 idE 1400000114000001  parIdE  14000001
+      const rE2bis = tableE.newRow({ayear: 2015}, rE1bis);   //ayear 2015 idE 1400000114000001  parIdE  14000001
+      const rE2ter = tableE.newRow({ayear: 2014}, rE1bis);   //ayear 2015 idE 1400000114000002  parIdE  14000001
+      const rE2quater = tableE.newRow({ayear: 2014}, rE1bis);//ayear 2015 idE 1400000114000003  parIdE  14000001
+      const rE3 = tableE.newRow({}, rE1);                    //ayear 2014 idE 1400000114000002  parIdE  14000001
+      const rE4 = tableE.newRow({}, rE1);                    //ayear 2014 idE 1400000114000003  parIdE  14000001
+      const rE5 = tableE.newRow({}, rE2);     //ayear 2014 idE 140000011400000114000001  parIdE  1400000114000001
+      const rE6 = tableE.newRow({}, rE2);     //ayear 2014 idE 140000011400000114000002  parIdE  1400000114000001
       expect(rE2ter.ayear).toBe(2015);
       expect(rE2quater.ayear).toBe(2015);
       expect(rE2quater.idE).toBe('1400000114000003');
@@ -1064,11 +1100,11 @@ describe('DataTable module test', function () {
       expect(rE5.idE).toBe('140009991400000114000001'); //should change cause parent is changed
       expect(rE6.idE).toBe('140009991400000114000002'); //should change cause parent is changed
 
-    })
+    });
   });
 
   describe('getSelector', function(){
-    var t, auto, auto2,auto3;
+    let t, auto, auto2, auto3;
     beforeEach(function(){
       t = ds.newTable('a');
       t.autoIncrement('id',{selector:['y','n']});
@@ -1084,59 +1120,56 @@ describe('DataTable module test', function () {
     });
 
     it ('returned function should compare all fields in autoIncrementProperty.selector', function(){
-      var
-        r1 = t.newRow({a:1, b:2,  y:2014,   n:1}),
-        r2 = t.newRow({a: 2, b: 2, y: 2014, n: 1}),
-        r3 = t.newRow({a: 3, b: 2, y: 2014, n: 2}),
-        r4 = t.newRow({a: 4, b: 2, y: 2014, n: 3}),
-        r5 = t.newRow({a: 5, b: 2, y: 2014, n: 3}),
-        r6 = t.newRow({a: 6, b: 2, y: 2014, n: 4}),
-        r7 = t.newRow({a: 2, b: 2, y: 2015, n: 1}),
-        r8 = t.newRow({a: 3, b: 2, y: 2015, n: 2}),
-        r9 = t.newRow({a: 4, b: 2, y: 2015, n: 3});
-      var f = auto.getSelector({a: 12, b: 15, y: 2014, n: 3});
+      const r1 = t.newRow({a: 1, b: 2, y: 2014, n: 1}),
+          r2 = t.newRow({a: 2, b: 2, y: 2014, n: 1}),
+          r3 = t.newRow({a: 3, b: 2, y: 2014, n: 2}),
+          r4 = t.newRow({a: 4, b: 2, y: 2014, n: 3}),
+          r5 = t.newRow({a: 5, b: 2, y: 2014, n: 3}),
+          r6 = t.newRow({a: 6, b: 2, y: 2014, n: 4}),
+          r7 = t.newRow({a: 2, b: 2, y: 2015, n: 1}),
+          r8 = t.newRow({a: 3, b: 2, y: 2015, n: 2}),
+          r9 = t.newRow({a: 4, b: 2, y: 2015, n: 3});
+      const f = auto.getSelector({a: 12, b: 15, y: 2014, n: 3});
       expect(t.select(f)).toEqual([r4,r5]);
-      var f2= auto.getSelector({a:13,b:20, y:2014,n:1});
+      const f2 = auto.getSelector({a: 13, b: 20, y: 2014, n: 1});
       expect(t.select(f2)).toEqual([r1,r2]);
-      var f3 = auto.getSelector({a: 13, b: 20, y: 2014}, auto);
-      expect(t.select(f3)).toEqual([])
-      var f4 = auto.getSelector({a: 13, b: 20});
+      const f3 = auto.getSelector({a: 13, b: 20, y: 2014}, auto);
+      expect(t.select(f3)).toEqual([]);
+      const f4 = auto.getSelector({a: 13, b: 20});
       expect(t.select(f4)).toEqual([]);
-      var f6 = auto3.getSelector({a: 13, b: 20, y: 2014, n: 1});
+      const f6 = auto3.getSelector({a: 13, b: 20, y: 2014, n: 1});
       expect(t.select(f6)).toEqual([r1,r2]);
 
-    })
+    });
 
     it ('empty selector means no filter', function(){
-      var
-        r1 = t.newRow({a: 1, b: 2, y: 2014, n: 1}),
-        r2 = t.newRow({a: 2, b: 2, y: 2014, n: 1}),
-        r3 = t.newRow({a: 3, b: 2, y: 2014, n: 2}),
-        r4 = t.newRow({a: 4, b: 2, y: 2014, n: 3}),
-        r5 = t.newRow({a: 5, b: 2, y: 2014, n: 3}),
-        r6 = t.newRow({a: 6, b: 2, y: 2014, n: 4}),
-        r7 = t.newRow({a: 2, b: 2, y: 2015, n: 1}),
-        r8 = t.newRow({a: 3, b: 2, y: 2015, n: 2}),
-        r9 = t.newRow({a: 4, b: 2, y: 2015, n: 3}),
-        f5 = auto2.getSelector({a: 13, b: 20, y: 2014, n: 1});
+      const r1 = t.newRow({a: 1, b: 2, y: 2014, n: 1}),
+          r2 = t.newRow({a: 2, b: 2, y: 2014, n: 1}),
+          r3 = t.newRow({a: 3, b: 2, y: 2014, n: 2}),
+          r4 = t.newRow({a: 4, b: 2, y: 2014, n: 3}),
+          r5 = t.newRow({a: 5, b: 2, y: 2014, n: 3}),
+          r6 = t.newRow({a: 6, b: 2, y: 2014, n: 4}),
+          r7 = t.newRow({a: 2, b: 2, y: 2015, n: 1}),
+          r8 = t.newRow({a: 3, b: 2, y: 2015, n: 2}),
+          r9 = t.newRow({a: 4, b: 2, y: 2015, n: 3}),
+          f5 = auto2.getSelector({a: 13, b: 20, y: 2014, n: 1});
       expect(t.select(f5)).toEqual([r1, r2, r3, r4, r5, r6, r7, r8, r9]);
     });
 
     it('should use mask when given', function () {
-      var
-        r1 = t.newRow({a: 1, b: 2, y: 2014, n: 1}),
-        r2 = t.newRow({a: 2, b: 2, y: 2014, n: 1}),
-        r3 = t.newRow({a: 3, b: 2, y: 2014, n: 2}),
-        r4 = t.newRow({a: 4, b: 2, y: 2014, n: 3}),
-        r5 = t.newRow({a: 5, b: 2, y: 2014, n: 3}),
-        r6 = t.newRow({a: 6, b: 2, y: 2014, n: 4}),
-        r7 = t.newRow({a: 2, b: 2, y: 2015, n: 1}),
-        r8 = t.newRow({a: 3, b: 2, y: 2015, n: 2}),
-        r9 = t.newRow({a: 4, b: 2, y: 2015, n: 3}),
-        f6 = auto3.getSelector({a: 13, b: 20, y: 2014, n: 257}),
-        f7 = auto3.getSelector({a: 13, b: 20, y: 2270, n: 1}),
-        f8 = auto3.getSelector({a: 13, b: 20, y: 2014, n: 17}),
-        f9 = auto3.getSelector({a: 13, b: 20, y: 2015+0xFFF00, n: 1+0xFFF0});
+      const r1 = t.newRow({a: 1, b: 2, y: 2014, n: 1}),
+          r2 = t.newRow({a: 2, b: 2, y: 2014, n: 1}),
+          r3 = t.newRow({a: 3, b: 2, y: 2014, n: 2}),
+          r4 = t.newRow({a: 4, b: 2, y: 2014, n: 3}),
+          r5 = t.newRow({a: 5, b: 2, y: 2014, n: 3}),
+          r6 = t.newRow({a: 6, b: 2, y: 2014, n: 4}),
+          r7 = t.newRow({a: 2, b: 2, y: 2015, n: 1}),
+          r8 = t.newRow({a: 3, b: 2, y: 2015, n: 2}),
+          r9 = t.newRow({a: 4, b: 2, y: 2015, n: 3}),
+          f6 = auto3.getSelector({a: 13, b: 20, y: 2014, n: 257}),
+          f7 = auto3.getSelector({a: 13, b: 20, y: 2270, n: 1}),
+          f8 = auto3.getSelector({a: 13, b: 20, y: 2014, n: 17}),
+          f9 = auto3.getSelector({a: 13, b: 20, y: 2015 + 0xFFF00, n: 1 + 0xFFF0});
       expect(t.select(f6)).toEqual([r1, r2]);
       expect(t.select(f7)).toEqual([r1, r2]);
       expect(t.select(f8)).toEqual([r1, r2]);
@@ -1147,10 +1180,10 @@ describe('DataTable module test', function () {
 
   describe('avoidCollisions', function(){
     beforeEach(function () {
-      var tableA = ds.newTable('a'),
-        tableB = ds.newTable('b'),
-        tableC = ds.newTable('c'),
-        tableD = ds.newTable('d');
+      const tableA = ds.newTable('a'),
+          tableB = ds.newTable('b'),
+          tableC = ds.newTable('c'),
+          tableD = ds.newTable('d');
       tableA.key('idA');
       tableB.key('idA', 'idB');
       tableC.key('idA', 'idB', 'idC');
@@ -1166,17 +1199,17 @@ describe('DataTable module test', function () {
 
 
     it('should avoid collision - simple case', function(){
-      var rA = ds.tables.a.newRow();  //idA = 1
-      var rA2 = ds.tables.a.newRow();  //idA = 2
-      var rA3 = ds.tables.a.newRow();  //idA = 3
+      const rA = ds.tables.a.newRow();  //idA = 1
+      const rA2 = ds.tables.a.newRow();  //idA = 2
+      const rA3 = ds.tables.a.newRow();  //idA = 3
 
-      var rB = ds.tables.b.newRow(); //idA undefined idB 00001
-      var rB2 = ds.tables.b.newRow({}, rA);//idA 1  idB 00001
-      var rB3 = ds.tables.b.newRow({}, rA);//idA 1  idB 00002
-      var rB4 = ds.tables.b.newRow({}, rA);//idA 1  idB 00003
-      var rC1 = ds.tables.c.newRow({}, rB4);//idA 1 idB 00003 idC 1
-      var rC2 = ds.tables.c.newRow({}, rB4);//idA 1 idB 00003 idC 2
-      var rC3 = ds.tables.c.newRow({}, rB3);//idA 1 idB 00002 idC 1
+      const rB = ds.tables.b.newRow(); //idA undefined idB 00001
+      const rB2 = ds.tables.b.newRow({}, rA);//idA 1  idB 00001
+      const rB3 = ds.tables.b.newRow({}, rA);//idA 1  idB 00002
+      const rB4 = ds.tables.b.newRow({}, rA);//idA 1  idB 00003
+      const rC1 = ds.tables.c.newRow({}, rB4);//idA 1 idB 00003 idC 1
+      const rC2 = ds.tables.c.newRow({}, rB4);//idA 1 idB 00003 idC 2
+      const rC3 = ds.tables.c.newRow({}, rB3);//idA 1 idB 00002 idC 1
 
       expect(rA2.idA).toBe(2);
       expect(rA3.idA).toBe(3);
@@ -1216,17 +1249,17 @@ describe('DataTable module test', function () {
     });
 
     it('should avoid collision on complex case (prefix field, middle field)', function () {
-      var tableE = ds.newTable('e');
+      const tableE = ds.newTable('e');
       ds.newRelation('e-e', 'e', ['idE'], 'e', 'parIdE');
       tableE.key('idE');
       tableE.autoIncrement('idE', {middleConst: '14', prefixField: 'parIdE', idLen: 6});
-      var rE1 = tableE.newRow({});       //idE 14000001
-      var rE2 = tableE.newRow({}, rE1);  //idE 1400000114000001 parIdE 14000001
-      var rE3 = tableE.newRow({}, rE1);  //idE 1400000114000002 parIdE 14000001
-      var rE4 = tableE.newRow({}, rE1);  //idE 1400000114000003 parIdE 14000001
-      var rE5 = tableE.newRow({}, rE2);  //idE 140000011400000114000001  parIdE 1400000114000001
-      var rE6 = tableE.newRow({}, rE2);  //idE 140000011400000114000002  parIdE 1400000114000001
-      var rE1Bis = tableE.newRow({});       //idE 14000002
+      const rE1 = tableE.newRow({});       //idE 14000001
+      const rE2 = tableE.newRow({}, rE1);  //idE 1400000114000001 parIdE 14000001
+      const rE3 = tableE.newRow({}, rE1);  //idE 1400000114000002 parIdE 14000001
+      const rE4 = tableE.newRow({}, rE1);  //idE 1400000114000003 parIdE 14000001
+      const rE5 = tableE.newRow({}, rE2);  //idE 140000011400000114000001  parIdE 1400000114000001
+      const rE6 = tableE.newRow({}, rE2);  //idE 140000011400000114000002  parIdE 1400000114000001
+      const rE1Bis = tableE.newRow({});       //idE 14000002
 
       tableE.avoidCollisions(rE1Bis,'idE','14000001');
       expect(rE2.idE).toBe('1400000314000001');
@@ -1240,22 +1273,22 @@ describe('DataTable module test', function () {
 
 
     it('should avoid collisions on more complex case (selectors, prefix field, middle field)', function () {
-      var tableE = ds.newTable('e');
+      const tableE = ds.newTable('e');
       ds.newRelation('e-e', 'e', ['ayear', 'idE'], 'e', ['ayear', 'parIdE']);
       tableE.key('ayear', 'idE');
       tableE.autoIncrement('idE', {middleConst: '14', prefixField: 'parIdE', idLen: 6, selector: ['ayear']});
       tableE.defaults({ayear: 2014});
-      var rE1 = tableE.newRow({});                         //ayear 2014 idE 14000001
-      var rE1bis = tableE.newRow({ayear: 2015});           //ayear 2015 idE 14000001
+      const rE1 = tableE.newRow({});                         //ayear 2014 idE 14000001
+      const rE1bis = tableE.newRow({ayear: 2015});           //ayear 2015 idE 14000001
 
-      var rE2 = tableE.newRow({}, rE1);                    //ayear 2014 idE 1400000114000001  parIdE  14000001
-      var rE2bis = tableE.newRow({ayear: 2015}, rE1bis);   //ayear 2015 idE 1400000114000001  parIdE  14000001
-      var rE2ter = tableE.newRow({ayear: 2014}, rE1bis);   //ayear 2015 idE 1400000114000002  parIdE  14000001
-      var rE2quater = tableE.newRow({ayear: 2014}, rE1bis);//ayear 2015 idE 1400000114000003  parIdE  14000001
-      var rE3 = tableE.newRow({}, rE1);                    //ayear 2014 idE 1400000114000002  parIdE  14000001
-      var rE4 = tableE.newRow({}, rE1);                    //ayear 2014 idE 1400000114000003  parIdE  14000001
-      var rE5 = tableE.newRow({}, rE2);     //ayear 2014 idE 140000011400000114000001  parIdE  1400000114000001
-      var rE6 = tableE.newRow({}, rE2);     //ayear 2014 idE 140000011400000114000002  parIdE  1400000114000001
+      const rE2 = tableE.newRow({}, rE1);                    //ayear 2014 idE 1400000114000001  parIdE  14000001
+      const rE2bis = tableE.newRow({ayear: 2015}, rE1bis);   //ayear 2015 idE 1400000114000001  parIdE  14000001
+      const rE2ter = tableE.newRow({ayear: 2014}, rE1bis);   //ayear 2015 idE 1400000114000002  parIdE  14000001
+      const rE2quater = tableE.newRow({ayear: 2014}, rE1bis);//ayear 2015 idE 1400000114000003  parIdE  14000001
+      const rE3 = tableE.newRow({}, rE1);                    //ayear 2014 idE 1400000114000002  parIdE  14000001
+      const rE4 = tableE.newRow({}, rE1);                    //ayear 2014 idE 1400000114000003  parIdE  14000001
+      const rE5 = tableE.newRow({}, rE2);     //ayear 2014 idE 140000011400000114000001  parIdE  1400000114000001
+      const rE6 = tableE.newRow({}, rE2);     //ayear 2014 idE 140000011400000114000002  parIdE  1400000114000001
 
       expect(rE2ter.idE).toBe('1400000114000002');
       expect(rE2quater.idE).toBe('1400000114000003');
@@ -1277,36 +1310,36 @@ describe('DataTable module test', function () {
       expect(rE5.idE).toBe('140000011400000114000001'); //unchanged cause 2014
       expect(rE6.idE).toBe('140000011400000114000002'); //unchanged cause 2014
 
-    })
+    });
   });
 
   describe('serialize',function(){
     it('should be a function', function () {
-      var t = ds.newTable('a');
+      const t = ds.newTable('a');
       expect(t.serialize).toEqual(jasmine.any(Function));
     });
 
     it('should preserve row number', function(){
-      var t = ds.newTable('a'),
-        r1 = t.newRow({a:1}),
-        r2= t.newRow({a: 2}),
-        r3 = t.newRow({a: 3});
+      const t = ds.newTable('a'),
+          r1 = t.newRow({a: 1}),
+          r2 = t.newRow({a: 2}),
+          r3 = t.newRow({a: 3});
       expect(t.serialize().rows.length).toBe(3);
     });
   });
 
   describe('deSerialize', function () {
     it('should be a function', function () {
-      var t = ds.newTable('a');
+      const t = ds.newTable('a');
       expect(t.deSerialize).toEqual(jasmine.any(Function));
     });
 
     it('should preserve row number', function () {
-      var t = ds.newTable('a'),
-        r1 = t.newRow({a: 1}),
-        r2 = t.newRow({a: 2}),
-        r3 = t.newRow({a: 3}),
-        t2 = ds2.newTable('a'), sData = JSON.parse(JSON.stringify(t.serialize()));
+      const t = ds.newTable('a'),
+          r1 = t.newRow({a: 1}),
+          r2 = t.newRow({a: 2}),
+          r3 = t.newRow({a: 3}),
+          t2 = ds2.newTable('a'), sData = JSON.parse(JSON.stringify(t.serialize()));
 
       expect(sData.rows.length).toBe(3);
       t2.deSerialize(sData);
@@ -1314,12 +1347,12 @@ describe('DataTable module test', function () {
     });
 
     it('should preserve state and value for added rows', function () {
-      var t = ds.newTable('a'),
-        r1 = t.newRow({a: 1}),
-        r2 = t.newRow({a: 2}),
-        r3 = t.newRow({a: 3}),
-        t2 = ds2.newTable('a'),
-        sData = JSON.parse(JSON.stringify(t.serialize()));
+      const t = ds.newTable('a'),
+          r1 = t.newRow({a: 1}),
+          r2 = t.newRow({a: 2}),
+          r3 = t.newRow({a: 3}),
+          t2 = ds2.newTable('a'),
+          sData = JSON.parse(JSON.stringify(t.serialize()));
       expect(sData.rows.length).toBe(3);
       t2.deSerialize(sData);
       expect(t2.rows[0].getRow().state).toBe(dsSpace.dataRowState.added);
@@ -1331,12 +1364,12 @@ describe('DataTable module test', function () {
     });
 
     it('should preserve state and value for unchanged rows', function () {
-      var t = ds.newTable('a'),
-        r1 = t.newRow({a: 1}),
-        r2 = t.newRow({a: 2}),
-        r3 = t.newRow({a: 3}),
-        t2 = ds2.newTable('a'),
-        sData;
+      const t = ds.newTable('a'),
+          r1 = t.newRow({a: 1}),
+          r2 = t.newRow({a: 2}),
+          r3 = t.newRow({a: 3}),
+          t2 = ds2.newTable('a');
+      let sData;
       t.acceptChanges();
       sData = JSON.parse(JSON.stringify(t.serialize()));
       expect(sData.rows.length).toBe(3);
@@ -1350,12 +1383,12 @@ describe('DataTable module test', function () {
     });
 
     it('should preserve state and value for deleted rows', function () {
-      var t = ds.newTable('a'),
-        r1 = t.newRow({a: 1}),
-        r2 = t.newRow({a: 2}),
-        r3 = t.newRow({a: 3}),
-        t2 = ds2.newTable('a'),
-        sData;
+      const t = ds.newTable('a'),
+          r1 = t.newRow({a: 1}),
+          r2 = t.newRow({a: 2}),
+          r3 = t.newRow({a: 3}),
+          t2 = ds2.newTable('a');
+      let sData;
       t.acceptChanges();
       r1.getRow().del();
       r2.getRow().del();
@@ -1372,12 +1405,12 @@ describe('DataTable module test', function () {
     });
 
     it('should preserve state and value for modified rows', function () {
-      var t = ds.newTable('a'),
-        r1 = t.newRow({a: 1}),
-        r2 = t.newRow({a: 2}),
-        r3 = t.newRow({a: 3}),
-        t2 = ds2.newTable('a'),
-        sData;
+      const t = ds.newTable('a'),
+          r1 = t.newRow({a: 1}),
+          r2 = t.newRow({a: 2}),
+          r3 = t.newRow({a: 3}),
+          t2 = ds2.newTable('a');
+      let sData;
       t.acceptChanges();
       r1.a=4;
       r2.a=5;
@@ -1397,12 +1430,12 @@ describe('DataTable module test', function () {
     });
 
     it('should preserve field addition for modified rows', function () {
-      var t = ds.newTable('a'),
-        r1 = t.newRow({a: 1}),
-        r2 = t.newRow({a: 2}),
-        r3 = t.newRow({a: 3}),
-        t2 = ds2.newTable('a'),
-        sData;
+      const t = ds.newTable('a'),
+          r1 = t.newRow({a: 1}),
+          r2 = t.newRow({a: 2}),
+          r3 = t.newRow({a: 3}),
+          t2 = ds2.newTable('a');
+      let sData;
       t.acceptChanges();
       r1.a = 4;
       r2.b = 5;
@@ -1428,12 +1461,12 @@ describe('DataTable module test', function () {
     });
 
     it('should preserve field deletion for modified rows', function () {
-      var t = ds.newTable('a'),
-        r1 = t.newRow({a: 1,b:4}),
-        r2 = t.newRow({a: 2,b:5}),
-        r3 = t.newRow({a: 3,b:6}),
-        t2 = ds2.newTable('a'),
-        sData;
+      const t = ds.newTable('a'),
+          r1 = t.newRow({a: 1, b: 4}),
+          r2 = t.newRow({a: 2, b: 5}),
+          r3 = t.newRow({a: 3, b: 6}),
+          t2 = ds2.newTable('a');
+      let sData;
       t.acceptChanges();
       r1.a = 4;
       r2.b = 5;
@@ -1467,7 +1500,7 @@ describe('DataTable module test', function () {
     });
 
 
-  })
+  });
 });
 //TODO: test  avoidCollisions,
 

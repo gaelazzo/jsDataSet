@@ -1674,9 +1674,43 @@
         },
 
         /**
+         * Sort a given array of rows, does not change table.
+         * @param {ObjectRow[]} rows
+         * @param {string} sortOrder it's like field1  [ASC|DESC] [, field2 [ASC|DESC] ..]
+         * @return {ObjectRow[]}
+         */
+        sortRows: function(rows,sortOrder){
+            let parts = sortOrder.split(",");
+            let result = parts.reduce((prevResult,field)=>{
+                let couple= field.trim();
+                let parts = couple.split(" ");
+                let sortOrder="asc";
+                if (parts.length>1 && parts[parts.length-1].toUpperCase()==="DESC"){
+                    sortOrder="desc";
+                }
+                prevResult.fields.push(parts[0]);
+                prevResult.sorting.push(sortOrder);
+                return prevResult;
+            },{fields:[],sorting:[]});
+            return _.orderBy(rows,result.fields,result.sorting);
+        },
+
+        /**
+         * Returns table rows in a specified order, does not change table. Skips deleted rows.
+         * @param {string} sortOrder it's like field1  [ASC|DESC] [, field2 [ASC|DESC] ..]
+         * @return {ObjectRow[]}
+         */
+        getSortedRows: function(sortOrder){
+          sortOrder = sortOrder || this.myOrderBy;
+          if (!sortOrder){
+              return this.select();
+          }
+          return this.sortRows(this.select(), sortOrder);
+        },
+        /**
          * Get/set the ordering that have to be user reading from db
-         * @param [fieldList]
-         * @returns {*}
+         * @param {string} [fieldList] it's like field1  [ASC|DESC] [, field2 [ASC|DESC] ..]
+         * @returns {string}
          */
         orderBy: function (fieldList) {
             if (fieldList === undefined) {
