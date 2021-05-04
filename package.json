@@ -1,6 +1,6 @@
 {
   "name": "jsDataSet",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "DataSet (like .Net) made available for javascript and more",
   "main": "src/jsDataSet.js",
   "directories": {
