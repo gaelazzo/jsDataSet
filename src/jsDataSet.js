@@ -1633,6 +1633,17 @@
         },
 
         /**
+         * Returns the table that should be used for writing, using tableForReading as a default for tableForWriting,
+         *  or this.name if none of them is set
+         *  @method postingTable
+         *  @public
+         * @return {string}
+         */
+        postingTable: function(){
+            return  this.myTableForWriting || this.myTableForReading || this.name;
+        },
+
+        /**
          * Get/Set the name of table  to be used to read data from database in a Jquery fashioned style
          * @method tableForReading
          * @param {string} [tableName]
