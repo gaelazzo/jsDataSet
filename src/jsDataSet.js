@@ -513,6 +513,12 @@
             return this;
         },
 
+
+
+        /**
+         * Get the column name of all modified/added/removed fields
+         * @return {*}
+         */
         getModifiedFields: function () {
             return _.union(_.keys(this.old), _.keys(this.removed), _.keys(this.added));
         },
@@ -758,7 +764,7 @@
         this.selector = options.selector || [];
 
         /**
-         * Array of bit mask to use for comparing selector. If present, only corrisponding bits will be compared,
+         * Array of bit mask to use for comparing selector. If present, only corresponding bits will be compared,
          *  i.e. instead of sel=value it will be compared (sel & mask) = value
          * @property {number[]} [selectorMask]
          **/
@@ -1013,6 +1019,23 @@
             if (this.maxCache !== undefined) {
                 this.maxCache = {};
             }
+        },
+
+        /**
+         *
+         * @param {string[]}colNames
+         */
+        getPostingColumnsNames: function (colNames){
+            if (this.postingTable()===this.name){
+                return  colNames;
+            }
+            return _.map(colNames, c=>{
+                let col=this.columns[c];
+                if (col===undefined) {
+                    return  c;
+                }
+                return col.forPosting || c;
+            });
         },
 
         /**
