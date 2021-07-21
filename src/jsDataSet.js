@@ -10,47 +10,43 @@
 (function (_,  dataQuery) {
     'use strict';
 
-    /** Used to determine if values are of the language type `Object`. (thanks lodash)*/
-    const objectTypes = {
-        'function': true,
-        'object': true
-    };
 
     //noinspection JSUnresolvedVariable
-    /**
-     * Used as a reference to the global object. (thanks lodash)
-     *
-     * The `this` value is used if it is the global object to avoid Greasemonkey's
-     * restricted `window` object, otherwise the `window` object is used.
-     */
-    let root = (objectTypes[typeof window] && window !== (this && this.window)) ? window : this;
 
-    //noinspection JSUnresolvedVariable
-    /** Detect free variable `exports`. (thanks lodash) */
-    const freeExports = objectTypes[typeof exports] && exports && !exports.nodeType && exports;
+    /** Detect free variable `global` from Node.js. */
+    let freeGlobal = typeof global === 'object' && global && global.Object === Object && global;
 
-    //noinspection JSUnresolvedVariable
-    /** Detect free variable `module`. (thanks lodash)*/
-    const freeModule = objectTypes[typeof module] && module && !module.nodeType && module;
+    //const freeGlobal = freeExports && freeModule && typeof global === 'object' && global;
+
+
+    /** Detect free variable `self`. */
+    let freeSelf = typeof self === 'object' && self && self.Object === Object && self;
+
+    /** Used as a reference to the global object. */
+    let root = freeGlobal || freeSelf || Function('return this')();
+
+
+
+    /** Detect free variable `exports`. */
+    let freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
+
+
+    /** Detect free variable `module`. */
+    let freeModule = freeExports && typeof module === 'object' && module && !module.nodeType && module;
+
 
     //noinspection JSUnresolvedVariable
     /** Detect free variable `global` from Node.js or Browserified code and use it as `root`. (thanks lodash)*/
-    const freeGlobal = freeExports && freeModule && typeof global === 'object' && global;
+    let moduleExports = freeModule && freeModule.exports === freeExports;
 
-    //noinspection JSUnresolvedVariable
-    if (freeGlobal && (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal || freeGlobal.self === freeGlobal)) {
-        root = freeGlobal;
-    }
 
-    /** Detect the popular CommonJS extension `module.exports`. (thanks lodash)*/
-    const moduleExports = freeModule && freeModule.exports === freeExports && freeExports;
 
     /**
-     * @property $cType
+     * @property CType
      * @public
      * @enum CType
      */
-    const $cType = {
+    const CType = {
         'string': 'string',
         'int': 'int',
         'number': 'number',
@@ -60,23 +56,14 @@
     };
 
 
-    /**
-     * @public
-     * @typedef {$rowState} dataRowState
-     * @property  {DataRowState} detached
-     * @property  {DataRowState} deleted
-     * @property {DataRowState} added
-     * @property  {DataRowState} unchanged
-     * @property  {DataRowState} modified
-     */
+
 
     //noinspection JSValidateTypes
     /**
-     * @property $rowState
      * @public
      * @enum DataRowState
      */
-    const $rowState = {
+    const DataRowState = {
             detached: "detached",
             deleted: "deleted",
             added: "added",
@@ -88,10 +75,9 @@
         /**
          * Enumerates possible version of a DataRow field: original, current
          * @public
-         * @property $rowVersion
          * @enum DataRowVersion
          */
-        $rowVersion = {
+        DataRowVersion = {
             original: "original",
             current: "current"
         };
@@ -204,7 +190,7 @@
      * @public
      * @class DataColumn
      * @param {string} columnName
-     * @param {CType} type of the column field
+     * @param {CType} ctype type of the column field
      **/
     function DataColumn(columnName, ctype) {
 
@@ -317,7 +303,7 @@
          */
         this.removed = {};
 
-        this.myState = $rowState.unchanged;
+        this.myState = DataRowState.unchanged;
         let that = this;
 
         /**
@@ -328,14 +314,14 @@
          */
         Object.defineProperty(this, 'state', {
             get: function () {
-                if (that.myState === $rowState.modified || that.myState === $rowState.unchanged) {
+                if (that.myState === DataRowState.modified || that.myState === DataRowState.unchanged) {
                     if (Object.keys(that.old).length === 0 &&
                         Object.keys(that.added).length === 0 &&
                         Object.keys(that.removed).length === 0) {
-                        that.myState = $rowState.unchanged;
+                        that.myState = DataRowState.unchanged;
                     }
                     else {
-                        that.myState = $rowState.modified;
+                        that.myState = DataRowState.modified;
                     }
                 }
                 return that.myState;
@@ -389,7 +375,7 @@
          * @returns {object}
          */
         getValue: function (fieldName, dataRowVer) {
-            if (dataRowVer === $rowVersion.original) {
+            if (dataRowVer === DataRowVersion.original) {
                 if (this.old.hasOwnProperty(fieldName)) {
                     return this.old[fieldName];
                 }
@@ -409,10 +395,10 @@
          * @return {object}
          */
         originalRow: function () {
-            if (this.state === $rowState.unchanged || this.state === $rowState.deleted) {
+            if (this.state === DataRowState.unchanged || this.state === DataRowState.deleted) {
                 return this.current;
             }
-            if (this.state === $rowState.added) {
+            if (this.state === DataRowState.added) {
                 return undefined;
             }
 
@@ -442,21 +428,21 @@
          * @return {DataRow}
          */
         makeSameAs: function (r) {
-            if (this.state === $rowState.deleted) {
+            if (this.state === DataRowState.deleted) {
                 this.rejectChanges();
             }
-            if (r.state === $rowState.deleted) {
+            if (r.state === DataRowState.deleted) {
                 return this.makeEqualTo(r.originalRow()).acceptChanges().del();
             }
-            if (r.state === $rowState.unchanged) {
+            if (r.state === DataRowState.unchanged) {
                 return this.makeEqualTo(r.current).acceptChanges();
             }
-            if (r.state === $rowState.modified) {
+            if (r.state === DataRowState.modified) {
                 return this.makeEqualTo(r.originalRow()).acceptChanges().makeEqualTo(r.current);
             }
-            if (r.state === $rowState.added) { //assumes this also is already in the state of "added"
+            if (r.state === DataRowState.added) { //assumes this also is already in the state of "added"
                 let res= this.makeEqualTo(r.current);
-                res.state=$rowState.added;
+                res.state=DataRowState.added;
                 return res;
             }
             return this;
@@ -475,7 +461,7 @@
              * @type {DataRow}
              */
             let that = this;
-            if (this.state === $rowState.deleted) {
+            if (this.state === DataRowState.deleted) {
                 this.rejectChanges();
             }
             //removes properties in this that are not present in o
@@ -501,7 +487,7 @@
          */
         patchTo: function (o) {
             let that = this;
-            if (this.state === $rowState.deleted) {
+            if (this.state === DataRowState.deleted) {
                 this.rejectChanges();
             }
 
@@ -529,10 +515,10 @@
          * @return {DataRow}
          */
         acceptChanges: function () {
-            if (this.state === $rowState.detached) {
+            if (this.state === DataRowState.detached) {
                 return this;
             }
-            if (this.state === $rowState.deleted) {
+            if (this.state === DataRowState.deleted) {
                 this.detach();
                 return this;
             }
@@ -547,11 +533,11 @@
          * @return {DataRow}
          */
         rejectChanges: function () {
-            if (this.state === $rowState.detached) {
+            if (this.state === DataRowState.detached) {
                 return this;
             }
 
-            if (this.state === $rowState.added) {
+            if (this.state === DataRowState.added) {
                 this.detach();
                 return this;
             }
@@ -578,7 +564,7 @@
             this.old = {};
             this.added = {};
             this.removed = {};
-            this.state = $rowState.unchanged;
+            this.state = DataRowState.unchanged;
             return this;
         },
 
@@ -589,7 +575,7 @@
          * @return {undefined}
          */
         detach: function () {
-            this.state = $rowState.detached;
+            this.state = DataRowState.detached;
             if (this.table) {
                 //this calls row.detach
                 this.table.detach(this.current);
@@ -606,18 +592,18 @@
          *  @returns {DataRow}
          */
         del: function () {
-            if (this.state === $rowState.deleted) {
+            if (this.state === DataRowState.deleted) {
                 return this;
             }
-            if (this.state === $rowState.added) {
+            if (this.state === DataRowState.added) {
                 this.detach();
                 return this;
             }
-            if (this.state === $rowState.detached) {
+            if (this.state === DataRowState.detached) {
                 return this;
             }
             this.rejectChanges();
-            this.state = $rowState.deleted;
+            this.state = DataRowState.deleted;
             return this;
         },
 
@@ -1175,7 +1161,7 @@
         select: function (filter) {
             if (filter === null || filter === undefined) {
                 return _.filter(this.rows, function (r) {
-                    return r.getRow().state !== $rowState.deleted;
+                    return r.getRow().state !== DataRowState.deleted;
                 });
             }
             if (filter) {
@@ -1183,7 +1169,7 @@
                     //console.log("always true: returning this.rows");
                     //does not return deleted rows, coherently with other cases
                     return _.filter(this.rows, function (r) {
-                        return r.getRow().state !== $rowState.deleted;
+                        return r.getRow().state !== DataRowState.deleted;
                     });
                     //return this.rows;
                 }
@@ -1194,7 +1180,7 @@
             }
             return _.filter(this.rows, function (r) {
                 //console.log('actually filtering by '+filter);
-                if (r.getRow().state === $rowState.deleted) {
+                if (r.getRow().state === DataRowState.deleted) {
                     //console.log("skipping a deleted row");
                     return false;
                 }
@@ -1329,8 +1315,8 @@
          */
         add: function (obj) {
             let dr = this.load(obj);
-            if (dr.state === $rowState.unchanged) {
-                dr.state = $rowState.added;
+            if (dr.state === DataRowState.unchanged) {
+                dr.state = DataRowState.added;
             }
             return dr;
         },
@@ -1410,7 +1396,7 @@
                  */
                 function (o) {
                     let dr = o.getRow();
-                    if (dr.state === $rowState.deleted) {
+                    if (dr.state === DataRowState.deleted) {
                         dr.table = null;
                         dr.detach();
                     }
@@ -1437,7 +1423,7 @@
                  */
                 function (o) {
                     let dr = o.getRow();
-                    if (dr.state === $rowState.added) {
+                    if (dr.state === DataRowState.added) {
                         dr.table = null;
                         dr.detach();
                     }
@@ -1456,7 +1442,7 @@
          */
         hasChanges: function () {
             return _.some(this.rows, function (o) {
-                return o.getRow().state !== $rowState.unchanged;
+                return o.getRow().state !== DataRowState.unchanged;
             });
 
         },
@@ -1468,7 +1454,7 @@
          */
         getChanges: function () {
             return _.filter(this.rows, function (o) {
-                return o.getRow().state !== $rowState.unchanged;
+                return o.getRow().state !== DataRowState.unchanged;
             });
         },
 
@@ -1852,10 +1838,10 @@
                 let row = r.getRow(),
                     rowState = row.state,
                     newRow = {state: rowState};
-                if (rowState === $rowState.deleted || rowState === $rowState.unchanged || rowState === $rowState.modified) {
+                if (rowState === DataRowState.deleted || rowState === DataRowState.unchanged || rowState === DataRowState.modified) {
                     newRow.old = clean(row.originalRow());
                 }
-                if (rowState === $rowState.modified || rowState === $rowState.added) {
+                if (rowState === DataRowState.modified || rowState === DataRowState.added) {
                     newRow.curr = clean(r); //_.clone(r)
                 }
 
@@ -1918,16 +1904,16 @@
             that.name=this.name;
             _.forEach(t.rows, function (r) {
                 let rowState = r.state;
-                if (rowState === $rowState.added) {
+                if (rowState === DataRowState.added) {
                     that.add(r.curr);
                     return;
                 }
                 let newRow = that.load(r.old); //newRow is unchanged
-                if (rowState === $rowState.deleted) {
+                if (rowState === DataRowState.deleted) {
                     newRow.del();
                     return;
                 }
-                if (rowState === $rowState.modified) {
+                if (rowState === DataRowState.modified) {
                     newRow.acceptChanges();
                     newRow.makeEqualTo(r.curr);
                 }
@@ -2269,7 +2255,7 @@
             let that = this;
             _.forEach(t.rows, function (r) {
                 let existingRow = that.select(t.keyFilter(r));
-                if (r.getRow().state === $rowState.deleted) {
+                if (r.getRow().state === DataRowState.deleted) {
                     if (existingRow.length === 1) {
                         existingRow[0].makeSameAs(r.getRow());
                     }
@@ -2323,14 +2309,14 @@
          */
         prepareForPosting: function (r, env) {
             let row = r.getRow();
-            if (row.state === $rowState.added) {
+            if (row.state === DataRowState.added) {
                 _.forEach(this.createFields, function (field) {
                     //noinspection JSUnresolvedFunction
                     r[field] = env.field(field);
                 });
                 return;
             }
-            if (row.state === $rowState.modified) {
+            if (row.state === DataRowState.modified) {
                 _.forEach(this.updateFields, function (field) {
                     //noinspection JSUnresolvedFunction
                     r[field] = env.field(field);
@@ -2352,7 +2338,7 @@
                 fields = key.concat(this.updateFields);
                 return dataQuery.mcmp(fields,
                     _.map(fields, function (f) {
-                        return row.getValue(f, $rowVersion.original);
+                        return row.getValue(f, DataRowVersion.original);
                     })
                 );
             }
@@ -2838,7 +2824,7 @@
             _.forEach(this.relationsByParent[table.name], function (rel) {
                 if (rel.isEntityRelation()) {
                     _.forEach(rel.getChild(row), function (toDel) {
-                        if (toDel.getRow().state !== $rowState.deleted) {
+                        if (toDel.getRow().state !== DataRowState.deleted) {
                             that.cascadeDelete(toDel);
                         }
                     });
@@ -2972,8 +2958,8 @@
 
 
     let jsDataSet = {
-        dataRowState: $rowState,
-        dataRowVersion: $rowVersion,
+        dataRowState: DataRowState,
+        dataRowVersion: DataRowVersion,
         DataColumn: DataColumn,
         DataRow: DataRow,
         DataTable: DataTable,
@@ -2981,7 +2967,7 @@
         toString: function () {
             return "dataSet Namespace";
         },
-        CType:$cType,
+        CType:CType,
         OptimisticLocking: OptimisticLocking,
         myLoDash: _ //for testing purposes
     };
