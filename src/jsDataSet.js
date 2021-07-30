@@ -1325,7 +1325,7 @@
          * check if a row is present in the table. If there is  a key, it is used for finding the row,
          *  otherwise a ==== comparison is made
          * @method existingRow
-         * @param obj
+         * @param {Object} obj
          * @return {DataRow | undefined}
          */
         existingRow: function (obj) {
@@ -1943,7 +1943,7 @@
          * adds an array of objects to collection, as unchanged, if they still are not present. Existence is verified
          *  basing on  key
          * @method mergeArray
-         * @param {ObjectRow []} arr
+         * @param {Object[]} arr
          * @param {boolean} overwrite
          * @return {*}
          */
@@ -2296,6 +2296,7 @@
     function OptimisticLocking(updateFields, createFields) {
         this.updateFields = updateFields || [];
         this.createFields = createFields || [];
+
     }
 
     OptimisticLocking.prototype = {
