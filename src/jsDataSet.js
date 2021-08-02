@@ -1628,14 +1628,14 @@
          * Get/Set a table name, that represents the real table associated to the table
          * @method realTable
          * @param {string} [arg]
-         * @returns {*|string}
+         * @returns {null|string}
          */
         realTable: function (arg) {
             if (arg === undefined) {
                 if (this.hasOwnProperty('myRealTable')) {
                     return this.myRealTable;
                 }
-                return false;
+                return null;
             }
             this.myRealTable = arg;
             return this;
