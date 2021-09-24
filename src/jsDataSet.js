@@ -1901,7 +1901,7 @@
                 this.key(t.key.split(','));
             }
 
-            that.name=this.name;
+            that.name=t.name;
             _.forEach(t.rows, function (r) {
                 let rowState = r.state;
                 if (rowState === DataRowState.added) {
