@@ -47,6 +47,7 @@
      * @enum CType
      */
     const CType = {
+        'byteArray':'byteArray',
         'string': 'string',
         'int': 'int',
         'number': 'number',
