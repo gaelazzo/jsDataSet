@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="jsDataSet" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.1</em>
+            <em>API Docs for: 1.0.6</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -39,9 +39,9 @@
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
                                 <li><a href="../classes/AutoIncrementColumn.html">AutoIncrementColumn</a></li>
+                                <li><a href="../classes/DataColumn.html">DataColumn</a></li>
                                 <li><a href="../classes/DataRelation.html">DataRelation</a></li>
                                 <li><a href="../classes/DataRow.html">DataRow</a></li>
-                                <li><a href="../classes/DataRowObserver.html">DataRowObserver</a></li>
                                 <li><a href="../classes/DataSet.html">DataSet</a></li>
                                 <li><a href="../classes/DataTable.html">DataTable</a></li>
                                 <li><a href="../classes/ObjectRow.html">ObjectRow</a></li>
@@ -90,7 +90,7 @@
 
 
         <div class="foundat">
-            Defined in: <a href="../files/src_jsDataSet.js.html#l2260"><code>src\jsDataSet.js:2260</code></a>
+            Defined in: <a href="../files/src_jsDataSet.js.html#l2597"><code>src\jsDataSet.js:2597</code></a>
         </div>
 
             Module: <a href="../modules/DataSet.html">DataSet</a>
@@ -122,6 +122,10 @@
                     <ul class="index-list methods">
                             <li class="index-item method">
                                 <a href="#method_acceptChanges">acceptChanges</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_addTable">addTable</a>
 
                             </li>
                             <li class="index-item method">
@@ -196,19 +200,19 @@
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_relations">relations</a>
+                                <a href="#property_}  relationsByChild">}  relationsByChild</a>
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_relationsByChild">relationsByChild</a>
+                                <a href="#property_} relations">} relations</a>
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_relationsByParent">relationsByParent</a>
+                                <a href="#property_} relationsByParent">} relationsByParent</a>
 
                             </li>
-                            <li class="index-item property">
-                                <a href="#property_tables">tables</a>
+                            <li class="index-item property public">
+                                <a href="#property_} tables">} tables</a>
 
                             </li>
                     </ul>
@@ -235,7 +239,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_jsDataSet.js.html#l2380"><code>src\jsDataSet.js:2380</code></a>
+        <a href="../files/src_jsDataSet.js.html#l2752"><code>src\jsDataSet.js:2752</code></a>
         </p>
 
 
@@ -248,6 +252,69 @@
     </div>
 
 
+
+
+</div>
+<div id="method_addTable" class="method item">
+    <h3 class="name"><code>addTable</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>table</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/DataTable.html" class="crosslink">DataTable</a></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_jsDataSet.js.html#l2714"><code>src\jsDataSet.js:2714</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Adds a datatable to DataSet</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">table</code>
+                        <span class="type"><a href="../classes/DataTable.html" class="crosslink">DataTable</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="../classes/DataTable.html" class="crosslink">DataTable</a></span>:
+            </div>
+        </div>
 
 
 </div>
@@ -275,7 +342,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_jsDataSet.js.html#l2449"><code>src\jsDataSet.js:2449</code></a>
+        <a href="../files/src_jsDataSet.js.html#l2821"><code>src\jsDataSet.js:2821</code></a>
         </p>
 
 
@@ -332,7 +399,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_jsDataSet.js.html#l2325"><code>src\jsDataSet.js:2325</code></a>
+        <a href="../files/src_jsDataSet.js.html#l2667"><code>src\jsDataSet.js:2667</code></a>
         </p>
 
 
@@ -373,7 +440,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_jsDataSet.js.html#l2364"><code>src\jsDataSet.js:2364</code></a>
+        <a href="../files/src_jsDataSet.js.html#l2736"><code>src\jsDataSet.js:2736</code></a>
         </p>
 
 
@@ -420,7 +487,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_jsDataSet.js.html#l2265"><code>src\jsDataSet.js:2265</code></a>
+        <a href="../files/src_jsDataSet.js.html#l2602"><code>src\jsDataSet.js:2602</code></a>
         </p>
 
 
@@ -483,7 +550,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_jsDataSet.js.html#l2500"><code>src\jsDataSet.js:2500</code></a>
+        <a href="../files/src_jsDataSet.js.html#l2873"><code>src\jsDataSet.js:2873</code></a>
         </p>
 
 
@@ -511,7 +578,7 @@
                 </li>
                 <li class="param">
                         <code class="param-name">deSerializeStructure</code>
-                        <span class="type">Bool</span>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
 
 
                     <div class="param-description">
@@ -543,7 +610,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_jsDataSet.js.html#l2400"><code>src\jsDataSet.js:2400</code></a>
+        <a href="../files/src_jsDataSet.js.html#l2772"><code>src\jsDataSet.js:2772</code></a>
         </p>
 
 
@@ -587,7 +654,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_jsDataSet.js.html#l2618"><code>src\jsDataSet.js:2618</code></a>
+        <a href="../files/src_jsDataSet.js.html#l2955"><code>src\jsDataSet.js:2955</code></a>
         </p>
 
 
@@ -640,7 +707,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_jsDataSet.js.html#l2566"><code>src\jsDataSet.js:2566</code></a>
+        <a href="../files/src_jsDataSet.js.html#l2928"><code>src\jsDataSet.js:2928</code></a>
         </p>
 
 
@@ -695,7 +762,7 @@ It is assumed that &quot;this&quot; dataset is unchanged at the beginning</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_jsDataSet.js.html#l2549"><code>src\jsDataSet.js:2549</code></a>
+        <a href="../files/src_jsDataSet.js.html#l2914"><code>src\jsDataSet.js:2914</code></a>
         </p>
 
 
@@ -750,7 +817,7 @@ It is assumed that &quot;this&quot; dataset is unchanged at the beginning</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_jsDataSet.js.html#l2527"><code>src\jsDataSet.js:2527</code></a>
+        <a href="../files/src_jsDataSet.js.html#l2900"><code>src\jsDataSet.js:2900</code></a>
         </p>
 
 
@@ -820,7 +887,7 @@ It is assumed that &quot;this&quot; dataset is unchanged at the beginning</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_jsDataSet.js.html#l2411"><code>src\jsDataSet.js:2411</code></a>
+        <a href="../files/src_jsDataSet.js.html#l2783"><code>src\jsDataSet.js:2783</code></a>
         </p>
 
 
@@ -925,7 +992,7 @@ It is assumed that &quot;this&quot; dataset is unchanged at the beginning</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_jsDataSet.js.html#l2346"><code>src\jsDataSet.js:2346</code></a>
+        <a href="../files/src_jsDataSet.js.html#l2696"><code>src\jsDataSet.js:2696</code></a>
         </p>
 
 
@@ -979,7 +1046,7 @@ It is assumed that &quot;this&quot; dataset is unchanged at the beginning</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_jsDataSet.js.html#l2390"><code>src\jsDataSet.js:2390</code></a>
+        <a href="../files/src_jsDataSet.js.html#l2762"><code>src\jsDataSet.js:2762</code></a>
         </p>
 
 
@@ -1022,7 +1089,7 @@ It is assumed that &quot;this&quot; dataset is unchanged at the beginning</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_jsDataSet.js.html#l2476"><code>src\jsDataSet.js:2476</code></a>
+        <a href="../files/src_jsDataSet.js.html#l2849"><code>src\jsDataSet.js:2849</code></a>
         </p>
 
 
@@ -1040,7 +1107,7 @@ It is assumed that &quot;this&quot; dataset is unchanged at the beginning</p>
             <ul class="params-list">
                 <li class="param">
                         <code class="param-name optional">[serializeStructure=false]</code>
-                        <span class="type">Bool</span>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
                         <span class="flag optional" title="This parameter is optional.">optional</span>
 
 
@@ -1091,7 +1158,7 @@ It is assumed that &quot;this&quot; dataset is unchanged at the beginning</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_jsDataSet.js.html#l2276"><code>src\jsDataSet.js:2276</code></a>
+        <a href="../files/src_jsDataSet.js.html#l2613"><code>src\jsDataSet.js:2613</code></a>
         </p>
 
 
@@ -1116,23 +1183,23 @@ It is assumed that &quot;this&quot; dataset is unchanged at the beginning</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_jsDataSet.js.html#l2312"><code>src\jsDataSet.js:2312</code></a>
+        <a href="../files/src_jsDataSet.js.html#l2648"><code>src\jsDataSet.js:2648</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>DataSet - level optmistic locking, this property is set in custom implementations</p>
+        <p>DataSet - level optimistic locking, this property is set in custom implementations</p>
 
     </div>
 
 
 
 </div>
-<div id="property_relations" class="property item">
-    <h3 class="name"><code>relations</code></h3>
-    <span class="type">Hash</span>
+<div id="property_}  relationsByChild" class="property item">
+    <h3 class="name"><code>}  relationsByChild</code></h3>
+    <span class="type"><a href="../classes/DataRelation.html" class="crosslink">DataRelation[]</a></span>
 
 
 
@@ -1141,32 +1208,7 @@ It is assumed that &quot;this&quot; dataset is unchanged at the beginning</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_jsDataSet.js.html#l2290"><code>src\jsDataSet.js:2290</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Collection of DataRelation  where relations[relName] is a DataRelation named relName</p>
-
-    </div>
-
-
-
-</div>
-<div id="property_relationsByChild" class="property item">
-    <h3 class="name"><code>relationsByChild</code></h3>
-    <span class="type">DataRelation[]</span>
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/src_jsDataSet.js.html#l2304"><code>src\jsDataSet.js:2304</code></a>
+        <a href="../files/src_jsDataSet.js.html#l2641"><code>src\jsDataSet.js:2641</code></a>
         </p>
 
 
@@ -1181,9 +1223,9 @@ relationsByChild['a'] is an array of all DataRelations where 'a' is the child</p
 
 
 </div>
-<div id="property_relationsByParent" class="property item">
-    <h3 class="name"><code>relationsByParent</code></h3>
-    <span class="type">DataRelation[]</span>
+<div id="property_} relations" class="property item">
+    <h3 class="name"><code>} relations</code></h3>
+    <span class="type"><a href="../classes/DataRelation.html" class="crosslink">DataRelation</a></span>
 
 
 
@@ -1192,7 +1234,32 @@ relationsByChild['a'] is an array of all DataRelations where 'a' is the child</p
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_jsDataSet.js.html#l2296"><code>src\jsDataSet.js:2296</code></a>
+        <a href="../files/src_jsDataSet.js.html#l2628"><code>src\jsDataSet.js:2628</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Collection of DataRelation  where relations[relName] is a DataRelation named relName</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_} relationsByParent" class="property item">
+    <h3 class="name"><code>} relationsByParent</code></h3>
+    <span class="type"><a href="../classes/DataRelation.html" class="crosslink">DataRelation[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_jsDataSet.js.html#l2634"><code>src\jsDataSet.js:2634</code></a>
         </p>
 
 
@@ -1207,18 +1274,19 @@ relationsByParent['a'] is an array of all DataRelations where 'a' is the parent<
 
 
 </div>
-<div id="property_tables" class="property item">
-    <h3 class="name"><code>tables</code></h3>
-    <span class="type">Hash</span>
+<div id="property_} tables" class="property item public">
+    <h3 class="name"><code>} tables</code></h3>
+    <span class="type"><a href="../classes/DataTable.html" class="crosslink">DataTable</a></span>
 
 
+        <span class="flag public">public</span>
 
 
 
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_jsDataSet.js.html#l2283"><code>src\jsDataSet.js:2283</code></a>
+        <a href="../files/src_jsDataSet.js.html#l2620"><code>src\jsDataSet.js:2620</code></a>
         </p>
 
 

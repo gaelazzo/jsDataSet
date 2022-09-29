@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="jsDataSet" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.1</em>
+            <em>API Docs for: 1.0.6</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -39,9 +39,9 @@
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
                                 <li><a href="../classes/AutoIncrementColumn.html">AutoIncrementColumn</a></li>
+                                <li><a href="../classes/DataColumn.html">DataColumn</a></li>
                                 <li><a href="../classes/DataRelation.html">DataRelation</a></li>
                                 <li><a href="../classes/DataRow.html">DataRow</a></li>
-                                <li><a href="../classes/DataRowObserver.html">DataRowObserver</a></li>
                                 <li><a href="../classes/DataSet.html">DataSet</a></li>
                                 <li><a href="../classes/DataTable.html">DataTable</a></li>
                                 <li><a href="../classes/ObjectRow.html">ObjectRow</a></li>
@@ -93,98 +93,69 @@
  * Created by Gaetano Lazzo on 07/02/2015.
  * Thanks to lodash, ObjectObserve
  */
-/*jslint nomen: true*/
-/*jslint bitwise: true */
-/*globals Environment */
-;
-&#x27;use strict&#x27;;
-
-(function (_, ObjectObserver, dataQuery) {
-    /** Used as a safe reference for &#x60;undefined&#x60; in pre-ES5 environments. (thanks lodash)*/
-    var undefined;
-
-    if (!Function.prototype.bind) {
-        Function.prototype.bind = function (oThis) {
-            if (typeof this !== &quot;function&quot;) {
-                // closest thing possible to the ECMAScript 5 internal IsCallable function
-                throw new TypeError(&quot;Function.prototype.bind - what is trying to be bound is not callable&quot;);
-            }
-
-            var aArgs = Array.prototype.slice.call(arguments, 1),
-                fToBind = this,
-                FNOP = function () {
-                },
-                fBound = function () {
-                    return fToBind.apply(this instanceof FNOP &amp;&amp; oThis ? this : oThis,
-                        aArgs.concat(Array.prototype.slice.call(arguments)));
-                };
-
-            FNOP.prototype = this.prototype;
-            fBound.prototype = new FNOP();
-
-            return fBound;
-        };
-    }
+/* jslint nomen: true */
+/* jslint bitwise: true */
+/*globals Environment,jsDataAccess,Function,jsDataQuery,define,_ */
 
 
-    /** Used to determine if values are of the language type &#x60;Object&#x60;. (thanks lodash)*/
-    var objectTypes = {
-        &#x27;function&#x27;: true,
-        &#x27;object&#x27;: true
-    };
+(function (_,  dataQuery) {
+    &#x27;use strict&#x27;;
+
 
     //noinspection JSUnresolvedVariable
-    /**
-     * Used as a reference to the global object. (thanks lodash)
-     *
-     * The &#x60;this&#x60; value is used if it is the global object to avoid Greasemonkey&#x27;s
-     * restricted &#x60;window&#x60; object, otherwise the &#x60;window&#x60; object is used.
-     */
-    var root = (objectTypes[typeof window] &amp;&amp; window !== (this &amp;&amp; this.window)) ? window : this;
 
-    //noinspection JSUnresolvedVariable
-    /** Detect free variable &#x60;exports&#x60;. (thanks lodash) */
-    var freeExports = objectTypes[typeof exports] &amp;&amp; exports &amp;&amp; !exports.nodeType &amp;&amp; exports;
+    /** Detect free variable &#x60;global&#x60; from Node.js. */
+    let freeGlobal = typeof global === &#x27;object&#x27; &amp;&amp; global &amp;&amp; global.Object === Object &amp;&amp; global;
 
-    //noinspection JSUnresolvedVariable
-    /** Detect free variable &#x60;module&#x60;. (thanks lodash)*/
-    var freeModule = objectTypes[typeof module] &amp;&amp; module &amp;&amp; !module.nodeType &amp;&amp; module;
+    //const freeGlobal = freeExports &amp;&amp; freeModule &amp;&amp; typeof global === &#x27;object&#x27; &amp;&amp; global;
+
+
+    /** Detect free variable &#x60;self&#x60;. */
+    let freeSelf = typeof self === &#x27;object&#x27; &amp;&amp; self &amp;&amp; self.Object === Object &amp;&amp; self;
+
+    /** Used as a reference to the global object. */
+    let root = freeGlobal || freeSelf || Function(&#x27;return this&#x27;)();
+
+
+
+    /** Detect free variable &#x60;exports&#x60;. */
+    let freeExports = typeof exports == &#x27;object&#x27; &amp;&amp; exports &amp;&amp; !exports.nodeType &amp;&amp; exports;
+
+
+    /** Detect free variable &#x60;module&#x60;. */
+    let freeModule = freeExports &amp;&amp; typeof module === &#x27;object&#x27; &amp;&amp; module &amp;&amp; !module.nodeType &amp;&amp; module;
+
 
     //noinspection JSUnresolvedVariable
     /** Detect free variable &#x60;global&#x60; from Node.js or Browserified code and use it as &#x60;root&#x60;. (thanks lodash)*/
-    var freeGlobal = freeExports &amp;&amp; freeModule &amp;&amp; typeof global == &#x27;object&#x27; &amp;&amp; global;
-    //noinspection JSUnresolvedVariable
-    if (freeGlobal &amp;&amp; (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal || freeGlobal.self === freeGlobal)) {
-        root = freeGlobal;
-    }
-
-    /** Detect the popular CommonJS extension &#x60;module.exports&#x60;. (thanks lodash)*/
-    var moduleExports = freeModule &amp;&amp; freeModule.exports === freeExports &amp;&amp; freeExports;
-
-
-    function isAngularField(f) {
-        return (f.substr(0, 2) === &#x27;$$&#x27;);
-    }
+    let moduleExports = freeModule &amp;&amp; freeModule.exports === freeExports;
 
 
 
     /**
+     * @property CType
      * @public
-     * @typedef {$rowState} dataRowState
-     * @property  {DataRowState} detached
-     * @property  {DataRowState} deleted
-     * @property {DataRowState} added
-     * @property  {DataRowState} unchanged
-     * @property  {DataRowState} modified
+     * @enum CType
      */
+    const CType = {
+        &#x27;byteArray&#x27;:&#x27;byteArray&#x27;,
+        &#x27;string&#x27;: &#x27;string&#x27;,
+        &#x27;int&#x27;: &#x27;int&#x27;,
+        &#x27;number&#x27;: &#x27;number&#x27;,
+        &#x27;date&#x27;: &#x27;date&#x27;,
+        &#x27;bool&#x27;: &#x27;bool&#x27;,
+        &#x27;unknown&#x27;: &#x27;unknown&#x27;
+    };
+
+
+
 
     //noinspection JSValidateTypes
     /**
-     * @property $rowState
      * @public
-     * @type dataRowState
+     * @enum DataRowState
      */
-    var $rowState = {
+    const DataRowState = {
             detached: &quot;detached&quot;,
             deleted: &quot;deleted&quot;,
             added: &quot;added&quot;,
@@ -193,181 +164,192 @@
         },
 
 
-    /**
-     * @public
-     * @typedef {$rowVersion} dataRowVersion
-     * @property  {DataRowVersion} original
-     * @property  {DataRowVersion} current
-     */
-
         /**
          * Enumerates possible version of a DataRow field: original, current
          * @public
-         * @property $rowVersion
-         * @type dataRowVersion
+         * @enum DataRowVersion
          */
-        $rowVersion = {
+        DataRowVersion = {
             original: &quot;original&quot;,
             current: &quot;current&quot;
         };
 
+    function dataRowDefineProperty(r, target, property,value) {
+        if (r.removed.hasOwnProperty(property)) {
+            //adding a property that was previously removed
+            if (r.removed[property] !== value) {
+                //if the property had been removed with a different value, that values now goes into
+                // old values
+                r.old[property] = r.removed[property];
+            }
+            delete r.removed[property];
+        }
+        else {
+            r.added[property] = value;
+        }
+    }
 
-    
+    const proxyObjectRow = {
+        get: function(target, prop, receiver) {
+            if (typeof prop === &#x27;symbol&#x27;){
+                return target[prop];
+            }
+            if (target.getRow  &amp;&amp; prop.startsWith(&#x27;$&#x27;)) { //&amp;&amp;  typeof prop === &#x27;string&#x27;
+                if (prop === &quot;$acceptChanges&quot;) {
+                    return () =&gt; target.getRow().acceptChanges();
+                }
+                if (prop === &quot;$rejectChanges&quot;) {
+                    return () =&gt; target.getRow().rejectChanges();
+                }
+                if (prop === &quot;$del&quot;) {
+                    return () =&gt; target.getRow().del();
+                }
+                if (prop === &quot;$DataRow&quot;) {
+                    return target.getRow();
+                }
+            }
+            return target[prop];
+        },
+
+
+        set: function(target, property, value, receiver) {
+            if (!target.getRow) {
+                return  false;
+            }
+
+            let r  = target.getRow();
+            if (!r){
+                return false;
+            }
+            if (!target.hasOwnProperty(property)){
+                dataRowDefineProperty(r,target,property);
+            }
+            //if property is added, old values has not to be set
+            if (!r.added.hasOwnProperty(property)) {
+                if (!r.old.hasOwnProperty(property)) {//only original value has to be saved
+                    r.old[property] = target[property];
+                }
+                else {
+                    if (r.old[property] === value) {
+                        delete r.old[property];
+                    }
+                }
+            }
+            target[property]=value;
+            return true;
+        },
+        defineProperty: function(target, property, descriptor) {
+            if (!target.getRow) {
+                return  false;
+            }
+            let r  = target.getRow();
+            if (!r){
+                return false;
+            }
+            dataRowDefineProperty(r,target,property,target[property]);
+            return Reflect.defineProperty(target, property, descriptor);
+        },
+
+        deleteProperty: function(target, property) {
+            if (!target.getRow) {
+                return  false;
+            }
+            let r  = target.getRow();
+            if (!r){
+                return false;
+            }
+//                property; // a property which has been been removed from obj
+//                getOldValueFn(property); // its old value
+            if (r.added.hasOwnProperty(property)) {
+                delete r.added[property];
+            }
+            else {
+                if (r.old.hasOwnProperty(property)) {
+                    //removing a property that had been previously modified
+                    r.removed[property] = r.old[property];
+                }
+                else {
+                    r.removed[property] = target[property];
+                }
+            }
+            delete target[property];
+            return true;
+        },
+
+    };
+
     /**
-   * Create a DataColumn
-   * @param {string} columnName
-   * @param {string} type of the column field
-   **/
-    function DataColumn(name, ctype) {
+     * @public
+     * @class DataColumn
+     * @param {string} columnName
+     * @param {CType} ctype type of the column field
+     **/
+    function DataColumn(columnName, ctype) {
 
         /**
-        * name of the column 
-        * @property {string} name
-        **/
-        this.name = name;
+         * name of the column
+         * @property {string} name
+         **/
+        this.name = columnName;
 
         /**
-        * type of the column 
-        * @property {string} ctype
-        **/
+         * type of the column
+         * @property {CType} ctype
+         **/
         this.ctype = ctype;
 
-    }   
-    
-    
+        /**
+         * Skips this column on insert copy
+         * @type {boolean}
+         */
+        //this.skipInsertCopy = false;
+
+        /**
+         * column name for posting to db
+         * @property {string} forPosting
+         **/
+        this.forPosting= undefined;
+    }
+
+
     /**
      * DataRow shim, provides methods to manage objects as Ado.Net DataRows
      * @module DataSet
      * @submodule DataRow
      */
 
-    /**
-     * Internal class attached to dataRow model data and used to track object changes
-     * @private
-     * @class DataRowObserver
-     * @param {objectRow} d
-     * @constructor
-     */
-    function DataRowObserver(d) {
-        /**
-         * @property r
-         * @type objectRow
-         */
-        this.r = d;
-    }
-
-
-
-    DataRowObserver.prototype = {
-        constructor: DataRowObserver,
-
-        /**
-         * Take track of object changes, managing added fields, removed fields, modified fields.
-         * This is called automatically by the ObjectObserver attached to the object
-         * @internal
-         * @method dataRowReactOnChange
-         * @param added
-         * @param removed
-         * @param changed
-         * @param getOldValueFn
-         */
-        dataRowReactOnChange: function (added, removed, changed, getOldValueFn) {
-            if (this.r.state === $rowState.deleted || this.r.state === $rowState.added) {
-                return;
-            }
-            var that = this;
-            // respond to changes to the obj.
-            Object.keys(added).forEach(function (property) {
-                if (isAngularField(property)) {
-                    return;
-                }
-                if (that.r.removed.hasOwnProperty(property)) {
-                    //adding a property that was previously removed
-                    if (that.r.removed[property] !== added[property]) {
-                        //if the property had been removed with a different value, that values now goes into
-                        // old values
-                        that.r.old[property] = that.r.removed[property];
-                    }
-                    delete that.r.removed[property];
-                } else {
-                    that.r.added[property] = added[property];
-                }
-            });
-
-            Object.keys(removed).forEach(function (property) {
-                if (isAngularField(property)) {
-                    return;
-                }
-//                property; // a property which has been been removed from obj
-//                getOldValueFn(property); // its old value
-                if (that.r.added.hasOwnProperty(property)) {
-                    delete that.r.added[property];
-                } else {
-                    if (that.r.old.hasOwnProperty(property)) {
-                        //removing a property that had been previously modified
-                        that.r.removed[property] = that.r.old[property];
-                    } else {
-                        that.r.removed[property] = getOldValueFn(property);
-                    }
-                }
-            });
-
-            Object.keys(changed).forEach(function (property) {
-                if (isAngularField(property)) {
-                    return;
-                }
-
-                //if property is added, old values has not to be set
-                if (!that.r.added.hasOwnProperty(property)) {
-                    if (!that.r.old.hasOwnProperty(property)) {
-                        that.r.old[property] = getOldValueFn(property);
-                    } else {
-                        if (that.r.old[property] === changed[property]) {
-                            delete that.r.old[property];
-                        }
-                    }
-                }
-                //property; // a property on obj which has changed value.
-                //changed[property]; // its new value
-                //getOldValueFn(property); // its old value
-            });
-        },
-        toString: function () {
-            return &#x27;DataRowObserver on &#x27; + this.r;
-        }
-
-    };
-
 
     /**
      * class type to host data
-     * @class ObjectRow
      * @public
+     * @class ObjectRow
      */
-     function ObjectRow(){
-        //dummy constructor
+    function ObjectRow() {
+        return null;
+    }
+
+    ObjectRow.prototype = {
+        constructor: ObjectRow,
         /**
          * Gets the DataRow linked to an ObjectRow
          * @public
          * @method getRow
          * @returns {DataRow}
          */
-        this.getRow  = function(){
+        getRow : function () {
+            return null;
         }
-    }
+    };
 
-
-    
 
     /**
      * Provides methods to manage objects as Ado.Net DataRows
      * @class DataRow
      */
 
- 
 
     /**
-     * 
+     *
      * Creates a DataRow from a generic plain object, and returns the DataRow
      * @method DataRow
      * @param {object} o this is the main object managed by the application logic, it is attached to a getRow function
@@ -375,73 +357,68 @@
      * @constructor
      */
     function DataRow(o) {
-
         if (o.constructor === DataRow) {
             throw &#x27;Called  DataRow with a DataRow as input parameter&#x27;;
         }
 
         if (o.getRow) {
             if (this &amp;&amp; this.constructor === DataRow) {
-                throw &#x27;Called new DataRow with an object already attached to a DataRow&#x27;;
+                o = _.clone(o);
+                //throw &#x27;Called new DataRow with an object already attached to a DataRow&#x27;;
             }
-            return o.getRow();
+            else {
+                return o.getRow();
+            }
         }
 
         if (this === undefined || this.constructor !== DataRow) {
             return new DataRow(o);
         }
 
-
         if (!o || typeof o !== &#x27;object&#x27;) {
             throw (&#x27;DataRow(o) needs an object as parameter&#x27;);
         }
 
         /**
-         * current value of the DataRow is the ObjectRow o itself
-         * @private
-         * @property {ObjectRow} current
-         */
-        this.current = o;
-        /**
          * previous values of the DataRow, only previous values of changed fields are stored
-         * @private
+         * @internal
          * @property {object} old
          */
         this.old = {};
 
         /**
          * fields added to object (after last acceptChanges())
-         * @private
+         * @internal
          * @property {object} added
          */
         this.added = {};
 
         /**
          * fields removed (with delete o.field) from object (after last acceptChanges())
-         * @private
+         * @internal
          * @property {object} removed
          */
         this.removed = {};
 
-        this.myState = $rowState.unchanged;
-        var that = this,
-            dObs;
+        this.myState = DataRowState.unchanged;
+        let that = this;
 
-        /**\
+        /**
          * State of the DataRow, possible values are added unchanged modified deleted detached
+         * @public
          * @property  state
          * @type DataRowState
          */
         Object.defineProperty(this, &#x27;state&#x27;, {
             get: function () {
-                this.commit();
-                if (that.myState === $rowState.modified || that.myState === $rowState.unchanged) {
+                if (that.myState === DataRowState.modified || that.myState === DataRowState.unchanged) {
                     if (Object.keys(that.old).length === 0 &amp;&amp;
                         Object.keys(that.added).length === 0 &amp;&amp;
                         Object.keys(that.removed).length === 0) {
-                        that.myState = $rowState.unchanged;
-                    } else {
-                        that.myState = $rowState.modified;
+                        that.myState = DataRowState.unchanged;
+                    }
+                    else {
+                        that.myState = DataRowState.modified;
                     }
                 }
                 return that.myState;
@@ -467,12 +444,23 @@
         });
 
 
-        //Create an observer on this
-        dObs = new DataRowObserver(this);
-        this.observer = new ObjectObserver(this.current);
-        this.observer.open(dObs.dataRowReactOnChange.bind(dObs));
+
+        /**
+         * @public
+         * @property {ObjectRow} current current value of the DataRow is the ObjectRow attached to it
+         */
+        this.current = new Proxy(o,proxyObjectRow);
+
+        /**
+         * @public
+         * @property {DataTable} table
+         */
+        this.table=undefined;
     }
 
+    /**
+     * @type {DataRow}
+     */
     DataRow.prototype = {
         constructor: DataRow,
 
@@ -484,8 +472,7 @@
          * @returns {object}
          */
         getValue: function (fieldName, dataRowVer) {
-            this.commit();
-            if (dataRowVer === $rowVersion.original) {
+            if (dataRowVer === DataRowVersion.original) {
                 if (this.old.hasOwnProperty(fieldName)) {
                     return this.old[fieldName];
                 }
@@ -495,7 +482,6 @@
                 if (this.added.hasOwnProperty(fieldName)) {
                     return undefined;
                 }
-
             }
             return this.current[fieldName];
         },
@@ -506,15 +492,14 @@
          * @return {object}
          */
         originalRow: function () {
-            this.commit();
-            if (this.state === $rowState.unchanged || this.state === $rowState.deleted) {
+            if (this.state === DataRowState.unchanged || this.state === DataRowState.deleted) {
                 return this.current;
             }
-            if (this.state === $rowState.added) {
+            if (this.state === DataRowState.added) {
                 return undefined;
             }
 
-            var o = {},
+            let o = {},
                 that = this;
             _.forEach(_.keys(this.removed), function (k) {
                 o[k] = that.removed[k];
@@ -533,26 +518,29 @@
             });
             return o;
         },
+
         /**
          * Make this row identical to another row (both in state, original and current value)
          * @param r {DataRow}
          * @return {DataRow}
          */
-        makeSameAs: function(r){
-            if (this.state === $rowState.deleted){
+        makeSameAs: function (r) {
+            if (this.state === DataRowState.deleted) {
                 this.rejectChanges();
             }
-            if (r.state === $rowState.deleted){
+            if (r.state === DataRowState.deleted) {
                 return this.makeEqualTo(r.originalRow()).acceptChanges().del();
             }
-            if (r.state === $rowState.unchanged){
+            if (r.state === DataRowState.unchanged) {
                 return this.makeEqualTo(r.current).acceptChanges();
             }
-            if (r.state === $rowState.modified){
+            if (r.state === DataRowState.modified) {
                 return this.makeEqualTo(r.originalRow()).acceptChanges().makeEqualTo(r.current);
             }
-            if (r.state === $rowState.added){ //assumes this also is already in the state of &quot;added&quot;
-                return this.makeEqualTo(r.current());
+            if (r.state === DataRowState.added) { //assumes this also is already in the state of &quot;added&quot;
+                let res= this.makeEqualTo(r.current);
+                res.state=DataRowState.added;
+                return res;
             }
             return this;
         },
@@ -566,11 +554,14 @@
          * @return {DataRow}
          */
         makeEqualTo: function (o) {
-            var that = this;
-            if (this.state === $rowState.deleted) {
+            /**
+             * @type {DataRow}
+             */
+            let that = this;
+            if (this.state === DataRowState.deleted) {
                 this.rejectChanges();
             }
-            //removes properties that are not present in o
+            //removes properties in this that are not present in o
             _.forEach(_.keys(this.current), function (k) {
                 if (!o.hasOwnProperty(k)) {
                     delete that.current[k];
@@ -582,9 +573,9 @@
                 that.current[k] = o[k];
             });
 
-            this.commit();
-            return this;
+            return that;
         },
+
         /**
          * changes current row to make it&#x27;s current values equal to another one. Deleted rows becomes modified
          * @method patchTo
@@ -592,8 +583,8 @@
          * @return {DataRow}
          */
         patchTo: function (o) {
-            var that = this;
-            if (this.state === $rowState.deleted) {
+            let that = this;
+            if (this.state === DataRowState.deleted) {
                 this.rejectChanges();
             }
 
@@ -602,71 +593,61 @@
                 that.current[k] = o[k];
             });
 
-            this.commit();
             return this;
         },
+
+
+
         /**
-         * get changes from the ObjectObserver
-         * @method commit
-         * @internal
+         * Get the column name of all modified/added/removed fields
+         * @return {*}
          */
-        commit: function () {
-            if (this.observer) {
-                this.observer.deliver();
-            }
-        },
         getModifiedFields: function () {
             return _.union(_.keys(this.old), _.keys(this.removed), _.keys(this.added));
         },
 
         /**
-         * Makes changes permanents, discarding old values. state becomes unchanged.
+         * Makes changes permanents, discarding old values. state becomes unchanged, detached remains detached
          * @method acceptChanges
          * @return {DataRow}
          */
         acceptChanges: function () {
-            if (this.state === $rowState.detached) {
+            if (this.state === DataRowState.detached) {
                 return this;
             }
-            if (this.state === $rowState.deleted) {
+            if (this.state === DataRowState.deleted) {
                 this.detach();
                 return this;
             }
-            this.commit();
-            this._reset();
+            this.reset();
             return this;
         },
 
         /**
-         * Discard changes, restoring the original values of the object. state becomes unchanged
+         * Discard changes, restoring the original values of the object. state becomes unchanged,
+         * detached remains detached
          * @method rejectChanges
          * @return {DataRow}
          */
         rejectChanges: function () {
-            if (this.state === $rowState.detached) {
+            if (this.state === DataRowState.detached) {
                 return this;
             }
 
-            if (this.state === $rowState.added) {
+            if (this.state === DataRowState.added) {
                 this.detach();
                 return this;
             }
-
-            var fieldToDel,
-                fieldToAdd;
-            this.commit();
             _.extend(this.current, this.old);
-            for (fieldToDel in this.added) {
-                if (this.added.hasOwnProperty(fieldToDel)) {
-                    delete this.current[fieldToDel];
-                }
-            }
-            for (fieldToAdd in this.removed) {
-                if (this.removed.hasOwnProperty(fieldToAdd)) {
-                    this.current[fieldToAdd] = this.removed[fieldToAdd];
-                }
-            }
-            this._reset();
+            let that = this;
+            _.forEach(this.added, function (value, fieldToDel) {
+                delete that.current[fieldToDel];
+            });
+            _.forEach(this.removed, function (value, fieldToAdd) {
+                that.current[fieldToAdd] = that.removed[fieldToAdd];
+            });
+
+            this.reset();
             return this;
         },
 
@@ -676,30 +657,28 @@
          * @method _reset
          * @return {DataRow}
          */
-        _reset: function () {
+        reset: function () {
             this.old = {};
             this.added = {};
             this.removed = {};
-            this.state = $rowState.unchanged;
+            this.state = DataRowState.unchanged;
             return this;
         },
 
         /**
-         * Detaches row, loosing all changes made. object is also removed from the underlying DataTable
+         * Detaches row, loosing all changes made. object is also removed from the underlying DataTable.
+         * Proxy is disposed.
          * @method detach
          * @return {undefined}
          */
         detach: function () {
-            this.state = $rowState.detached;
-            if (this.observer) {
-                this.observer.discardChanges();
-                this.observer.close();
-                delete this.observer;
-            }
+            this.state = DataRowState.detached;
             if (this.table) {
+                //this calls row.detach
                 this.table.detach(this.current);
+                return undefined;
             }
-            delete (this.current).getRow;
+            delete this.current.getRow;
             return undefined;
         },
 
@@ -710,18 +689,18 @@
          *  @returns {DataRow}
          */
         del: function () {
-            if (this.state === $rowState.deleted) {
+            if (this.state === DataRowState.deleted) {
                 return this;
             }
-            if (this.state === $rowState.added) {
+            if (this.state === DataRowState.added) {
                 this.detach();
                 return this;
             }
-            if (this.state === $rowState.detached) {
+            if (this.state === DataRowState.detached) {
                 return this;
             }
             this.rejectChanges();
-            this.state = $rowState.deleted;
+            this.state = DataRowState.deleted;
             return this;
         },
 
@@ -745,7 +724,7 @@
          * @returns {ObjectRow[]}
          */
         getParentRows: function (relName) {
-            var rel = this.table.dataset.relations[relName];
+            let rel = this.table.dataset.relations[relName];
             if (rel === undefined) {
                 throw &#x27;Relation &#x27; + relName + &#x27; does not exists in dataset &#x27; + this.table.dataset.name;
             }
@@ -757,7 +736,7 @@
          * @returns {ObjectRow[]}
          */
         getAllParentRows: function () {
-            var that = this;
+            let that = this;
             return _(this.table.dataset.relationsByChild[this.table.name])
                 .value()
                 .reduce(function (list, rel) {
@@ -771,7 +750,7 @@
          * @returns {ObjectRow[]}
          */
         getParentsInTable: function (parentTableName) {
-            var that = this;
+            let that = this;
             return _(this.table.dataset.relationsByChild[this.table.name])
                 .filter({parentTable: parentTableName})
                 .value()
@@ -788,11 +767,11 @@
          * @returns {ObjectRow[]}
          */
         getChildRows: function (relName) {
-            var rel = this.table.dataset.relations[relName];
+            let rel = this.table.dataset.relations[relName];
             if (rel === undefined) {
-                throw &#x27;Relation &#x27; + relName + &#x27; does not exists in dataset &#x27; + this.tables.dataset.name;
+                throw &#x27;Relation &#x27; + relName + &#x27; does not exists in dataset &#x27; + this.table.dataset.name;
             }
-            return rel.getChilds(this.current);
+            return rel.getChild(this.current);
         },
 
         /**
@@ -800,27 +779,27 @@
          * @returns {ObjectRow[]}
          */
         getAllChildRows: function () {
-            var that = this;
+            let that = this;
             return _(this.table.dataset.relationsByParent[this.table.name])
                 .value()
                 .reduce(function (list, rel) {
-                    return list.concat(rel.getChilds(that.current));
+                    return list.concat(rel.getChild(that.current));
                 }, []);
         },
 
         /**
          * Gets child rows of this row in a given table
-         * @method getChildsInTable
+         * @method getChildInTable
          * @param  {string} childTableName
          * @returns {ObjectRow[]}
          */
-        getChildsInTable: function (childTableName) {
-            var that = this;
+        getChildInTable: function (childTableName) {
+            let that = this;
             return _(this.table.dataset.relationsByParent[this.table.name])
                 .filter({childTable: childTableName})
                 .value()
                 .reduce(function (list, rel) {
-                    return list.concat(rel.getChilds(that.current));
+                    return list.concat(rel.getChild(that.current));
                 }, []);
         },
 
@@ -868,7 +847,7 @@
         this.selector = options.selector || [];
 
         /**
-         * Array of bit mask to use for comparing selector. If present, only corrisponding bits will be compared,
+         * Array of bit mask to use for comparing selector. If present, only corresponding bits will be compared,
          *  i.e. instead of sel=value it will be compared (sel &amp; mask) = value
          * @property {number[]} [selectorMask]
          **/
@@ -911,9 +890,9 @@
          * true if this field is a number
          * @property {number} [isNumber=false]
          **/
-        if (typeof options.isNumber === &#x27;undefined&#x27;) {
-            this.isNumber = (this.idLen === 0) &amp;&amp; (typeof this.prefixField === &#x27;undefined&#x27;)
-                &amp;&amp; (typeof this.middleConst === &#x27;undefined&#x27;);
+        if (options.isNumber === undefined) {
+            this.isNumber = (this.idLen === 0) &amp;&amp; (this.prefixField === undefined) &amp;&amp;
+                (this.middleConst === undefined);
         }
         else {
             this.isNumber = options.isNumber;
@@ -934,19 +913,20 @@
      * @returns {sqlFun}
      */
     AutoIncrementColumn.prototype.getFieldSelectorMask = function (row) {
-        var that = this;
-        if (typeof this.getInternalSelector === &#x27;undefined&#x27;) {
+        let that = this;
+        if (this.getInternalSelector === undefined) {
             this.getInternalSelector = function (r) {
                 return dataQuery.and(
                     _.map(that.selector, function (field, index) {
                         if (that.selectorMask &amp;&amp; that.selectorMask[index]) {
                             return dataQuery.testMask(field, that.selectorMask[index], r[field]);
-                        } else {
+                        }
+                        else {
                             return dataQuery.eq(field, r[field]);
                         }
                     })
                 );
-            }
+            };
         }
         return this.getInternalSelector(row);
     };
@@ -958,7 +938,7 @@
      * @returns {sqlFun}
      */
     AutoIncrementColumn.prototype.getSelector = function (r) {
-        var prefix = this.getPrefix(r),
+        let prefix = this.getPrefix(r),
             selector = this.getFieldSelectorMask(r);
 
         if (this.linearField === false &amp;&amp; prefix !== &#x27;&#x27;) {
@@ -974,10 +954,11 @@
      * @returns string
      */
     AutoIncrementColumn.prototype.getPrefix = function (r) {
-        var prefix = &#x27;&#x27;;
+        let prefix = &#x27;&#x27;;
         if (this.prefixField) {
-            if (r[this.prefixField] !== null &amp;&amp; r[this.prefixField] !== undefined)
+            if (r[this.prefixField] !== null &amp;&amp; r[this.prefixField] !== undefined) {
                 prefix += r[this.prefixField];
+            }
         }
         if (this.middleConst) {
             prefix += this.middleConst;
@@ -992,7 +973,7 @@
      * @return {sqlFun}
      */
     AutoIncrementColumn.prototype.getExpression = function (r) {
-        var fieldExpr = dataQuery.field(this.columnName),
+        let fieldExpr = dataQuery.field(this.columnName),
             lenToExtract,
             startSearch;
         if (this.isNumber) {
@@ -1004,16 +985,15 @@
     };
 
 
-
     /**
      * Optional custom function to be called to evaluate the maximum value
      * @method customFunction
      * @param {ObjectRow} r
      * @param {string} columnName
-     * @param {DataAccess} conn
+     * @param {jsDataAccess} conn
      * @return {object}
      **/
-    AutoIncrementColumn.prototype.customFunction = undefined;
+    AutoIncrementColumn.prototype.customFunction = null;
 
 
     /**
@@ -1063,13 +1043,13 @@
         /**
          * Dictionary of DataColumn
          * @property columns
-         * @type {}
+         * @type {{DataColumn}}
          */
         this.columns = {};
 
         /**
          * @property autoIncrementColumns
-         * @type {AutoIncrementColumn[]}
+         * @type {{AutoIncrementColumn}}
          */
         this.autoIncrementColumns = {};
 
@@ -1097,7 +1077,7 @@
          */
         setOptimized: function (value) {
             if (value === false) {
-                this.maxCache = undefined;
+                delete this.maxCache;
                 return;
             }
             if (this.maxCache === undefined) {
@@ -1125,6 +1105,23 @@
         },
 
         /**
+         *
+         * @param {string[]}colNames
+         */
+        getPostingColumnsNames: function (colNames){
+            if (this.postingTable()===this.name){
+                return  colNames;
+            }
+            return _.map(colNames, c=&gt;{
+                let col=this.columns[c];
+                if (col===undefined) {
+                    return  c;
+                }
+                return col.forPosting || c;
+            });
+        },
+
+        /**
          * Set a value in the max cache
          * @method setMaxExpr
          * @param {string} field
@@ -1136,18 +1133,28 @@
             if (this.maxCache === undefined) {
                 return;
             }
-            var hash = field + &#x27;§&#x27; + expr.toString() + &#x27;§&#x27; + filter.toString();
+            let hash = field + &#x27;§&#x27; + expr.toString() + &#x27;§&#x27; + filter.toString();
             this.maxCache[hash] = num;
         },
 
-        
-        setDataColumn : function(field,name,ctype){
-        
-            this.columns[field] = new DataColumn(name, ctype);
+        /**
+         *
+         * @param {string} name
+         * @param {CType} ctype
+         * @return {DataColumn}
+         */
+        setDataColumn: function (name, ctype) {
+            let c = this.columns[name];
+            if (c){
+                c.ctype= ctype;
+            } else {
+                c= new DataColumn(name, ctype);
+            }
+            this.columns[name] = c;
+            return c;
+        },
 
-        },       
-        
-        
+
         /**
          * get/set the minimum temp value for a field, assuming 0 if undefined
          * @method minimumTempValue
@@ -1155,20 +1162,20 @@
          * @param {number} [value]
          */
         minimumTempValue: function (field, value) {
-            var autoInfo = this.autoIncrementColumns[field];
+            let autoInfo = this.autoIncrementColumns[field];
             if (autoInfo === undefined) {
                 if (value === undefined) {
                     return 0;
                 }
                 this.autoIncrementColumns[field] = new AutoIncrementColumn(field, {minimum: value});
-            } else {
+            }
+            else {
                 if (value === undefined) {
                     return autoInfo.minimum || 0;
                 }
                 autoInfo.minimum = value;
             }
         },
-
 
 
         /**
@@ -1180,7 +1187,7 @@
          * @return {number}
          */
         getMaxExpr: function (field, expr, filter) {
-            var hash = field + &#x27;§&#x27; + expr.toString() + &#x27;§&#x27; + filter.toString(),
+            let hash = field + &#x27;§&#x27; + expr.toString() + &#x27;§&#x27; + filter.toString(),
                 res = this.minimumTempValue(field);
             if (this.maxCache[hash] !== undefined) {
                 res = this.maxCache[hash];
@@ -1199,10 +1206,9 @@
          * @return {number}
          */
         cachedMaxSubstring: function (field, start, len, filter) {
-            var expr;
+            let expr;
             if (!this.isOptimized()) {
                 return this.unCachedMaxSubstring(field, start, len, filter);
-
             }
             expr = field + &#x27;§&#x27; + start + &#x27;§&#x27; + len + &#x27;§&#x27; + filter.toString();
             return this.getMaxExpr(field, expr, filter);
@@ -1218,21 +1224,22 @@
          * @return {number}
          */
         unCachedMaxSubstring: function (field, start, len, filter) {
-
-            var res,
+            let res,
                 min = this.minimumTempValue(field),
                 expr,
                 rows;
             if (start === 0 &amp;&amp; len === 0) {
                 expr = dataQuery.max(field);
-            } else {
+            }
+            else {
                 expr = dataQuery.max(dataQuery.convertToInt(dataQuery.substring(field, start, len)));
             }
 
             rows = this.selectAll(filter);
             if (rows.length === 0) {
                 res = 0;
-            } else {
+            }
+            else {
                 res = expr(rows);
             }
 
@@ -1250,12 +1257,18 @@
          */
         select: function (filter) {
             if (filter === null || filter === undefined) {
-                return this.rows;
+                return _.filter(this.rows, function (r) {
+                    return r.getRow().state !== DataRowState.deleted;
+                });
             }
             if (filter) {
                 if (filter.isTrue) {
                     //console.log(&quot;always true: returning this.rows&quot;);
-                    return this.rows;
+                    //does not return deleted rows, coherently with other cases
+                    return _.filter(this.rows, function (r) {
+                        return r.getRow().state !== DataRowState.deleted;
+                    });
+                    //return this.rows;
                 }
                 if (filter.isFalse) {
                     //console.log(&quot;always false: returning []&quot;);
@@ -1264,7 +1277,7 @@
             }
             return _.filter(this.rows, function (r) {
                 //console.log(&#x27;actually filtering by &#x27;+filter);
-                if (r.getRow().state === $rowState.deleted) {
+                if (r.getRow().state === DataRowState.deleted) {
                     //console.log(&quot;skipping a deleted row&quot;);
                     return false;
                 }
@@ -1312,8 +1325,8 @@
          */
         sameKey: function (a, b) {
             return _.find(this.myKey, function (k) {
-                    return a[k] !== b[k];
-                }) !== undefined;
+                return a[k] !== b[k];
+            }) !== undefined;
         },
 
         /**
@@ -1329,19 +1342,40 @@
             }
             if (_.isArray(k)) {
                 this.myKey = _.clone(k);
-            } else {
+            }
+            else {
                 this.myKey = Array.prototype.slice.call(arguments);
             }
+            _.forEach(this.columns,function(c){
+                delete c.isPrimaryKey;
+            });
+            let self=this;
+            _.forEach(this.myKey,function(k){
+                if (!self.columns[k]){
+                    return true;
+                }
+                self.columns[k].isPrimaryKey=true;
+            });
             return this;
         },
 
-
+        /**
+         * Check if a column is key
+         * @param {string} k
+         * @returns {boolean}
+         */
+        isKey: function(k){
+            if (this.columns[k]){
+                return this.columns[k].isPrimaryKey;
+            }
+            return this.myKey.indexOf(k)&gt;=0;
+        },
         /**
          * Clears the table detaching all rows.
          * @method clear
          */
         clear: function () {
-            var dr;
+            let dr;
             _.forEach(this.rows, function (row) {
                 dr = row.getRow();
                 dr.table = null;
@@ -1356,7 +1390,11 @@
          * @param obj
          */
         detach: function (obj) {
-            var i = this.rows.indexOf(obj),
+            if (!obj.acceptChanges){//non è il proxy, ottiene il proxy dal DataRow associato
+                obj = obj.getRow().current;
+            }
+
+            let i = this.rows.indexOf(obj),
                 dr;
             if (i &gt;= 0) {
                 this.rows.splice(i, 1);
@@ -1373,9 +1411,9 @@
          * @returns DataRow created
          */
         add: function (obj) {
-            var dr = this.load(obj);
-            if (dr.state === $rowState.unchanged) {
-                dr.state = $rowState.added;
+            let dr = this.load(obj);
+            if (dr.state === DataRowState.unchanged) {
+                dr.state = DataRowState.added;
             }
             return dr;
         },
@@ -1384,18 +1422,21 @@
          * check if a row is present in the table. If there is  a key, it is used for finding the row,
          *  otherwise a ==== comparison is made
          * @method existingRow
-         * @param obj
+         * @param {Object} obj
          * @return {DataRow | undefined}
          */
         existingRow: function (obj) {
+            if (obj.getRow &amp;&amp; !obj.acceptChanges){
+                obj = obj.getRow().current;
+            }
             if (this.myKey.length === 0) {
-                var i = this.rows.indexOf(obj);
+                let i = this.rows.indexOf(obj);
                 if (i === -1) {
-                    return undefined
+                    return undefined;
                 }
                 return this.rows[i];
             }
-            var arr = _.filter(this.rows, this.keyFilter(obj));
+            let arr = _.filter(this.rows, this.keyFilter(obj));
             if (arr.length === 0) {
                 return undefined;
             }
@@ -1406,11 +1447,11 @@
          * Adds an object to the table setting the datarow in the state of &quot;unchanged&quot;
          * @method load
          * @param {object} obj plain object to load in the table
-         * @param {bool} [safe=true] if false doesn&#x27;t verify existence of row
+         * @param {boolean} [safe=true] if false doesn&#x27;t verify existence of row
          * @returns {DataRow} created DataRow
          */
         load: function (obj, safe) {
-            var dr, oldRow;
+            let dr, oldRow;
             if (safe || safe === undefined) {
                 oldRow = this.existingRow(obj);
                 if (oldRow) {
@@ -1419,7 +1460,7 @@
             }
             dr = new DataRow(obj);
             dr.table = this;
-            this.rows.push(obj);
+            this.rows.push(dr.current);
             return dr;
         },
 
@@ -1427,11 +1468,11 @@
          * Adds an object to the table setting the datarow in the state of &#x27;unchanged&#x27;
          * @method loadArray
          * @param {object[]} arr array of plain objects
-         * @param {bool} safe if false doesn&#x27;t verify existence of row
+         * @param {boolean} safe if false doesn&#x27;t verify existence of row
          * @return *
          */
         loadArray: function (arr, safe) {
-            var that=this;
+            let that = this;
             _.forEach(arr, function (o) {
                 that.load(o, safe);
             });
@@ -1444,17 +1485,23 @@
          */
         acceptChanges: function () {
             //First detach all deleted rows
-            var newRows = [];
-            _.forEach(this.rows, function (o) {
-                var dr = o.getRow();
-                if (dr.state === $rowState.deleted) {
-                    dr.table = null;
-                    dr.detach();
-                } else {
-                    dr.acceptChanges();
-                    newRows.push(o);
-                }
-            });
+            let newRows = [];
+            _.forEach(this.rows,
+                /**
+                 * @type {ObjectRow}
+                 * @param o
+                 */
+                function (o) {
+                    let dr = o.getRow();
+                    if (dr.state === DataRowState.deleted) {
+                        dr.table = null;
+                        dr.detach();
+                    }
+                    else {
+                        dr.acceptChanges();
+                        newRows.push(o);
+                    }
+                });
             this.rows = newRows;
         },
 
@@ -1465,22 +1512,23 @@
          */
         rejectChanges: function () {
             //First detach all added rows
-            var newRows = [];
+            let newRows = [];
             _(this.rows).forEach(
                 /**
                  * @method
                  * @param {ObjectRow} o
                  */
                 function (o) {
-                var dr = o.getRow();
-                if (dr.state === $rowState.added) {
-                    dr.table = null;
-                    dr.detach();
-                } else {
-                    dr.rejectChanges();
-                    newRows.push(o);
-                }
-            });
+                    let dr = o.getRow();
+                    if (dr.state === DataRowState.added) {
+                        dr.table = null;
+                        dr.detach();
+                    }
+                    else {
+                        dr.rejectChanges();
+                        newRows.push(o);
+                    }
+                });
             this.rows = newRows;
         },
 
@@ -1491,7 +1539,7 @@
          */
         hasChanges: function () {
             return _.some(this.rows, function (o) {
-                return o.getRow().state !== $rowState.unchanged;
+                return o.getRow().state !== DataRowState.unchanged;
             });
 
         },
@@ -1503,7 +1551,7 @@
          */
         getChanges: function () {
             return _.filter(this.rows, function (o) {
-                return o.getRow().state !== $rowState.unchanged;
+                return o.getRow().state !== DataRowState.unchanged;
             });
         },
 
@@ -1523,10 +1571,9 @@
          * @returns {DataRow} created
          */
         importRow: function (row) {
-            var dr = row.getRow(),
+            let dr = row.getRow(),
                 newR,
                 newDr;
-            dr.commit();
             newR = {};
             _.forOwn(row, function (val, key) {
                 newR[key] = val;
@@ -1539,7 +1586,8 @@
             this.rows.push(newR);
             return newDr;
         },
-        /**1212
+
+        /**
          * Get/set the object defaults in a JQuery fashioned style. When def is present, its fields and values are
          *  merged into existent defaults.
          * @method defaults
@@ -1571,7 +1619,7 @@
          * @returns {object}
          */
         newRow: function (obj, parentRow) {
-            var n = {};
+            let n = {};
             _.assign(n, this.myDefaults);
             if (_.isObject(obj)) {
                 _.assign(n, obj);
@@ -1580,8 +1628,7 @@
                 this.makeChild(n, parentRow.getRow().table.name, parentRow);
             }
             this.calcTemporaryId(n);
-            this.add(n);
-            return n;
+            return this.add(n).current;
         },
 
         /**
@@ -1592,7 +1639,7 @@
          * @param {ObjectRow} [parentRow]
          */
         makeChild: function (childRow, parentTable, parentRow) {
-            var that = this,
+            let that = this,
                 parentRel = _.find(this.dataset.relationsByParent[parentTable],
                     function (rel) {
                         return rel.childTable === that.name;
@@ -1621,6 +1668,85 @@
             }
             this.isSkipSecurity = arg;
             return this;
+        },
+
+        /**
+         * Get/Set a flag indicating that this table is not subjected to the Insert and Copy function
+         * @method skipInsertCopy
+         * @param {boolean} [arg]
+         * @returns {*|boolean}
+         */
+        skipInsertCopy: function (arg) {
+            if (arg === undefined) {
+                if (this.hasOwnProperty(&#x27;isSkipInsertCopy&#x27;)) {
+                    return this.isSkipInsertCopy;
+                }
+                return false;
+            }
+            this.isSkipInsertCopy = arg;
+            return this;
+        },
+
+        /**
+         * Get/Set DenyClear. === y avoid to clear table on backend reads
+         * @method denyClear
+         * @param {string} [arg]
+         * @returns {*|string}
+         */
+        denyClear: function (arg) {
+            if (arg === undefined) {
+                if (this.hasOwnProperty(&#x27;myDenyClear&#x27;)) {
+                    return this.myDenyClear;
+                }
+                return false;
+            }
+            this.myDenyClear = arg;
+            return this;
+        },
+
+        /**
+         * Get/Set a table name, that represents the view table associated to the table
+         * @method viewTable
+         * @param {string} [arg]
+         * @returns {*|string}
+         */
+        viewTable: function (arg) {
+            if (arg === undefined) {
+                if (this.hasOwnProperty(&#x27;myViewTable&#x27;)) {
+                    return this.myViewTable;
+                }
+                return false;
+            }
+            this.myViewTable = arg;
+            return this;
+        },
+
+        /**
+         * Get/Set a table name, that represents the real table associated to the table
+         * @method realTable
+         * @param {string} [arg]
+         * @returns {null|string}
+         */
+        realTable: function (arg) {
+            if (arg === undefined) {
+                if (this.hasOwnProperty(&#x27;myRealTable&#x27;)) {
+                    return this.myRealTable;
+                }
+                return null;
+            }
+            this.myRealTable = arg;
+            return this;
+        },
+
+        /**
+         * Returns the table that should be used for writing, using tableForReading as a default for tableForWriting,
+         *  or this.name if none of them is set
+         *  @method postingTable
+         *  @public
+         * @return {string}
+         */
+        postingTable: function(){
+            return  this.myTableForWriting || this.myTableForReading || this.name;
         },
 
         /**
@@ -1665,9 +1791,43 @@
         },
 
         /**
+         * Sort a given array of rows, does not change table.
+         * @param {ObjectRow[]} rows
+         * @param {string} sortOrder it&#x27;s like field1  [ASC|DESC] [, field2 [ASC|DESC] ..]
+         * @return {ObjectRow[]}
+         */
+        sortRows: function(rows,sortOrder){
+            let parts = sortOrder.split(&quot;,&quot;);
+            let result = parts.reduce((prevResult,field)=&gt;{
+                let couple= field.trim();
+                let parts = couple.split(&quot; &quot;);
+                let sortOrder=&quot;asc&quot;;
+                if (parts.length&gt;1 &amp;&amp; parts[parts.length-1].toUpperCase()===&quot;DESC&quot;){
+                    sortOrder=&quot;desc&quot;;
+                }
+                prevResult.fields.push(parts[0]);
+                prevResult.sorting.push(sortOrder);
+                return prevResult;
+            },{fields:[],sorting:[]});
+            return _.orderBy(rows,result.fields,result.sorting);
+        },
+
+        /**
+         * Returns table rows in a specified order, does not change table. Skips deleted rows.
+         * @param {string} sortOrder it&#x27;s like field1  [ASC|DESC] [, field2 [ASC|DESC] ..]
+         * @return {ObjectRow[]}
+         */
+        getSortedRows: function(sortOrder){
+          sortOrder = sortOrder || this.myOrderBy;
+          if (!sortOrder){
+              return this.select();
+          }
+          return this.sortRows(this.select(), sortOrder);
+        },
+        /**
          * Get/set the ordering that have to be user reading from db
-         * @param [fieldList]
-         * @returns {*}
+         * @param {string} [fieldList] it&#x27;s like field1  [ASC|DESC] [, field2 [ASC|DESC] ..]
+         * @returns {string}
          */
         orderBy: function (fieldList) {
             if (fieldList === undefined) {
@@ -1683,18 +1843,22 @@
          * @returns string
          */
         columnList: function () {
-            var c = [ ];
-            for( var key in columns ) {
-                c.push(columns[key].name);
+            let c = _.map(
+                this.columns,
+                function (c) {
+                    return c.name;
+                }
+            );
+            if (c.length &gt; 0) {
+                return c.join(&quot;,&quot;);
             }
-            if (this.c.length &gt; 0) {return c.join(&quot;,&quot;);}
-            return &#x27;*&#x27;;   
+            return &#x27;*&#x27;;
         },
 
         /**
          * Gets all autoincrement column names of this table
          * @method getAutoIncrementColumns
-         * @returns {string[]}
+         * @returns string[]
          */
         getAutoIncrementColumns: function () {
             return _.keys(this.autoIncrementColumns);
@@ -1711,46 +1875,73 @@
             if (autoIncrementInfo !== undefined) {
                 this.autoIncrementColumns[fieldName] = new AutoIncrementColumn(fieldName, autoIncrementInfo);
                 return this;
-            } else {
+            }
+            else {
                 return this.autoIncrementColumns[fieldName];
             }
         },
 
         /**
          * Get a serializable version of this table. If serializeStructure=true, also structure information is serialized
-         * @param {bool} [serializeStructure=false]
+         * @param {boolean} [serializeStructure=false]
          * @param {function} [filterRow] optional function for filtering rows to serialize
          * @return {object} the serialization object derived from this DataTable
          */
         serialize: function (serializeStructure, filterRow) {
-            var t = {};
+            let clean= function (r){
+                return _.pickBy(r,function(o){return o!==null &amp;&amp; o!==undefined;});
+            };
+            let t = {};
             if (serializeStructure) {
                 t.key = this.key().join();
                 t.tableForReading = this.tableForReading();
                 t.tableForWriting = this.tableForWriting();
+                t.isCached = this.isCached;
+                t.isTemporaryTable = this.isTemporaryTable;
                 t.orderBy = this.orderBy();
-                //TODO: make a serializable version of sqlFun and use it for staticFilter
+
                 //t.staticFilter(this.staticFilter());
+                if (this.staticFilter()) {
+                    t.staticFilter=dataQuery.toObject(this.staticFilter());
+                }
                 t.skipSecurity = this.skipSecurity();
+                t.skipInsertCopy = this.skipInsertCopy();
+                t.realTable = this.realTable();
+                t.viewTable = this.viewTable();
+                t.denyClear = this.denyClear();
                 t.defaults = this.defaults();
                 t.autoIncrementColumns = this.autoIncrementColumns;
-                t.columns = this.columns;
+                t.columns = {};
+
+                let o = {};
+                _.forOwn(this.columns, function (val, key) {
+                    o = {};
+                    _.forOwn(val, function (v, k) {
+                        if ((k === &#x27;expression&#x27;) &amp;&amp; (_.isFunction(v) || _.isArray(v))) {
+                            o[k] = dataQuery.toObject(v);
+                        } else {
+                            o[k] = v;
+                        }
+                    });
+                    t.columns[key] = o;
+                });
             }
+            t.name= this.name;
             t.rows = [];
             _.forEach(this.rows, function (r) {
                 if (filterRow &amp;&amp; filterRow(r) === false) {
                     return; //skip this row
                 }
-                var row = r.getRow(),
+                let row = r.getRow(),
                     rowState = row.state,
                     newRow = {state: rowState};
-                row.commit();
-                if (rowState === $rowState.deleted || rowState === $rowState.unchanged || rowState === $rowState.modified) {
-                    newRow.old = row.originalRow();
+                if (rowState === DataRowState.deleted || rowState === DataRowState.unchanged || rowState === DataRowState.modified) {
+                    newRow.old = clean(row.originalRow());
                 }
-                if (rowState === $rowState.modified || rowState == $rowState.added) {
-                    newRow.curr = _.clone(r);
+                if (rowState === DataRowState.modified || rowState === DataRowState.added) {
+                    newRow.curr = clean(r); //_.clone(r)
                 }
+
                 t.rows.push(newRow);
             });
             return t;
@@ -1759,37 +1950,67 @@
         /**
          * Get data from a serialized structure. If serializeStructure=true, also structure information is serialized
          * @param {object} t
-         * @param {bool} [deserializeStructure=false]
+         * @param {boolean} [deserializeStructure=false]
          * @return {*}
          */
         deSerialize: function (t, deserializeStructure) {
-            var that = this;
+            let that = this;
             if (deserializeStructure) {
-                this.key(t.key.split(&#x27;,&#x27;));
+
                 this.tableForReading(t.tableForReading);
                 this.tableForWriting(t.tableForWriting);
+                this.isCached = t.isCached;
+                this.isTemporaryTable = t.isTemporaryTable;
+
                 this.skipSecurity(t.skipSecurity);
+                this.skipInsertCopy(t.skipInsertCopy);
+                this.realTable(t.realTable);
+                this.viewTable(t.viewTable);
+                this.denyClear(t.denyClear);
                 this.defaults(t.defaults);
                 this.orderBy(t.orderBy);
-                if (t.autoIncrementColumns) {
-                    this.autoIncrementColumns = _.clone(t.autoIncrementColumns);
+                if (t.staticFilter) {
+                    this.staticFilter(dataQuery.fromObject(t.staticFilter));
                 }
+                _.forEach(t.autoIncrementColumns, function (aiObj) {
+                    let columnName = aiObj.columnName;
+
+                    let options  = _.pick(aiObj, [&#x27;prefixField&#x27;, &#x27;linearField&#x27;, &#x27;idLen&#x27;, &#x27;middleConst&#x27;, &#x27;selector&#x27;, &#x27;selectorMask&#x27;, &#x27;minimum&#x27;]);
+
+                    that.autoIncrementColumns[columnName] = new AutoIncrementColumn(columnName, options);
+                });
                 if (t.columns) {
-                    this.columns = _.clone(t.columns);
+                    let o = {};
+                    that.columns = {};
+                    _.forOwn(t.columns, function (val, key) {
+                        o = {};
+                        _.forOwn(val, function (v, k) {
+                            if (k === &#x27;expression&#x27; &amp;&amp; _.isObject(v)) {
+                                o.expression = dataQuery.fromObject(v);
+                            } else {
+                                o[k] = v;
+                            }
+                        });
+                        that.columns[key] = o;
+                    });
                 }
+
+                this.key(t.key.split(&#x27;,&#x27;));
             }
+
+            that.name=t.name;
             _.forEach(t.rows, function (r) {
-                var rowState = r.state;
-                if (rowState === $rowState.added) {
+                let rowState = r.state;
+                if (rowState === DataRowState.added) {
                     that.add(r.curr);
                     return;
                 }
-                var newRow = that.load(r.old); //newRow is unchanged
-                if (rowState === $rowState.deleted) {
+                let newRow = that.load(r.old); //newRow is unchanged
+                if (rowState === DataRowState.deleted) {
                     newRow.del();
                     return;
                 }
-                if (rowState === $rowState.modified) {
+                if (rowState === DataRowState.modified) {
                     newRow.acceptChanges();
                     newRow.makeEqualTo(r.curr);
                 }
@@ -1800,18 +2021,18 @@
         /**
          * Get all relation where THIS table is the child and another table is the parent
          * @method parentRelations
-         * @returns {DataRelation[]}
+         * @returns DataRelation[]
          */
-        parentRelations: function() {
+        parentRelations: function () {
             return this.dataset.relationsByChild[this.name];
         },
 
         /**
          * Get all relation where THIS table is the parent and another table is the child
          * @method childRelations
-         * @returns {DataRelation[]}
+         * @returns DataRelation[]
          */
-        childRelations: function() {
+        childRelations: function () {
             return this.dataset.relationsByParent[this.name];
         },
 
@@ -1819,20 +2040,21 @@
          * adds an array of objects to collection, as unchanged, if they still are not present. Existence is verified
          *  basing on  key
          * @method mergeArray
-         * @param {ObjectRow []} arr
-         * @param {bool} overwrite
+         * @param {Object[]} arr
+         * @param {boolean} overwrite
          * @return {*}
          */
         mergeArray: function (arr, overwrite) {
-            var that=this;
+            let that = this;
             _.forEach(arr, function (r) {
-                    var oldRow = that.existingRow(r);
+                    let oldRow = that.existingRow(r);
                     if (oldRow) {
                         if (overwrite) {
                             oldRow.getRow().makeEqualTo(r);
                             oldRow.acceptChanges();
                         }
-                    } else {
+                    }
+                    else {
                         that.load(r, false);
                     }
                 }
@@ -1845,12 +2067,16 @@
          * @return {DataTable}
          */
         clone: function () {
-            var cloned = new DataTable(this.name);
+            let cloned = new DataTable(this.name);
             cloned.key(this.key());
             cloned.tableForReading(this.tableForReading());
             cloned.tableForWriting(this.tableForWriting());
             cloned.staticFilter(this.staticFilter());
             cloned.skipSecurity(this.skipSecurity());
+            cloned.skipInsertCopy(this.skipInsertCopy());
+            cloned.realTable(this.realTable());
+            cloned.viewTable(this.viewTable());
+            cloned.denyClear(this.denyClear());
             cloned.defaults(this.defaults());
             cloned.autoIncrementColumns = _.clone(this.autoIncrementColumns);
             cloned.columns = _.clone(this.columns);
@@ -1864,7 +2090,7 @@
          * @return {DataTable}
          */
         copy: function () {
-            var cloned = this.clone();
+            let cloned = this.clone();
             _.forEach(this.rows, function (row) {
                 cloned.importRow(row);
             });
@@ -1882,7 +2108,7 @@
          * @return {sqlFun}
          */
         collisionFilter: function (r, field, value, autoInfo) {
-            var fields = [autoInfo.columnName].concat(autoInfo.selector),
+            let fields = [autoInfo.columnName].concat(autoInfo.selector),
                 values = _.map(fields, function (k) {
                     if (k !== field) {
                         return r[k];
@@ -1914,8 +2140,8 @@
          * @param {object} value
          */
         avoidCollisions: function (r, field, value) {
-            var that=this;
-            var deps = this.fieldDependencies(field);
+            let that = this;
+            let deps = this.fieldDependencies(field);
             if (this.autoIncrementColumns[field]) {
                 deps.unshift(field);
             }
@@ -1928,14 +2154,14 @@
         },
 
         /**
-         * Recalc a field to avoid collisions on some rows identified by a filter
+         * Recalculate a field to avoid collisions on some rows identified by a filter
          * @method avoidCollisionsOnField
          * @private
          * @param {string} field
          * @param {sqlFun} filter
          */
         avoidCollisionsOnField: function (field, filter) {
-            var that=this;
+            let that = this;
             _.forEach(this.select(filter), function (rCollide) {
                 that.calcTemporaryId(rCollide, field);
             });
@@ -1963,13 +2189,13 @@
          * @param {object} value
          */
         cascadeAssignField: function (r, parentField, value) {
-            var ds = this.dataset;
+            let ds = this.dataset;
             _.forEach(ds.relationsByParent[this.name], function (rel) {
-                var pos = _.indexOf(rel.parentCols, parentField);
+                let pos = _.indexOf(rel.parentCols, parentField);
                 if (pos &gt;= 0) {
-                    var childField = rel.childCols[pos];
-                    _.forEach(rel.getChilds(r), function (childRow) {
-                        var childTable = ds.tables[rel.childTable];
+                    let childField = rel.childCols[pos];
+                    _.forEach(rel.getChild(r), function (childRow) {
+                        let childTable = ds.tables[rel.childTable];
                         childTable.cascadeAssignField(childRow, childField, value);
 
                         childRow[childField] = value;
@@ -1987,7 +2213,7 @@
          * @return {string[]}
          */
         fieldDependencies: function (field) {
-            var res = [];
+            let res = [];
             _.forEach(_.values(this.autoIncrementColumns), function (autoInfo) {
                     if (autoInfo.prefixField === field) {
                         res.push(autoInfo.columnName);
@@ -2010,7 +2236,7 @@
          * @returns {*}
          */
         updateDependencies: function (row, field) {
-            var that=this;
+            let that = this;
             _.forEach(this.fieldDependencies(field), function (f) {
                 that.calcTemporaryId(row, f);
             });
@@ -2026,22 +2252,23 @@
          * @param {string} [field]
          */
         calcTemporaryId: function (r, field) {
-            var that=this;
+            let that = this;
             if (field === undefined) {
                 _.forEach(_.keys(this.autoIncrementColumns), function (field) {
                     that.calcTemporaryId(r, field);
                 });
                 return;
             }
-            var prefix = &#x27;&#x27;,
-                newID = &#x27;1&#x27;,
+            let prefix = &#x27;&#x27;,
+                newID,
                 evaluatedMax,
                 autoIncrementInfo = this.autoIncrementColumns[field],
                 selector = autoIncrementInfo.getSelector(r),
                 startSearch;
             if (autoIncrementInfo.isNumber) {
                 evaluatedMax = this.cachedMaxSubstring(field, 0, 0, selector) + 1;
-            } else {
+            }
+            else {
                 prefix = autoIncrementInfo.getPrefix(r);
                 startSearch = prefix.length + 1;
                 evaluatedMax = this.cachedMaxSubstring(field, startSearch, autoIncrementInfo.idLen, selector) + 1;
@@ -2049,7 +2276,8 @@
 
             if (autoIncrementInfo.isNumber) {
                 newID = evaluatedMax;
-            } else {
+            }
+            else {
 
                 newID = evaluatedMax.toString();
                 if (autoIncrementInfo.idLen &gt; 0) {
@@ -2062,6 +2290,85 @@
 
             this.assignField(r, field, newID);
 
+        },
+        /**
+         * merges changes from dataTable t assuming they are unchanged and they can be present in this or not.
+         * If a row is not present, it is added. If it is present, it is updated.
+         * It is assumed that &quot;this&quot; dataTable is unchanged at the beginning
+         * @method mergeAsPut
+         * @param {DataTable} t
+         */
+        mergeAsPut: function (t) {
+            let that = this;
+            _.forEach(t.rows, function (r) {
+                let existingRow = that.select(that.keyFilter(r));
+                if (existingRow.length === 0) {
+                    that.add(_.clone(r.current));  // new row state is &#x27;added&#x27;
+                }
+                else {
+                    existingRow[0].getRow().makeEqualTo(r.current); //new row state is modified
+                }
+            });
+        },
+
+        /**
+         * merges changes from dataTable t assuming they are unchanged and they are not present in this dataTable.
+         * Rows are all added &#x27;as is&#x27; to this, in the state of ADDED
+         * It is assumed that &quot;this&quot; dataTable is unchanged at the beginning
+         * @method mergeAsPost
+         * @param {DataTable} t
+         */
+        mergeAsPost: function (t) {
+            let that = this;
+            _.forEach(t.rows, function (r) {
+                that.add(_.clone(r.current)); //row is always simply  added
+            });
+        },
+
+        /**
+         * merges changes from dataTable t assuming they are unchanged and they are all present in this dataTable.
+         * Rows are updated, but only  fields actually present in d are modified. Other field are left unchanged.
+         * It is assumed that &quot;this&quot; dataTable is unchanged at the beginning
+         * @method mergeAsPatch
+         * @param {DataTable} t
+         */
+        mergeAsPatch: function (t) {
+            let that = this;
+            _.forEach(t.rows, function (r) {
+                let existingRow = that.select(t.keyFilter(r));
+                if (existingRow.length === 1) {
+                    existingRow[0].getRow().patchTo(r); //row is now in the state of updated
+                }
+            });
+        },
+
+        /**
+         * merge any row present in dataTable t. Rows are merged as unchanged if they are unchanged,
+         *  otherwise their values are copied into existent dataTable
+         *  DataSet must have same table structure
+         * @param  {DataTable} t
+         */
+        merge: function (t) {
+            let that = this;
+            _.forEach(t.rows, function (r) {
+                let existingRow = that.select(t.keyFilter(r));
+                if (r.getRow().state === DataRowState.deleted) {
+                    if (existingRow.length === 1) {
+                        existingRow[0].makeSameAs(r.getRow());
+                    }
+                    else {
+                        that.add(_.clone(r.getRow())).acceptChanges().del();
+                    }
+                }
+                else {
+                    if (existingRow.length === 1) {
+                        existingRow[0].getRow().makeSameAs(r.getRow());
+                    }
+                    else {
+                        that.add({}).makeSameAs(r.getRow());
+                    }
+                }
+            });
         }
 
     };
@@ -2086,6 +2393,7 @@
     function OptimisticLocking(updateFields, createFields) {
         this.updateFields = updateFields || [];
         this.createFields = createFields || [];
+
     }
 
     OptimisticLocking.prototype = {
@@ -2098,15 +2406,15 @@
          * @param {Environment} env
          */
         prepareForPosting: function (r, env) {
-            var row = r.getRow();
-            if (row.state === $rowState.added) {
+            let row = r.getRow();
+            if (row.state === DataRowState.added) {
                 _.forEach(this.createFields, function (field) {
                     //noinspection JSUnresolvedFunction
                     r[field] = env.field(field);
                 });
                 return;
             }
-            if (row.state === $rowState.modified) {
+            if (row.state === DataRowState.modified) {
                 _.forEach(this.updateFields, function (field) {
                     //noinspection JSUnresolvedFunction
                     r[field] = env.field(field);
@@ -2121,14 +2429,14 @@
          * @returns {sqlFun}
          */
         getOptimisticLock: function (r) {
-            var row = r.getRow(),
+            let row = r.getRow(),
                 fields,
                 key = row.table.key();
             if (key.length !== 0) {
                 fields = key.concat(this.updateFields);
                 return dataQuery.mcmp(fields,
                     _.map(fields, function (f) {
-                        return row.getValue(f, $rowVersion.original);
+                        return row.getValue(f, DataRowVersion.original);
                     })
                 );
             }
@@ -2199,7 +2507,8 @@
                     return s.trim();
                 })
                 : _.clone(childColsName);
-        } else {
+        }
+        else {
             this.childCols = this.parentCols;
         }
     }
@@ -2207,12 +2516,12 @@
     DataRelation.prototype = {
         /**
          * Gets a filter that will be applied to the child table and will find any child row of a given ObjectRow
-         * @method getChildsFilter
+         * @method getChildFilter
          * @param {ObjectRow} parentRow
          * @param {string} [alias] when present is used to attach an alias for the parent table in the composed filter
          */
-        getChildsFilter: function (parentRow, alias) {
-            var that = this;
+        getChildFilter: function (parentRow, alias) {
+            let that = this;
             return dataQuery.mcmp(that.childCols,
                 _.map(that.parentCols, function (col) {
                     return parentRow[col];
@@ -2223,17 +2532,17 @@
 
         /**
          * Get any child of a given ObjectRow following this DataRelation
-         * @method getChilds
+         * @method getChild
          * @param {ObjectRow} parentRow
          * @returns {ObjectRow[]}
          */
-        getChilds: function (parentRow) {
-            var ds = this.dataset;
+        getChild: function (parentRow) {
+            let ds = this.dataset;
             if (ds === null) {
                 ds = parentRow.getRow().table.dataset;
             }
-            var childTable = ds.tables[this.childTable];
-            return _.filter(childTable.rows, this.getChildsFilter(parentRow));
+            let childTable = ds.tables[this.childTable];
+            return _.filter(childTable.rows, this.getChildFilter(parentRow));
         },
 
         /**
@@ -2243,7 +2552,7 @@
          * @param {string} [alias] when present is used to attach an alias for the parent table in the composed filter
          */
         getParentsFilter: function (childRow, alias) {
-            var that = this;
+            let that = this;
             return dataQuery.mcmp(that.parentCols,
                 _.map(that.childCols, function (col) {
                     return childRow[col];
@@ -2260,11 +2569,11 @@
          * @returns {ObjectRow[]}
          */
         getParents: function (childRow) {
-            var ds = this.dataset;
+            let ds = this.dataset;
             if (ds === null) {
                 ds = childRow.getRow().table.dataset;
             }
-            var actualParentTable = ds.tables[this.parentTable];
+            let actualParentTable = ds.tables[this.parentTable];
             return _.filter(actualParentTable.rows, this.getParentsFilter(childRow));
         },
 
@@ -2273,20 +2582,34 @@
          * @returns {{}}
          */
         serialize: function () {
-            var rel = {};
+            let rel = {};
+            let sep = &quot;,&quot;;
             //relation name is not serialized here, it is a key in the parent
             rel.parentTable = this.parentTable;
             //parent cols are serialized as a comma separated field list
-            rel.parentCols = this.parentCols.join();
+            rel.parentCols = this.parentCols.join(sep);
             rel.childTable = this.childTable;
             //child cols are not serialized if are same as parent cols
             if (this.childCols !== this.parentCols) {
-                rel.childCols = this.childCols.join();
+                rel.childCols = this.childCols.join(sep);
             }
             return rel;
         },
 
-        deSerialize: function () {
+        deSerialize: function (rel) {
+            let sep = &quot;,&quot;;
+            //relation name is not serialized here, it is a key in the parent
+            this.parentTable = rel.parentTable;
+            //parent cols are serialized as a comma separated field list
+            this.parentCols = rel.parentCols.split(sep);
+            this.childTable = rel.childTable;
+            //child cols are not serialized if are same as parent cols
+            if (rel.childCols) {
+                this.childCols = rel.childCols.split(sep);
+            }
+            else {
+                this.childCols = rel.parentCols.split(sep);
+            }
         },
 
         /**
@@ -2299,7 +2622,8 @@
         activationFilter: function (filter) {
             if (filter) {
                 this.myActivationFilter = filter;
-            } else {
+            }
+            else {
                 return this.myActivationFilter;
             }
         },
@@ -2310,14 +2634,14 @@
          * @returns {boolean}
          */
         isEntityRelation: function () {
-            var parent = this.dataset.tables[this.parentTable],
+            let parent = this.dataset.tables[this.parentTable],
                 parentKey = parent.key(),
                 child = this.dataset.tables[this.childTable];
             if (parentKey.length !== this.parentCols.length) {
                 return false;
             }
             //parent columns must be the key for parent table
-            if (_.difference(parentKey, this.parentCols).length != 0) {
+            if (_.difference(parentKey, this.parentCols).length !== 0) {
                 return false;
             }
             //child columns must be a subset of the child table key
@@ -2336,14 +2660,27 @@
          * @return {*}
          */
         makeChild: function (parentRow, childRow) {
-            var i;
-            for (i = 0; i &lt; this.parentCols.length; i += 1) {
-                if (parentRow === undefined || parentRow === null) {
-                    childRow[this.childCols[i]] = null;
-                } else {
-                    childRow[this.childCols[i]] = parentRow[this.parentCols[i]];
-                }
-            }
+            _.each(_.map(
+                _.zip(this.parentCols, this.childCols),
+                _.curry(_.zipObject)([&#x27;parentCol&#x27;, &#x27;childCol&#x27;])
+                ),
+                function (pair) {
+                    if (parentRow === undefined || parentRow === null) {
+                        childRow[pair.childCol] = null;
+                    }
+                    else {
+                        childRow[pair.childCol] = parentRow[pair.parentCol];
+                    }
+                });
+
+            // _.forEach(_.zip(this.parentCols,this.childCols),function(colPair){
+            //     if (parentRow === undefined || parentRow === null) {
+            //         childRow[colPair[1]] = null;
+            //     }
+            //     else {
+            //         childRow[colPair[1]] = parentRow[colPair[0]];
+            //     }
+            // });
         }
     };
 
@@ -2373,37 +2710,37 @@
 
         /**
          * Collection of DataTable where tables[tableName] is a DataTable named tableName
-         * @property {Hash} tables
+         * @public
+         * @property {{DataTable}} tables
          */
         this.tables = {};
 
 
         /**
          * Collection of DataRelation  where relations[relName] is a DataRelation named relName
-         * @property {Hash} relations
+         * @property {{DataRelation}} relations
          */
         this.relations = {};
 
         /**
          * Gets all relations where the parent table is the key of the hash
          * relationsByParent[&#x27;a&#x27;] is an array of all DataRelations where &#x27;a&#x27; is the parent
-         * @property relationsByParent
-         * @type DataRelation[][]
+         * @property {{DataRelation[]}} relationsByParent
          */
         this.relationsByParent = {};
 
         /**
          * Gets all relations where the child table is the key of the hash
          * relationsByChild[&#x27;a&#x27;] is an array of all DataRelations where &#x27;a&#x27; is the child
-         * @property relationsByChild
-         * @type DataRelation[][]
+         *  @property {{DataRelation[]}}  relationsByChild
          */
         this.relationsByChild = {};
 
         /**
-         * DataSet - level optmistic locking, this property is set in custom implementations
+         * DataSet - level optimistic locking, this property is set in custom implementations
          * @property {OptimisticLocking} optimisticLocking
          */
+        this.optimisticLocking=undefined;
     }
 
 
@@ -2413,16 +2750,29 @@
             return &quot;dataSet &quot; + this.name;
         },
 
+        getParentChildRelation: function (parentName, childName) {
+            return _(this.relationsByChild[childName])
+                .filter({parentTable: parentName})
+                .value();
+        },
         /**
          * Clones a DataSet replicating its structure but without copying any ObjectRow
          * @method clone
          * @returns {DataSet}
          */
         clone: function () {
-            var newDs = new DataSet(this.name);
+            /**
+             * newDs
+             * @type {DataSet}
+             */
+            let newDs = new DataSet(this.name);
             newDs.optimisticLocking = this.optimisticLocking;
             _.forEach(this.tables, function (t) {
-                var newT = t.clone();
+                /**
+                 * newT
+                 * @type {DataTable}
+                 */
+                let newT = t.clone();
                 newT.dataset = newDs;
                 newDs.tables[newT.name] = newT;
                 newDs.relationsByChild[newT.name] = [];
@@ -2444,7 +2794,7 @@
             if (this.tables[tableName]) {
                 throw (&quot;Table &quot; + tableName + &quot; is already present in dataset&quot;);
             }
-            var t = new DataTable(tableName);
+            let t = new DataTable(tableName);
             t.dataset = this;
             this.tables[tableName] = t;
             this.relationsByChild[tableName] = [];
@@ -2453,14 +2803,36 @@
         },
 
         /**
+         * Adds a datatable to DataSet
+         * @method addTable
+         * @param {DataTable} table
+         * @returns {DataTable}
+         */
+        addTable: function (table) {
+            let tableName= table.name;
+            if (this.tables[tableName]) {
+                throw (&quot;Table &quot; + tableName + &quot; is already present in dataset&quot;);
+            }
+            if (table.dataset) {
+                throw (&quot;Table &quot; + tableName + &quot; already belongs to a dataset&quot;);
+            }
+
+            table.dataset = this;
+            this.tables[tableName] = table;
+            this.relationsByChild[tableName] = [];
+            this.relationsByParent[tableName] = [];
+            return table;
+        },
+
+        /**
          * Creates a copy of the DataSet, including both structure and data.
          * @method copy
          * @returns {DataSet}
          */
         copy: function () {
-            var newDS = this.clone();
+            let newDS = this.clone();
             _.forEach(this.tables, function (t) {
-                var newT = newDS.tables[t.name];
+                let newT = newDS.tables[t.name];
                 _.forEach(t.rows, function (r) {
                     newT.importRow(r);
                 });
@@ -2520,7 +2892,7 @@
                 throw (&quot;Child table:&quot; + childTableName + &quot; of relation &quot; + relationName + &quot; is not a dataSet table&quot;);
             }
 
-            var rel = new DataRelation(relationName, parentTableName, parentColsName, childTableName, childColsName);
+            let rel = new DataRelation(relationName, parentTableName, parentColsName, childTableName, childColsName);
             rel.dataset = this;
             this.relations[relationName] = rel;
 
@@ -2544,19 +2916,20 @@
          * @return {*}
          */
         cascadeDelete: function (row) {
-            var r = row.getRow(),
+            let r = row.getRow(),
                 table = r.table,
-                that=this;
+                that = this;
             _.forEach(this.relationsByParent[table.name], function (rel) {
                 if (rel.isEntityRelation()) {
-                    _.forEach(rel.getChilds(row), function (toDel) {
-                        if (toDel.getRow().state !== $rowState.deleted) {
+                    _.forEach(rel.getChild(row), function (toDel) {
+                        if (toDel.getRow().state !== DataRowState.deleted) {
                             that.cascadeDelete(toDel);
                         }
-                    })
-                } else {
-                    _.forEach(rel.getChilds(row), function (toUnlink) {
-                            rel.makeChild(null, toUnlink)
+                    });
+                }
+                else {
+                    _.forEach(rel.getChild(row), function (toUnlink) {
+                            rel.makeChild(null, toUnlink);
                         }
                     );
                 }
@@ -2567,12 +2940,12 @@
         /**
          * Creates a serializable version of this DataSet
          * @method serialize
-         * @param {bool} [serializeStructure=false] when true serialized also structure, when false only row data
+         * @param {boolean} [serializeStructure=false] when true serialized also structure, when false only row data
          * @param {function} [filterRow] function to select which rows have to be serialized
          * @returns {object}
          */
         serialize: function (serializeStructure, filterRow) {
-            var d = {},
+            let d = {},
                 that = this;
             if (serializeStructure) {
                 d.name = this.name;
@@ -2592,23 +2965,23 @@
          * Restores data from an object obtained with serialize().
          * @method deSerialize
          * @param {object} d
-         * @param {bool} deSerializeStructure
+         * @param {boolean} deSerializeStructure
          */
         deSerialize: function (d, deSerializeStructure) {
-            var that = this;
+            let that = this;
             if (deSerializeStructure) {
                 this.name = d.name;
             }
             _.forEach(_.keys(d.tables), function (tableName) {
-                var t = that.tables[tableName];
+                let t = that.tables[tableName];
                 if (t === undefined) {
                     t = that.newTable(tableName);
                 }
-                t.deSerialize(d.tables[tableName]);
+                t.deSerialize(d.tables[tableName],deSerializeStructure);
             });
             if (deSerializeStructure) {
                 _.forEach(_.keys(d.relations), function (relationName) {
-                    var rel = d.relations[relationName],
+                    let rel = d.relations[relationName],
                         newRel = that.newRelation(relationName, rel.parentTable, rel.parentCols, rel.childTable, rel.childCols);
                     newRel.deSerialize(rel);
                 });
@@ -2623,18 +2996,10 @@
          * @param {DataSet} d
          */
         mergeAsPut: function (d) {
-            var that = this;
+            let that = this;
             _.forEach(d.tables, function (t) {
-                var t2 = that.tables[t.name];
-                _.forEach(t.rows, function (r) {
-                    var existingRow = t2.select(t2.keyFilter(r));
-                    if (existingRow.length === 0) {
-                        t2.add(_.clone(r.current));  // new row state is &#x27;added&#x27;
-                    } else {
-                        existingRow[0].getRow().makeEqualTo(r.current); //new row state is modified
-                    }
-                })
-            })
+                that.tables[t.name].mergeAsPut(t);
+            });
         },
 
         /**
@@ -2645,13 +3010,10 @@
          * @param {DataSet} d
          */
         mergeAsPost: function (d) {
-            var that = this;
+            let that = this;
             _.forEach(d.tables, function (t) {
-                var t2 = that.tables[t.name];
-                _.forEach(t.rows, function (r) {
-                    t2.add(_.clone(r.current)); //row is always simply  added
-                })
-            })
+                that.tables[t.name].mergeAsPost(t);
+            });
         },
 
         /**
@@ -2662,16 +3024,10 @@
          * @param {DataSet} d
          */
         mergeAsPatch: function (d) {
-            var that = this;
+            let that = this;
             _.forEach(d.tables, function (t) {
-                var t2 = that.tables[t.name];
-                _.forEach(t.rows, function (r) {
-                    var existingRow = t2.select(t.keyFilter(r));
-                    if (existingRow.length === 1) {
-                        existingRow[0].getRow().patchTo(r); //row is now in the state of updated
-                    }
-                })
-            })
+                that.tables[t.name].mergeAsPatch(t);
+            });
         },
 
         /**
@@ -2681,29 +3037,10 @@
          * @param d
          */
         merge: function (d) {
-            var that = this;
+            let that = this;
             _.forEach(d.tables, function (t) {
-                var t2 = that.tables[t.name];
-                _.forEach(t.rows, function (r) {
-                    var existingRow = t2.select(t.keyFilter(r));
-                    if (r.getRow().state == $rowState.deleted) {
-                        if (existingRow.length === 1) {
-                            existingRow[0].makeSameAs(r);
-                        }
-                        else {
-                            t2.add(_.clone(r)).acceptChanges().del();
-                        }
-                    }
-                    else {
-                        if (existingRow.length === 1) {
-                            existingRow[0].getRow().makeSameAs(r);
-                        }
-                        else {
-                            t2.add({}).makeSameAs(r);
-                        }
-                    }
-                })
-            })
+                that.tables[t.name].merge(t);
+            });
         },
 
         /**
@@ -2718,15 +3055,17 @@
     };
 
 
-    var jsDataSet = {
-        dataRowState: $rowState,
-        dataRowVersion: $rowVersion,
+    let jsDataSet = {
+        dataRowState: DataRowState,
+        dataRowVersion: DataRowVersion,
+        DataColumn: DataColumn,
         DataRow: DataRow,
         DataTable: DataTable,
         DataSet: DataSet,
         toString: function () {
             return &quot;dataSet Namespace&quot;;
         },
+        CType:CType,
         OptimisticLocking: OptimisticLocking,
         myLoDash: _ //for testing purposes
     };
@@ -2734,7 +3073,7 @@
 
     // Some AMD build optimizers like r.js check for condition patterns like the following:
     //noinspection JSUnresolvedVariable
-    if (typeof define == &#x27;function&#x27; &amp;&amp; typeof define.amd == &#x27;object&#x27; &amp;&amp; define.amd) {
+    if (typeof define === &#x27;function&#x27; &amp;&amp; typeof define.amd === &#x27;object&#x27; &amp;&amp; define.amd) {
         // Expose lodash to the global object when an AMD loader is present to avoid
         // errors in cases where lodash is loaded by a script tag and not intended
         // as an AMD module. See http://requirejs.org/docs/errors.html#mismatch for
@@ -2765,7 +3104,6 @@
     }
 }).call(this,
     (typeof _ === &#x27;undefined&#x27;) ? require(&#x27;lodash&#x27;) : _,
-    (typeof ObjectObserver === &#x27;undefined&#x27;) ? require(&#x27;observe-js&#x27;).ObjectObserver : ObjectObserver,
     (typeof jsDataQuery === &#x27;undefined&#x27;) ? require(&#x27;jsDataQuery&#x27;).jsDataQuery : jsDataQuery
 );
 

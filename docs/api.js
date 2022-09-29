@@ -2,9 +2,9 @@ YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
         "AutoIncrementColumn",
+        "DataColumn",
         "DataRelation",
         "DataRow",
-        "DataRowObserver",
         "DataSet",
         "DataTable",
         "ObjectRow",
