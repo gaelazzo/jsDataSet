@@ -147,6 +147,7 @@
             target[property]=value;
             return true;
         },
+
         defineProperty: function(target, property, descriptor) {
             if (!target.getRow) {
                 return  false;
@@ -207,6 +208,11 @@
          **/
         this.ctype = ctype;
 
+        /**
+         * Skips this column on insert copy
+         * @type {boolean}
+         */
+        //this.skipInsertCopy = false;
 
         /**
          * column name for posting to db
@@ -245,20 +251,12 @@
         }
     };
 
-
     /**
      * Provides methods to manage objects as Ado.Net DataRows
-     * @class DataRow
-     */
-
-
-    /**
-     *
-     * Creates a DataRow from a generic plain object, and returns the DataRow
-     * @method DataRow
+     * Creates a DataRow from a generic plain object
+     * @class
+     * @name DataRow
      * @param {object} o this is the main object managed by the application logic, it is attached to a getRow function
-     * @returns {DataRow}
-     * @constructor
      */
     function DataRow(o) {
         if (o.constructor === DataRow) {
@@ -481,7 +479,7 @@
         },
 
         /**
-         * changes current row to make it's current values equal to another one. Deleted rows becomes modified
+         * changes current row to make its current values equal to another one. Deleted rows becomes modified
          * @method patchTo
          * @param {object} o
          * @return {DataRow}
@@ -642,10 +640,10 @@
         getAllParentRows: function () {
             let that = this;
             return _(this.table.dataset.relationsByChild[this.table.name])
-                .value()
-                .reduce(function (list, rel) {
-                    return list.concat(rel.getParents(that.current));
-                }, [], this);
+            .value()
+            .reduce(function (list, rel) {
+                return list.concat(rel.getParents(that.current));
+            }, [], this);
         },
         /**
          * Gets parents row of this row in a given table
@@ -656,11 +654,11 @@
         getParentsInTable: function (parentTableName) {
             let that = this;
             return _(this.table.dataset.relationsByChild[this.table.name])
-                .filter({parentTable: parentTableName})
-                .value()
-                .reduce(function (list, rel) {
-                    return list.concat(rel.getParents(that.current));
-                }, [], this);
+            .filter({parentTable: parentTableName})
+            .value()
+            .reduce(function (list, rel) {
+                return list.concat(rel.getParents(that.current));
+            }, [], this);
         },
 
         /**
@@ -685,10 +683,10 @@
         getAllChildRows: function () {
             let that = this;
             return _(this.table.dataset.relationsByParent[this.table.name])
-                .value()
-                .reduce(function (list, rel) {
-                    return list.concat(rel.getChild(that.current));
-                }, []);
+            .value()
+            .reduce(function (list, rel) {
+                return list.concat(rel.getChild(that.current));
+            }, []);
         },
 
         /**
@@ -700,11 +698,11 @@
         getChildInTable: function (childTableName) {
             let that = this;
             return _(this.table.dataset.relationsByParent[this.table.name])
-                .filter({childTable: childTableName})
-                .value()
-                .reduce(function (list, rel) {
-                    return list.concat(rel.getChild(that.current));
-                }, []);
+            .filter({childTable: childTableName})
+            .value()
+            .reduce(function (list, rel) {
+                return list.concat(rel.getChild(that.current));
+            }, []);
         },
 
         /**
@@ -725,17 +723,13 @@
     };
 
 
-    /**
-     * Describe how to evaluate the value of a column before posting it
-     * @class AutoIncrementColumn
-     *
-     **/
+
 
     /**
-     * Create a AutoIncrementColumn
+     * Describe how to evaluate the value of a column before posting it
      * @constructor AutoIncrementColumn
      * @param {string} columnName
-     * @param {object} options same options as AutoIncrement properties
+     * @param {object} options same options as AutoIncrementColumn properties
      **/
     function AutoIncrementColumn(columnName, options) {
         /**
@@ -900,18 +894,14 @@
     AutoIncrementColumn.prototype.customFunction = null;
 
 
+
+
+
+
     /**
      * A DataTable is s collection of ObjectRow and provides information about the structure of logical table
-     * @class DataTable
-     */
-
-    /**
-     * DataSet to which this table belongs
-     * @property {DataSet} dataset
-     */
-
-    /**
-     * Creates an empty DataTable
+     * @class
+     * @name DataTable
      * @param {string} tableName
      * @constructor
      * @return {DataTable}
@@ -957,6 +947,11 @@
          */
         this.autoIncrementColumns = {};
 
+        /**
+         * DataSet to which this table belongs
+         * @property {DataSet} dataset
+         */
+        this.dataset = undefined;
         /**
          * A ordering to use for posting of this table
          * @property postingOrder
@@ -1009,7 +1004,8 @@
         },
 
         /**
-         *
+         * Get name to be used where columns are written to the database. Usually the same as column name,
+         *  but can differ if the real table is a different one
          * @param {string[]}colNames
          */
         getPostingColumnsNames: function (colNames){
@@ -1557,7 +1553,7 @@
 
 
         /**
-         * Get/Set a flag indicating that this table is not subjected to security functions in a Jquery fashioned
+         * Get/Set a flag indicating that this table is not subjected to security functions in a jQuery fashioned
          *  style
          * @method skipSecurity
          * @param {boolean} [arg]
@@ -1722,12 +1718,13 @@
          * @return {ObjectRow[]}
          */
         getSortedRows: function(sortOrder){
-          sortOrder = sortOrder || this.myOrderBy;
-          if (!sortOrder){
-              return this.select();
-          }
-          return this.sortRows(this.select(), sortOrder);
+            sortOrder = sortOrder || this.myOrderBy;
+            if (!sortOrder){
+                return this.select();
+            }
+            return this.sortRows(this.select(), sortOrder);
         },
+
         /**
          * Get/set the ordering that have to be user reading from db
          * @param {string} [fieldList] it's like field1  [ASC|DESC] [, field2 [ASC|DESC] ..]
@@ -1772,7 +1769,7 @@
          * Get/Set autoincrement properties of fields
          * @method autoIncrement
          * @param {string} fieldName
-         * @param {object} [autoIncrementInfo] //see AutoIncrementColumn properties for details
+         * @param {AutoIncrementColumn} [autoIncrementInfo] //see AutoIncrementColumn properties for details
          * @returns {*|AutoIncrementColumn}
          */
         autoIncrement: function (fieldName, autoIncrementInfo) {
@@ -1945,7 +1942,8 @@
          *  basing on  key
          * @method mergeArray
          * @param {Object[]} arr
-         * @param {boolean} overwrite
+         * @param {boolean} overwrite If ovewrite is true, existing rows are made equals to those in the array,
+         otherwise array's conflicting rows are ignored.
          * @return {*}
          */
         mergeArray: function (arr, overwrite) {
@@ -2053,8 +2051,6 @@
                 that.avoidCollisionsOnField(depField,
                     that.collisionFilter(r, field, value, that.autoIncrementColumns[depField]));
             });
-
-
         },
 
         /**
@@ -2198,7 +2194,7 @@
         /**
          * merges changes from dataTable t assuming they are unchanged and they can be present in this or not.
          * If a row is not present, it is added. If it is present, it is updated.
-         * It is assumed that "this" dataTable is unchanged at the beginning
+         * It is assumed that "this" dataTable is initially unchanged
          * @method mergeAsPut
          * @param {DataTable} t
          */
@@ -2231,7 +2227,7 @@
 
         /**
          * merges changes from dataTable t assuming they are unchanged and they are all present in this dataTable.
-         * Rows are updated, but only  fields actually present in d are modified. Other field are left unchanged.
+         * Rows are updated, but only actually existing rows in d are modified. Other rows are ignored.
          * It is assumed that "this" dataTable is unchanged at the beginning
          * @method mergeAsPatch
          * @param {DataTable} t
@@ -2255,18 +2251,18 @@
         merge: function (t) {
             let that = this;
             _.forEach(t.rows, function (r) {
-                let existingRow = that.select(t.keyFilter(r));
+                let existingRows = that.select(t.keyFilter(r));
                 if (r.getRow().state === DataRowState.deleted) {
-                    if (existingRow.length === 1) {
-                        existingRow[0].makeSameAs(r.getRow());
+                    if (existingRows.length === 1) {
+                        existingRows[0].getRow().makeSameAs(r.getRow());
                     }
                     else {
                         that.add(_.clone(r.getRow())).acceptChanges().del();
                     }
                 }
                 else {
-                    if (existingRow.length === 1) {
-                        existingRow[0].getRow().makeSameAs(r.getRow());
+                    if (existingRows.length === 1) {
+                        existingRows[0].getRow().makeSameAs(r.getRow());
                     }
                     else {
                         that.add({}).makeSameAs(r.getRow());
@@ -2277,22 +2273,15 @@
 
     };
 
-    /**
-     * Provides shim for Ado.net DataSet class
-     * @module DataSet
-     */
 
     /**
      * Manages auto fill of locking purposed fields and evaluates filter for optimistic locking for update
      * In his basic implementation accept a list of fields to fill. Values for filling are taken from
      *  environment.
-     * @class  OptimisticLocking
-     */
-    /**
-     * @method OptimisticLocking
+     * @class
+     * @name OptimisticLocking
      * @param {string[]} updateFields Fields to fill and to check during update operations
      * @param {string[]} createFields Fields to fill and to check during insert operations
-     * @constructor
      */
     function OptimisticLocking(updateFields, createFields) {
         this.updateFields = updateFields || [];
@@ -2349,15 +2338,9 @@
     };
 
 
+
     /**
      * Describe a relation between two DataTables of a DataSet.
-     * @class DataRelation
-     */
-
-
-    /**
-     * creates a DataRelation
-     * @class DataRelation
      * @constructor DataRelation
      * @param {string} relationName
      * @param {string} parentTableName
@@ -2565,8 +2548,8 @@
          */
         makeChild: function (parentRow, childRow) {
             _.each(_.map(
-                _.zip(this.parentCols, this.childCols),
-                _.curry(_.zipObject)(['parentCol', 'childCol'])
+                    _.zip(this.parentCols, this.childCols),
+                    _.curry(_.zipObject)(['parentCol', 'childCol'])
                 ),
                 function (pair) {
                     if (parentRow === undefined || parentRow === null) {
@@ -2588,15 +2571,10 @@
         }
     };
 
-
     /**
      * Stores and manages a set of DataTables and DataRelations
-     * @class DataSet
-     */
-
-    /**
-     * Creates an empty DataSet
-     * @method DataSet
+     * @class
+     * @name DataSet
      * @param {string} dataSetName
      * @returns {DataSet}
      * @constructor
@@ -2656,9 +2634,10 @@
 
         getParentChildRelation: function (parentName, childName) {
             return _(this.relationsByChild[childName])
-                .filter({parentTable: parentName})
-                .value();
+            .filter({parentTable: parentName})
+            .value();
         },
+
         /**
          * Clones a DataSet replicating its structure but without copying any ObjectRow
          * @method clone
@@ -2699,11 +2678,8 @@
                 throw ("Table " + tableName + " is already present in dataset");
             }
             let t = new DataTable(tableName);
-            t.dataset = this;
-            this.tables[tableName] = t;
-            this.relationsByChild[tableName] = [];
-            this.relationsByParent[tableName] = [];
-            return t;
+
+            return this.addTable(t);
         },
 
         /**
@@ -2785,7 +2761,11 @@
          * @param {string[]} childColsName array of string
          * @return {DataRelation}
          */
-        newRelation: function (relationName, parentTableName, parentColsName, childTableName, childColsName) {
+        newRelation: function (relationName,
+                               parentTableName,
+                               parentColsName,
+                               childTableName,
+                               childColsName) {
             if (this.relations[relationName]) {
                 throw ("Relation " + relationName + " is already present in dataset");
             }
@@ -2814,7 +2794,7 @@
             return rel;
         },
         /**
-         * Deletes a row with all subentity child
+         * Deletes a row with all subentity children. Children that are not subentity are unlinked.
          * @method cascadeDelete
          * @param {ObjectRow} row
          * @return {*}
@@ -2893,9 +2873,9 @@
         },
 
         /**
-         * merges changes from DataSet d assuming they are unchanged and they can be present in this or not.
+         * merges changes from DataSet d assuming they are unchanged and they can exist in this or not.
          * If a row is not present, it is added. If it is present, it is updated.
-         * It is assumed that "this" dataset is unchanged at the beginning
+         * It is assumed that "this" dataset is initially unchanged
          * @method mergeAsPut
          * @param {DataSet} d
          */
@@ -2907,7 +2887,7 @@
         },
 
         /**
-         * merges changes from DataSet d assuming they are unchanged and they are not present in this dataset.
+         * merges changes from DataSet d assuming they are unchanged and they dont' exist in this dataset.
          * Rows are all added 'as is' to this, in the state of ADDED
          * It is assumed that "this" dataset is unchanged at the beginning
          * @method mergeAsPost
@@ -2935,7 +2915,7 @@
         },
 
         /**
-         * merge any row present in dataset d. Rows are merged as unchanged if they are unchanged,
+         * merge any row existent in dataset d. Rows are merged as unchanged if they are unchanged,
          *  otherwise their values are copied into existent dataset
          *  DataSet must have same table structure
          * @param d
@@ -2948,7 +2928,7 @@
         },
 
         /**
-         * Import data from a given dataset
+         * Import data from a given dataset, this DataSet will become unchanged
          * @method importData
          * @param {DataSet}  d
          */
@@ -3008,6 +2988,6 @@
     }
 }).call(this,
     (typeof _ === 'undefined') ? require('lodash') : _,
-    (typeof jsDataQuery === 'undefined') ? require('jsDataQuery').jsDataQuery : jsDataQuery
+    (typeof jsDataQuery === 'undefined') ? require('./jsDataQuery').jsDataQuery : jsDataQuery
 );
 
