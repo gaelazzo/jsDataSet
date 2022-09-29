@@ -5,7 +5,7 @@
 'use strict';
 
 describe('System status', function () {
-  const dsSpace = DataSet,
+  const dsSpace = jsDataSet,
       $q = jsDataQuery;
   let ds;
 
@@ -28,7 +28,7 @@ describe('System status', function () {
 
 describe('DataSet',
   function () {
-    const dsSpace = DataSet,
+    const dsSpace = jsDataSet,
         $q = jsDataQuery;
     let ds;
 

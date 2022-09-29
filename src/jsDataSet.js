@@ -2962,7 +2962,7 @@
         // errors in cases where lodash is loaded by a script tag and not intended
         // as an AMD module. See http://requirejs.org/docs/errors.html#mismatch for
         // more details.
-        root.DataSet = jsDataSet;
+        root.jsDataSet = jsDataSet;
 
         // Define as an anonymous module so, through path mapping, it can be
         // referenced as the "underscore" module.
@@ -2975,16 +2975,16 @@
     else if (freeExports && freeModule) {
         // Export for Node.js or RingoJS.
         if (moduleExports) {
-            (freeModule.exports = jsDataSet).DataSet = jsDataSet;
+            (freeModule.exports = jsDataSet).jsDataSet = jsDataSet;
         }
         // Export for Narwhal or Rhino -require.
         else {
-            freeExports.DataSet = jsDataSet;
+            freeExports.jsDataSet = jsDataSet;
         }
     }
     else {
         // Export for a browser or Rhino.
-        root.DataSet = jsDataSet;
+        root.jsDataSet = jsDataSet;
     }
 }).call(this,
     (typeof _ === 'undefined') ? require('lodash') : _,

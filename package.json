@@ -1,8 +1,8 @@
 {
-  "name": "dataset",
+  "name": "jsdataset",
   "version": "1.0.6",
   "description": "DataSet (like .Net) made available for javascript and more",
-  "main": "src/DataSet.js",
+  "main": "src/jsDataSet.js",
   "directories": {
     "bin": "src",
     "test": "test"
@@ -41,7 +41,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gaelazzo/DataSet"
+    "url": "https://github.com/gaelazzo/jsDataSet"
   },
   "keywords": [
     "DataSet",
@@ -51,7 +51,7 @@
   "author": "Gaetano Lazzo",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/gaelazzo/DataSet/issues"
+    "url": "https://github.com/gaelazzo/jsDataSet/issues"
   },
-  "homepage": "https://github.com/gaelazzo/DataSet"
+  "homepage": "https://github.com/gaelazzo/jsDataSet"
 }

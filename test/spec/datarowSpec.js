@@ -4,7 +4,7 @@
 
 
 describe('DataRow module test', function () {
-    var  dsNameSpace = DataSet,
+    var  dsNameSpace = jsDataSet,
         DataRow = dsNameSpace.DataRow,
         $rowState = dsNameSpace.dataRowState,
         ds;

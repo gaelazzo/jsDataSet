@@ -3,7 +3,7 @@
 
 
 describe('DataTable module test', function () {
-  const dsSpace = DataSet,
+  const dsSpace = jsDataSet,
       DataTable = dsSpace.DataTable,
       $q = jsDataQuery;
   let ds, ds2;
