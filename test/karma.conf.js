@@ -29,7 +29,7 @@ module.exports = function(config) {
             'bower_components/lodash/lodash.js',
             'bower_components/observe-js/src/observe.js',
             'bower_components/jsDataQuery/src/jsDataQuery.js',
-            'src/jsDataSet.js',
+            'src/DataSet.js',
             'test/spec/*.js'
         ],
 

@@ -1,6 +1,6 @@
 /*global ObjectObserver */
 ///'use strict';
-/*globals beforeEach,jsDataSet, afterEach,describe,jasmine,it,expect,inject,getRow */
+/*globals beforeEach,DataSet, afterEach,describe,jasmine,it,expect,inject,getRow */
 
 
 describe('proxy object test', function () {

@@ -1,9 +1,9 @@
 'use strict';
-/*globals _ ,  jasmine, jsDataSet, beforeEach, expect, module, it, inject, describe, spyOn, afterEach  */
+/*globals _ ,  jasmine, DataSet, beforeEach, expect, module, it, inject, describe, spyOn, afterEach  */
 
 
 describe('DataTable module test', function () {
-  const dsSpace = jsDataSet,
+  const dsSpace = DataSet,
       DataTable = dsSpace.DataTable,
       $q = jsDataQuery;
   let ds, ds2;

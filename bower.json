@@ -1,17 +1,17 @@
 {
   "name": "jsDataSet",
   "version": "1.1.0",
-  "homepage": "https://github.com/gaelazzo/jsDataSet",
+  "homepage": "https://github.com/gaelazzo/DataSet",
   "repository": {
     "type": "git",
-    "url": "git://github.com/gaelazzo/jsDataSet"
+    "url": "git://github.com/gaelazzo/DataSet"
   },
   "authors": [
     "Gaetano Lazzo <gaetano.lazzo@gmail.com>"
   ],
   "description": ".Net DataSet made available for javascript",
   "main": [
-    "src/jsDataSet.js"
+    "src/DataSet.js"
   ],
   "files": [
     "src"

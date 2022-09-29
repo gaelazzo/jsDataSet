@@ -1,10 +1,10 @@
 /*global ObjectObserver */
 'use strict';
-/*globals beforeEach,jsDataSet, afterEach,describe,jasmine,it,expect,inject,getRow */
+/*globals beforeEach,DataSet, afterEach,describe,jasmine,it,expect,inject,getRow */
 
 
 describe('DataRow module test', function () {
-    var  dsNameSpace = jsDataSet,
+    var  dsNameSpace = DataSet,
         DataRow = dsNameSpace.DataRow,
         $rowState = dsNameSpace.dataRowState,
         ds;
@@ -238,7 +238,7 @@ describe('DataRow module test', function () {
 
 
         beforeEach(function () {
-            d = new jsDataSet.DataSet("dummy name");
+            d = new dsNameSpace.DataSet("dummy name");
 
             t = d.newTable('par1');
             o = {a: 1, b: 2, c: 'a'};

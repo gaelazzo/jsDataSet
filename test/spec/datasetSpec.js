@@ -1,11 +1,11 @@
 /*jslint  nomen:true*/
 /*jslint  nomen:true*/
-/*globals _ ,  jsDataSet, jasmine, beforeEach, expect, module, it,  describe, spyOn, afterEach  */
+/*globals _ ,  DataSet, jasmine, beforeEach, expect, module, it,  describe, spyOn, afterEach  */
 //console.log('defining datasetSpec');
 'use strict';
 
 describe('System status', function () {
-  const dsSpace = jsDataSet,
+  const dsSpace = DataSet,
       $q = jsDataQuery;
   let ds;
 
@@ -28,7 +28,7 @@ describe('System status', function () {
 
 describe('DataSet',
   function () {
-    const dsSpace = jsDataSet,
+    const dsSpace = DataSet,
         $q = jsDataQuery;
     let ds;
 
